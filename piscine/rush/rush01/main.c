@@ -436,6 +436,7 @@ int	pos_(char *mancanti, int size, char mobile)
 	while (++i < size)
 		if (mancanti[i] == mobile)
 			return (i);
+	return (0);
 }
 
 void	swap(char *mancanti, int pos1, int pos2)
