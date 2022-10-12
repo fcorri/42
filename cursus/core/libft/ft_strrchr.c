@@ -1,10 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/11 15:22:12 by fcorri            #+#    #+#             */
+/*   Updated: 2022/10/11 19:46:41 by fcorri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	while (*s++ != 0)
+	char	*p_s;
+	char	input;
+
+	p_s = (char *)s;
+	input = c;
+	while (*p_s++ != 0)
 		;
-	while (*s-- != c)
+	while (p_s != s && *--p_s != input)
 		;
-	return ((char *) s + 1);
+	if (*p_s == input)
+		return (p_s);
+	return (NULL);
 }
