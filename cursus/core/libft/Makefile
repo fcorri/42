@@ -6,4 +6,4 @@ libft: compile
 	rm -f *.o
 
 main: libft
-	gcc -g ../main.c libft.a
+	gcc -g ../main.c libft.a -lbsd
