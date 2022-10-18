@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 19:56:06 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/12 18:20:07 by fcorri           ###   ########.fr       */
+/*   Updated: 2022/10/18 18:52:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	{
 		index = -1;
 		while (++index < size - 1 && src[index])
-			*dst++ = src[index];
-		*dst = 0;
+			dst[index] = src[index];
+		dst[index] = 0;
 	}
 	return (ft_strlen(src));
 }
