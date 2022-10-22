@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:21:00 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/18 19:04:15 by fcorri           ###   ########.fr       */
+/*   Updated: 2022/10/20 15:55:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	const char	*p_src;
 	char		*p_dest;
+	const char	*p_src;
+	size_t		index;
 
-	p_src = src;
 	p_dest = dest;
+	p_src = src;
+	index = 0;
 	while (n--)
-		*p_dest++ = *p_src++;
+	{
+		p_dest[index] = p_src[index];
+		index++;
+	}
 	return (dest);
 }
