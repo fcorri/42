@@ -28,6 +28,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		j++;
 	}
 	if (n == 0)
-		return (s1[i - 1] - s2[j - 1]);
-	return (s1[i] - s2[j]);
+		return ((unsigned char) s1[i - 1] - (unsigned char) s2[j - 1]);
+	return ((unsigned char) s1[i] - (unsigned char) s2[j]);
 }

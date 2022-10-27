@@ -15,13 +15,13 @@
 char	*ft_strchr(const char *s, int c)
 {
 	char	input;
-	size_t	index;
+	char	read;
 
 	input = c;
-	index = 0;
-	while (s[index] && s[index] != input)
-		index++;
-	if (s[index] == input)
-		return ((char *)(s + index));
+	read = *s;
+	while (read && read != input)
+		read = *++s;
+	if (read == input)
+		return ((char *) s);
 	return (NULL);
 }

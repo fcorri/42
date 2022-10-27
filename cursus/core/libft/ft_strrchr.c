@@ -14,26 +14,20 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	input;
-	size_t	index;
-	int		found;
+	char		read;
+	const char	*last;
+	char		input;
 
+	read = *s;
+	last = NULL;
 	input = c;
-	index = 0;
-	found = 0;
-	while (s[index])
+	while (read != '\0')
 	{
-		if (s[index] == input)
-		{
-			found = 1;
-			s += index;
-			index = 0;
-		}
-		index++;
+		if (read == input)
+			last = s;
+		read = *++s;
 	}
-	if (found)
-		return ((char *) s);
-	else if (s[index] == input)
-		return ((char *)(s + index));
-	return (NULL);
+	if (read == input)
+		last = s;
+	return ((char *) last);
 }
