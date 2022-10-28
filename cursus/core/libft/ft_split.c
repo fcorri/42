@@ -6,22 +6,13 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/23 01:33:26 by fcorri           ###   ########.fr       */
+/*   Updated: 2022/10/24 19:22:13 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_init_output_null(void)
-{
-	char	**output;
-
-	output = malloc(sizeof(char *));
-	output[0] = NULL;
-	return (output);
-}
-
-int		ft_other_in(const char *s, char input)
+static int	ft_others_in(const char *s, char input)
 {
 	size_t	index;
 	char	c;
@@ -37,26 +28,32 @@ int		ft_other_in(const char *s, char input)
 	return (0);
 }
 
-char	**ft_init_output(const char *s, char input)
+static char	**ft_init_output(const char *s, char input)
 {
 	char	**output;
 
-	if ((!s || !input) && !ft_other_in(s, input))
-		return (ft_init_output_null());
-	output = malloc(sizeof(char *) * 2);
-	output[0] = ft_strdup(s);
-	output[1] = NULL;
+	if (!s || ft_others_in(s, input) || (s && input))
+	{
+		output = malloc(sizeof(char *));
+		output[0] = NULL;
+	}
+	else
+	{
+		output = malloc(sizeof(char *) * 2);
+		output[0] = ft_strdup(s);
+		output[1] = NULL;
+	}
 	return (output);
 }
 
-size_t	ft_calculate_len(const char *s, size_t index, char input)
+static size_t	ft_calculate_len(const char *s, size_t index, char input)
 {
 	size_t	len;
 	char	c;
 
 	len = 0;
 	c = s[index];
-	while (c != input)
+	while (c && c != input)
 	{
 		len++;
 		c = s[++index];
@@ -64,21 +61,7 @@ size_t	ft_calculate_len(const char *s, size_t index, char input)
 	return (len);
 }
 
-size_t	ft_arrcpy(char **dest, char **src)
-{
-	size_t	index;
-
-	index = 0;
-	while (src[index])
-	{
-		dest[index] = src[index];
-		index++;
-	}
-	free(src);
-	return (index);
-}
-
-char	**ft_arrcat(char **arr, char *str)
+static char	**ft_arrcat(char **arr, char *str)
 {
 	size_t	index;
 	char	**output;
@@ -87,7 +70,13 @@ char	**ft_arrcat(char **arr, char *str)
 	while (arr[index])
 		index++;
 	output = malloc(sizeof(char *) * (index + 2));
-	index = ft_arrcpy(output, arr);
+	index = 0;
+	while (arr[index])
+	{
+		output[index] = arr[index];
+		index++;
+	}
+	free(arr);
 	output[index] = str;
 	output[index + 1] = NULL;
 	return (output);
@@ -102,16 +91,21 @@ char	**ft_split(char const *s, char c)
 
 	output = ft_init_output(s, c);
 	index = 0;
-	while (s[index])
+	if (s && output[0] == NULL)
 	{
-		len = ft_calculate_len(s, index, c);
-		if (len)
+		while (s[index])
 		{
-			str = malloc(len + 1);
-			ft_strlcpy(str, s + index, len + 1);
-			output = ft_arrcat(output, str);
+			len = ft_calculate_len(s, index, c);
+			if (len)
+			{
+				str = malloc(len + 1);
+				ft_strlcpy(str, s + index, len + 1);
+				output = ft_arrcat(output, str);
+				index += len;
+			}
+			else
+				index++;
 		}
-		index += len + 1;
 	}
 	return (output);
 }

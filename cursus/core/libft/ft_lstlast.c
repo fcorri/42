@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 15:39:14 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/24 19:11:37 by fcorri           ###   ########.fr       */
+/*   Created: 2022/10/28 18:45:33 by fcorri            #+#    #+#             */
+/*   Updated: 2022/10/28 18:47:05 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_find_in(const char *set, char c)
+t_list	*ft_lstlast(t_list *lst)
 {
-	char	comp;
-
-	comp = *set;
-	while (comp)
-	{
-		if (comp == c)
-			return (1);
-		comp = *++set;
-	}
-	return (0);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
-{
-	size_t	start;
-	size_t	len;
-
-	start = 0;
-	len = ft_strlen(s1);
-	while (ft_find_in(set, s1[len - 1]))
-		len--;
-	while (ft_find_in(set, s1[start++]))
-		len--;
-	return (ft_substr(s1, start - 1, len));
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next == NULL)
+		lst = lst->next;
+	return (lst);
 }
