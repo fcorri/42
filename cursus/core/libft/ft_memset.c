@@ -14,12 +14,43 @@
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	char	*p_s;
-	char	input;
+	/*	This is the address used to store unsigned long words or bytes*/
+	long			dest;
+	/*	This should be, normally, the biggest type supported by a single load 
+		and store */
+	unsigned long	word;
+	unsigned char	input;
 
-	p_s = s;
+	dest = (long) s;
 	input = c;
+	if (n >= 8)
+	{
+		/*	Build the word to save on memory */
+		word = input;
+		word = (word << 8) | word;
+		word = (word << 16) | word;
+		if (sizeof(word) > 4)
+			word = (word << 32) | word;
+		/*	Align dest in memory, copying input */
+		while (dest % sizeof(word) != 0)
+		{
+			((unsigned char *) dest)[0] = input;
+			dest++;
+			n--;
+		}
+		/*	Copy 1 words per iteration until less than sizeof(word) bytes remain*/
+		while (n / sizeof(word))
+		{
+			((unsigned long *) dest)[0] = word;
+			dest += sizeof(word);
+			n -= sizeof(word);
+		}
+	}
+	/*	Copy 1 byte per iteration until none remains*/
 	while (n--)
-		p_s[n] = input;
+	{
+		((unsigned char *) dest)[0] = input;
+		dest++;
+	}
 	return (s);
 }

@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 # include <errno.h>
-# include <stdlib.h>
+# include <malloc.h>
 # include <unistd.h>
 
 int		ft_isalpha(int c);

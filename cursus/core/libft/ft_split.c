@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int	ft_others_in(const char *s, char input)
+static int	ft_others_in_than(const char *s, char input)
 {
 	size_t	index;
 	char	c;
@@ -32,7 +32,7 @@ static char	**ft_init_output(const char *s, char input)
 {
 	char	**output;
 
-	if (!s || ft_others_in(s, input) || (s && input))
+	if (!s || ft_others_in_than(s, input) || (s && input))
 	{
 		output = malloc(sizeof(char *));
 		output[0] = NULL;
