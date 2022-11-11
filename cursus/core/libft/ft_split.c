@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:02:09 by fcorri            #+#    #+#             */
-/*   Updated: 2022/11/11 19:11:04 by fcorri           ###   ########.fr       */
+/*   Updated: 2022/11/11 19:38:38 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	**ft_split(char const *s, char c)
 	size_t	words;
 	char	**output;
 	size_t	index;
+	char const	*str;
+	size_t	len;
 
 	words = ft_init_words(s, c);
 	output = malloc(sizeof(char *) * (words + 1));
@@ -44,7 +46,18 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	output[words] = NULL;
 	index = 0;
-	while (s[index]	
+	str = s;
+	while (words--)
+	{
+		str = ft_strtrim(str, &c);
+		if (words != 1)
+			len = ft_strchr(str, c) - str;
+		else
+			len = ft_strlen(str);
+		output[index++] = ft_substr(str, 0, len);
+		str += len;
+	}
+	return (output);
 }
 
 void main()
