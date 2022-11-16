@@ -59,6 +59,6 @@ void	*ft_memset(void *s, int c, size_t n)
 		n = ft_set_words(dest, word, n) * sizeof(word);
 	}
 	while (n--)
-		*((unsigned char *) s++) = (unsigned char) c;
+		*((unsigned char *) dest++) = (unsigned char) c;
 	return (s);
 }
