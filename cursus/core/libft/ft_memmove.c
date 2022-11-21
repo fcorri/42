@@ -6,86 +6,36 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:21:17 by fcorri            #+#    #+#             */
-/*   Updated: 2022/11/16 18:44:12 by fcorri           ###   ########.fr       */
+/*   Updated: 2022/11/21 15:44:33 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_set_padding(size_t dest, size_t src)
+void	*ft_memmove(void *p_dest, const void *p_src, size_t n)
 {
-	size_t	remainder;
-	int		output;
+	size_t	dest;
+	size_t	src;
+	size_t	quozient;
 
-	remainder = dest % sizeof(unsigned long);
-	output = remainder;
-	while (remainder--)
-		*((unsigned char *) dest++) = *((unsigned char *) src++);
-	return (output);
-}
-
-static unsigned long	ft_init_word(size_t src)
-{
-	unsigned long	output;
-	unsigned long	input;
-	int				offset;
-
-	offset = src % sizeof(unsigned long);
-	input = *((unsigned long *)(src - offset));
-	input = input >> offset * 8;
-	output = *((unsigned long *)(src + (sizeof(unsigned long) - offset)));
-	output = (output << ((sizeof(unsigned long) - offset) * 8)) | input;
-	return (output);
-}
-
-static size_t	ft_set_words(size_t dest, size_t src, size_t n)
-{
-	unsigned long	word;
-	size_t			quozient;
-	size_t			output;
-
-	quozient = n / sizeof(word);
-	output = quozient;
-	while (quozient--)
+	if (p_dest == p_src)
+		return (p_dest);
+	if (p_src > p_dest)
+		return (ft_memcpy(p_dest, p_src, n));
+	dest = (size_t) p_dest + n - 1;
+	src = (size_t) p_src + n - 1;
+	if (n >= sizeof(unsigned long))
 	{
-		*((unsigned long *) dest) = ft_init_word(src);
-		dest += sizeof(word);
-		src += sizeof(word);
-	}
-	return (output);
-}
-
-void	ft_increment_by(size_t *dest, size_t *src, size_t *n, size_t bytes)
-{
-	*n -= bytes;
-	*dest += bytes;
-	*src += bytes;
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	size_t	p_dest;
-	size_t	p_src;
-	size_t	wrote;
-
-	if (!dest && !src)
-		return (NULL);
-	if (dest == src)
-		return (dest);
-	if (src > dest)
-		return (ft_memcpy(dest, src, n));
-	p_dest = (size_t) dest;
-	p_src = (size_t) src;
-	if (n >= 8)
-	{
-		wrote = ft_set_padding(p_dest, p_src);
-		if (wrote)
-			ft_increment_by(&p_dest, &p_src, &n, wrote);
-		wrote = ft_set_words(p_dest, p_src, n) * sizeof(unsigned long);
-		if (wrote)
-			ft_increment_by(&p_dest, &p_src, &n, wrote);
+		quozient = n / sizeof(unsigned long);
+		n -= quozient * sizeof(unsigned long);
+		while (quozient--)
+		{
+			dest = dest - sizeof(unsigned long) + 1;
+			src = src - sizeof(unsigned long) + 1;
+			*((unsigned long *) dest--) = *((unsigned long *) src--);
+		}
 	}
 	while (n--)
-		*((unsigned char *) p_dest++) = *((unsigned char *) p_src++);
-	return (dest);
+		*((unsigned char *) dest--) = *((unsigned char *) src--);
+	return (p_dest);
 }

@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2022/11/09 15:37:05 by fcorri           ###   ########.fr        #
+#    Updated: 2022/11/21 16:50:23 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ BONUS_OBJS	=	$(BONUS_SRCS:.c=.o)
 
 AR			=	ar -crs
 
-RM			=	rm
+RM			=	rm -fr
 
 all: $(NAME)
 
@@ -51,8 +51,4 @@ re: fclean all
 
 bonus: $(OBJS) $(BONUS_OBJS)
 	$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
-
-#so:
-#	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS)
-#	gcc -nostartfiles -shared -o libft.so $(OBJS)
 
