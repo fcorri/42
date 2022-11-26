@@ -25,18 +25,18 @@ static long	ft_mod(int n)
 static size_t	ft_digits(int n)
 {
 	size_t	digits;
-	long	c_n;
+	long	copia_n;
 
 	if (n == 0)
 		return (1);
 	digits = 0;
 	if (n < 0)
 		digits++;
-	c_n = ft_mod(n);
-	while (c_n)
+	copia_n = ft_mod(n);
+	while (copia_n)
 	{
 		digits++;
-		c_n /= 10;
+		copia_n /= 10;
 	}
 	return (digits);
 }
@@ -49,6 +49,8 @@ char	*ft_itoa(int n)
 
 	digits = ft_digits(n);
 	output = malloc(sizeof(char) * (digits + 1));
+	if (!output)
+		return (NULL);
 	output[digits--] = '\0';
 	c_n = ft_mod(n);
 	while (digits + 1)
