@@ -26,19 +26,21 @@ static size_t	ft_init_buffer(const char *str, unsigned int start, size_t len)
 	buffer = ft_strlen(str) + 1;
 	if (start >= buffer)
 		return (1);
-	return (ft_min(len, buffer - start));
+	if (len + 1 == 0)
+		return (buffer - start);
+	return (ft_min(len + 1, buffer - start));
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *str, unsigned int start, size_t len)
 {
 	char	*output;
 	size_t	buffer;
 
-	buffer = ft_init_buffer(s, start, len + 1);
+	buffer = ft_init_buffer(str, start, len);
 	output = ft_calloc(buffer, 1);
 	if (!output)
 		return (NULL);
 	if (buffer != 1)
-		ft_strlcpy(output, s + start, len + 1);
+		ft_strlcpy(output, str + start, buffer);
 	return (output);
 }
