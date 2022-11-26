@@ -16,11 +16,10 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	t_list	*tmp;
 
-	if (lst != NULL)
-	{
-		tmp = lst->next;
-		del(lst->content);
-		free(lst);
-		lst = tmp;
-	}
+	if (!lst || !del)
+		return ;
+	tmp = lst->next;
+	del(lst->content);
+	free(lst);
+	lst = tmp;
 }
