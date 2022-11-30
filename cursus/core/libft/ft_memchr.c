@@ -34,16 +34,14 @@ static unsigned long	ft_init_one(void)
 	return (one);
 }
 
-static void	ft_check_words(size_t *p_dest, size_t *p_n,
+static size_t	ft_check_words(size_t *p_dest, size_t n,
 	unsigned long input, unsigned long one)
 {
 	size_t			dest;
 	unsigned long	word;
 	size_t			quozient;
-	size_t			n;
 
 	dest = *p_dest;
-	n = *p_n;
 	quozient = n / sizeof(unsigned long);
 	while (quozient--)
 	{
@@ -55,26 +53,31 @@ static void	ft_check_words(size_t *p_dest, size_t *p_n,
 		dest += sizeof(unsigned long);
 	}
 	*p_dest = dest;
-	*p_n = n;
+	return (n);
 }
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t			dest;
+	size_t			remainder;
 	unsigned long	input;
 	unsigned long	one;
 
-	if (n != 0)
+	if (n == 0)
+		return (NULL);
+	dest = (size_t) s;
+	remainder = n % sizeof(unsigned long);
+	n -= remainder;
+	while (remainder--)
+		if (*((unsigned char *) dest++) == (unsigned char) c)
+			return ((void *)(dest - 1));
+	input = ft_init_input(c);
+	one = ft_init_one();
+	n = ft_check_words(&dest, n, input, one);
+	while (n--)
 	{
-		dest = (size_t) s;
-		input = ft_init_input(c);
-		one = ft_init_one();
-		ft_check_words(&dest, &n, input, one);
-		while (n--)
-		{
-			if (*((unsigned char *) dest++) == (unsigned char) c)
-				return ((void *)(dest - 1));
-		}
+		if (*((unsigned char *) dest++) == (unsigned char) c)
+			return ((void *)(dest - 1));
 	}
 	return (NULL);
 }
