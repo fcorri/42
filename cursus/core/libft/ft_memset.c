@@ -28,19 +28,22 @@ void	*ft_memset(void *s, int c, size_t n)
 {
 	size_t	dest;
 	size_t	word;
-	size_t	quozient;
+	size_t	div_result;
 
+	if (!n)
+		return (s);
 	dest = (size_t) s;
-	if (n >= sizeof(unsigned long))
+	div_result = n % sizeof(word);
+	n -= div_result;
+	while (div_result--)
+		*((unsigned char *) dest++) = (unsigned char) c;
+	word = ft_init_word(c);
+	div_result = n / sizeof(word);
+	n -= div_result * sizeof(word);
+	while (div_result--)
 	{
-		word = ft_init_word(c);
-		quozient = n / sizeof(word);
-		n -= quozient * sizeof(word);
-		while (quozient--)
-		{
-			*((unsigned long *) dest) = word;
-			dest += sizeof(word);
-		}
+		*((unsigned long *) dest) = word;
+		dest += sizeof(word);
 	}
 	while (n--)
 		*((unsigned char *) dest++) = (unsigned char) c;
