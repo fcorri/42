@@ -21,6 +21,6 @@ char	*ft_strdup(const char *s)
 	output = malloc(buffer_len);
 	if (!output)
 		return (NULL);
-	ft_strlcpy(output, s, buffer_len);
+	ft_memcpy(output, s, buffer_len);
 	return (output);
 }
