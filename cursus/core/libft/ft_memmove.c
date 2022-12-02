@@ -12,28 +12,69 @@
 
 #include "libft.h"
 
-void	*ft_memmove(void *p_dest, const void *p_src, size_t n)
+static void	ft_set_word(size_t dest, size_t src)
+{
+	int	right;
+	int	left;
+
+	right = dest % sizeof(unsigned long);
+	if (right == 0)
+		*(unsigned long *)dest = *(unsigned long *)src;
+	else
+	{
+		left = (sizeof(unsigned long) - right);
+		*(unsigned long *)(dest + left) = (*(unsigned long *)(dest + left)
+				>> right * 8) << right * 8
+			| *(unsigned long *)src >> left * 8;
+		*(unsigned long *)(dest - right) = (*(unsigned long *)(dest - right)
+				<< left * 8) >> left * 8
+			| *(unsigned long*)src << right * 8;
+	}
+}
+
+static size_t	ft_set_words(size_t *p_dest, size_t *p_src, size_t n)
 {
 	size_t	dest;
 	size_t	src;
 	size_t	quozient;
 
-	if (p_dest == p_src)
+	dest = *p_dest;
+	src = *p_src;
+	quozient = n / sizeof(unsigned long);
+	if (!quozient)
+		return (n);
+	n -= quozient * sizeof(unsigned long);
+	while (quozient--)
+	{
+		dest -= sizeof(unsigned long);
+		src -= sizeof(unsigned long);
+		ft_set_word(dest, src);
+	}
+	*p_dest = dest - 1;
+	*p_src = src - 1;
+	return (n);
+}
+
+void	*ft_memmove(void *p_dest, const void *p_src, size_t n)
+{
+	size_t	dest;
+	size_t	src;
+	size_t	remainder;
+
+	if (!n || p_dest == p_src)
 		return (p_dest);
 	if (p_src > p_dest)
 		return (ft_memcpy(p_dest, p_src, n));
 	dest = (size_t) p_dest + n - 1;
 	src = (size_t) p_src + n - 1;
-	if (n >= sizeof(unsigned long))
+	if (n >= 4 * sizeof(unsigned long))
 	{
-		quozient = n / sizeof(unsigned long);
-		n -= quozient * sizeof(unsigned long);
-		while (quozient--)
-		{
-			dest = dest - sizeof(unsigned long) + 1;
-			src = src - sizeof(unsigned long) + 1;
-			*((unsigned long *) dest--) = *((unsigned long *) src--);
-		}
+		remainder = src % sizeof(unsigned long);
+		n -= remainder + 1;
+		while (remainder--)
+			*((unsigned char *) dest--) = *((unsigned char *) src--);
+		*((unsigned char *) dest) = *((unsigned char *) src);
+		n = ft_set_words(&dest, &src, n);
 	}
 	while (n--)
 		*((unsigned char *) dest--) = *((unsigned char *) src--);
