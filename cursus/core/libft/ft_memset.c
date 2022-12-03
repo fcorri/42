@@ -24,28 +24,31 @@ static unsigned long	ft_init_word(unsigned char c)
 	return (output);
 }
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *p_dest, int c, size_t n)
 {
 	size_t	dest;
 	size_t	word;
 	size_t	div_result;
 
 	if (!n)
-		return (s);
-	dest = (size_t) s;
-	div_result = n % sizeof(word);
-	n -= div_result;
-	while (div_result--)
-		*((unsigned char *) dest++) = (unsigned char) c;
-	word = ft_init_word(c);
-	div_result = n / sizeof(word);
-	n -= div_result * sizeof(word);
-	while (div_result--)
+		return (p_dest);
+	dest = (size_t) p_dest;
+	if (n >= 4 * sizeof(unsigned long))
 	{
-		*((unsigned long *) dest) = word;
-		dest += sizeof(word);
+		div_result = dest % sizeof(word);
+		n -= div_result;
+		while (div_result--)
+			*((unsigned char *) dest++) = (unsigned char) c;
+		word = ft_init_word(c);
+		div_result = n / sizeof(word);
+		n -= div_result * sizeof(word);
+		while (div_result--)
+		{
+			*((unsigned long *) dest) = word;
+			dest += sizeof(word);
+		}
 	}
 	while (n--)
 		*((unsigned char *) dest++) = (unsigned char) c;
-	return (s);
+	return (p_dest);
 }

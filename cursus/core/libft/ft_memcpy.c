@@ -54,15 +54,18 @@ void	*ft_memcpy(void *p_dest, const void *p_src, size_t n)
 	size_t	src;
 	size_t	remainder;
 
-	if (p_dest == p_src)
+	if (!n || p_dest == p_src)
 		return (p_dest);
 	dest = (size_t) p_dest;
 	src = (size_t) p_src;
-	remainder = dest % sizeof(unsigned long);
-	n -= remainder;
-	while (remainder--)
-		*((unsigned char *) dest++) = *((unsigned char *) src++);
-	n = ft_set_words(&dest, &src, n);
+	if (n >= 4 * sizeof(unsigned long))
+	{
+		remainder = dest % sizeof(unsigned long);
+		n -= remainder;
+		while (remainder--)
+			*((unsigned char *) dest++) = *((unsigned char *) src++);
+		n = ft_set_words(&dest, &src, n);
+	}
 	while (n--)
 		*((unsigned char *) dest++) = *((unsigned char *) src++);
 	return (p_dest);
