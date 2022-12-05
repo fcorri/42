@@ -12,8 +12,7 @@
 
 #include "libft.h"
 
-static _Bool	ft_check_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n,
-					size_t *p_index)
+static _Bool	ft_check_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n)
 {
 	size_t	p1;
 	size_t	p2;
@@ -24,20 +23,16 @@ static _Bool	ft_check_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n,
 	p2 = *p_p2;
 	size = sizeof(unsigned long);
 	remainder = p1 & (size - 1);
-	if (!remainder)
-		return (0);
 	*p_n -= (size - remainder);
-	while (size - remainder++)
+	while (size - remainder && *(unsigned char *)p1 == *(unsigned char *)p2)
 	{
-		if (*(unsigned char *)p1++ == *(unsigned char *)p2++)
-			break ;
+		remainder++;
+		p1++;
+		p2++;
 	}
-	*p_index = --p1 - *p_p1;
 	*p_p1 = p1;
-	*p_p2 = --p2;
-	if (remainder)
-		return (1);
-	return (0);
+	*p_p2 = p2;
+	return (size - remainder);
 }
 
 static unsigned long	ft_read_word(size_t src)
@@ -57,8 +52,7 @@ static unsigned long	ft_read_word(size_t src)
 	);
 }
 
-static _Bool	ft_check_words(size_t *p_p1, size_t *p_p2, size_t *p_n,
-					size_t *output)
+static _Bool	ft_check_words(size_t *p_p1, size_t *p_p2, size_t *p_n)
 {
 	size_t	p1;
 	size_t	p2;
@@ -69,29 +63,28 @@ static _Bool	ft_check_words(size_t *p_p1, size_t *p_p2, size_t *p_n,
 	p2 = *p_p2;
 	n = *p_n;
 	temp = n / sizeof(unsigned long);
+	n -= temp * sizeof(unsigned long);
 	while (temp--)
 	{
 		if (*(unsigned long *)p1 != ft_read_word(p2))
 		{
-			if (*(unsigned char *)p1 != *(unsigned char *)p2)
-				return (p1);
-			return (ft_check_bytes(p_p1, p_p2, n, output));
+			*p_p1 = p1;
+			*p_p2 = p2;
+			return (ft_check_bytes(p_p1, p_p2, p_n));
 		}
 		p1 += sizeof(unsigned long);
 		p2 += sizeof(unsigned long);
-		n -= sizeof(unsigned long);
 	}
 	*p_p1 = p1;
 	*p_p2 = p2;
 	*p_n = n;
-	return (sizeof(unsigned long));
+	return (0);
 }
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t	p1;
 	size_t	p2;
-	size_t	index;
 	int		output;
 
 	if (n == 0)
@@ -100,16 +93,14 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	p2 = (size_t) s2;
 	if (n >= 4 * sizeof(unsigned long))
 	{
-		index = 0;
-		if (ft_check_bytes(&p1, &p2, &n, &index))
-			return (*(unsigned char *)(p1 + index)
-				- *(unsigned char *)(p2 + index));
+		if (ft_check_bytes(&p1, &p2, &n) || ft_check_words(&p1, &p2, &n))
+			return (*(unsigned char *)p1 - *(unsigned char *)p2);
 	}
 	while (n--)
 	{
 		output = *(unsigned char *)p1++ - *(unsigned char *)p2++;
-		if (output)
+		if (output != 0)
 			return (output);
 	}
-	return (*(unsigned char *)p1 - *(unsigned char *)p2);
+	return (0);
 }
