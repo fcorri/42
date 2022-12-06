@@ -12,24 +12,31 @@
 
 #include "libft.h"
 
-static int	ft_isspace(char c)
+static void	ft_remove_initial_spaces(const char **str)
 {
-	return (c == ' '
+	char	c;
+
+	c = **str;
+	while (c == ' '
 		|| c == '\f'
 		|| c == '\n'
 		|| c == '\r'
 		|| c == '\t'
-		|| c == '\v');
+		|| c == '\v')
+	{
+		*str += 1;
+		c = **str;
+	}
 }
 
-static int	ft_is_sign(const char *ptr, size_t *index)
+static int	ft_is_sign(const char **ptr)
 {
 	char	c;
 
-	c = ptr[*index];
+	c = **ptr;
 	if (c != '-' && c != '+')
 		return (1);
-	*index += 1;
+	*ptr += 1;
 	if (c == '-')
 		return (-1);
 	return (1);
@@ -38,16 +45,26 @@ static int	ft_is_sign(const char *ptr, size_t *index)
 int	ft_atoi(const char *nptr)
 {
 	long	output;
-	char	sign;
-	size_t	index;
+	long	temp;
+	int		sign;
 
 	output = 0;
-	index = 0;
-	while (ft_isspace(nptr[index]))
-		index++;
-	sign = ft_is_sign(nptr, &index);
-	while (ft_isdigit(nptr[index]))
-		output = output * 10 + (nptr[index++] - '0');
+	ft_remove_initial_spaces(&nptr);
+	sign = ft_is_sign(&nptr);
+	while (ft_isdigit(*nptr))
+	{
+		temp = output * 10 + (*nptr - '0');
+		if (temp < output)
+		{
+			if (sign > 0)
+				return (-1);
+			else
+				return (0);
+		}
+		else
+			output = temp;
+		nptr++;
+	}	
 	output *= sign;
 	return (output);
 }
