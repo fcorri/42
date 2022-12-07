@@ -37,17 +37,19 @@ static size_t	ft_set_words(size_t *p_dest, size_t *p_src, size_t n)
 	size_t	dest;
 	size_t	src;
 	size_t	quozient;
+	size_t	size;
 
 	dest = *p_dest;
 	src = *p_src;
-	quozient = n / sizeof(unsigned long);
+	size = sizeof(unsigned long);
+	quozient = n / size;
 	if (!quozient)
 		return (n);
-	n -= quozient * sizeof(unsigned long);
+	n -= quozient * size;
 	while (quozient--)
 	{
-		dest -= sizeof(unsigned long);
-		src -= sizeof(unsigned long);
+		dest -= size;
+		src -= size;
 		ft_set_word(dest, src);
 	}
 	*p_dest = dest - 1;

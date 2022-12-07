@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static _Bool	ft_check_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n)
+static int	ft_check_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n)
 {
 	size_t	p1;
 	size_t	p2;
@@ -42,7 +42,7 @@ static unsigned long	ft_read_word(size_t src)
 	size_t	size;
 
 	size = sizeof(unsigned long);
-	right = src % size;
+	right = src & (size - 1);
 	if (right == 0)
 		return (*(unsigned long *)src);
 	left = size - right;
@@ -52,19 +52,19 @@ static unsigned long	ft_read_word(size_t src)
 	);
 }
 
-static _Bool	ft_check_words(size_t *p_p1, size_t *p_p2, size_t *p_n)
+static int	ft_check_words(size_t *p_p1, size_t *p_p2, size_t *p_n)
 {
 	size_t	p1;
 	size_t	p2;
-	int		temp;
-	size_t	n;
+	int		quozient;
+	size_t	size;
 
 	p1 = *p_p1;
 	p2 = *p_p2;
-	n = *p_n;
-	temp = n / sizeof(unsigned long);
-	n -= temp * sizeof(unsigned long);
-	while (temp--)
+	size = sizeof(unsigned long);
+	quozient = *p_n / size;
+	*p_n -= quozient * size;
+	while (quozient--)
 	{
 		if (*(unsigned long *)p1 != ft_read_word(p2))
 		{
@@ -72,12 +72,11 @@ static _Bool	ft_check_words(size_t *p_p1, size_t *p_p2, size_t *p_n)
 			*p_p2 = p2;
 			return (ft_check_bytes(p_p1, p_p2, p_n));
 		}
-		p1 += sizeof(unsigned long);
-		p2 += sizeof(unsigned long);
+		p1 += size;
+		p2 += size;
 	}
 	*p_p1 = p1;
 	*p_p2 = p2;
-	*p_n = n;
 	return (0);
 }
 
@@ -91,11 +90,9 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 		return (0);
 	p1 = (size_t) s1;
 	p2 = (size_t) s2;
-	if (n >= 4 * sizeof(unsigned long))
-	{
-		if (ft_check_bytes(&p1, &p2, &n) || ft_check_words(&p1, &p2, &n))
-			return (*(unsigned char *)p1 - *(unsigned char *)p2);
-	}
+	if (n >= 4 * sizeof(unsigned long)
+		&& (ft_check_bytes(&p1, &p2, &n) || ft_check_words(&p1, &p2, &n)))
+		return (*(unsigned char *)p1 - *(unsigned char *)p2);
 	while (n--)
 	{
 		output = *(unsigned char *)p1++ - *(unsigned char *)p2++;

@@ -19,34 +19,49 @@ static unsigned long	ft_init_word(unsigned char c)
 	output = c;
 	output = (output << 8) | output;
 	output = (output << 16) | output;
-	if (sizeof(unsigned long) > 4)
+	if (sizeof(output) > 4)
 		output = ((output << 16) << 16) | output;
 	return (output);
+}
+
+static size_t	ft_set_words(size_t *p_dest, unsigned long word, size_t n)
+{
+	size_t	dest;
+	size_t	quozient;
+	size_t	size;
+
+	dest = *p_dest;
+	size = sizeof(unsigned long);
+	quozient = n / size;
+	if (!quozient)
+		return (n);
+	n -= quozient * size;
+	while (quozient--)
+	{
+		*((unsigned long *) dest) = word;
+		dest += size;
+	}
+	*p_dest = dest;
+	return (n);
 }
 
 void	*ft_memset(void *p_dest, int c, size_t n)
 {
 	size_t	dest;
-	size_t	word;
 	size_t	div_result;
+	size_t	size;
 
 	if (!n)
 		return (p_dest);
 	dest = (size_t) p_dest;
-	if (n >= 4 * sizeof(unsigned long))
+	size = sizeof(unsigned long);
+	if (n >= 4 * size)
 	{
-		div_result = dest % sizeof(word);
-		n -= div_result;
-		while (div_result--)
+		div_result = dest & (size - 1);
+		n -= (size - div_result);
+		while (size - div_result++)
 			*((unsigned char *) dest++) = (unsigned char) c;
-		word = ft_init_word(c);
-		div_result = n / sizeof(word);
-		n -= div_result * sizeof(word);
-		while (div_result--)
-		{
-			*((unsigned long *) dest) = word;
-			dest += sizeof(word);
-		}
+		n = ft_set_words(&dest, ft_init_word(c), n);
 	}
 	while (n--)
 		*((unsigned char *) dest++) = (unsigned char) c;
