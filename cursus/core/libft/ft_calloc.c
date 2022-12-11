@@ -18,8 +18,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	char	*output;
 
 	buffer_len = nmemb * size;
+	if (buffer_len < nmemb || buffer_len < size)
+		buffer_len = -1;
 	output = malloc(buffer_len);
-	if (!output || buffer_len < nmemb || buffer_len < size)
+	if (!output)
 		return (NULL);
 	ft_memset(output, 0, buffer_len);
 	return (output);
