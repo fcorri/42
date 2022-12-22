@@ -21,5 +21,6 @@ int	main(int argc, char **argv)
 		write(r, line, strlen(line));
 	free(line);
 	close(fd);
+	close(r);
 	return (0);
 }
