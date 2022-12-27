@@ -1,36 +1,51 @@
 #include "get_next_line.h"
-#include <bsd/string.h>
 
-char	*ft_strdup(char *s)
+size_t	ft_strlen(char *s)
+{
+	char	*tmp;
+
+	tmp = s;
+	while (*s)
+		s++;
+	return (s - tmp);
+}
+
+char	*ft_strdup(char *s, size_t len)
 {
 	char	*output;
-	size_t	buffer_len;
+	size_t	index;
 
-	buffer_len = strlen(s) + 1;
-	output = malloc(buffer_len);
+	output = malloc(len + 1);
 	if (!output)
 		return (NULL);
-	memcpy(output, s, buffer_len);
+	index = -1;
+	while (++index < len)
+		output[index] = s[index];
+	output[index] = '\0';
 	return (output);
 }
 
-char	*ft_strjoin(char **s1, char *s2)
+char	*ft_strjoin(char **s1, char *s2, size_t br)
 {
 	char	*output;
 	size_t	len1;
-	size_t	len2;
+	size_t	index;
 
 	if (!*s1)
-		output = ft_strdup(s2);
+		output = ft_strdup(s2, br);
 	else
 	{
-		len1 = strlen(*s1);
-		len2 = strlen(s2);
-		output = calloc(len1 + len2 + 1, 1);
+		len1 = ft_strlen(*s1);
+		output = malloc(len1 + br + 1);
 		if (!output)
 			return (NULL);
-		strlcpy(output, *s1, len1 + 1);
-		strlcat(output + len1, s2, len2 + 1);
+		index = -1;
+		while (++index < len1)
+			output[index] = (*s1)[index];
+		index = -1;
+		while (++index < br)
+			output[len1 + index] = s2[index];
+		output[len1 + index] = '\0';
 		free(*s1);
 	}
 	*s1 = output;

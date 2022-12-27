@@ -17,7 +17,8 @@ static char	*ft_return_new(char **line, char *newline, char *buffer)
 	output = malloc(sizeof(char) * (len + 1));
 	memcpy(output, *line, len);
 	output[len] = '\0';
-	tmp = ft_strdup(++newline);
+	++newline;
+	tmp = ft_strdup(newline, ft_strlen(newline));
 	free(*line);
 	*line = tmp;
 	free(buffer);
@@ -37,20 +38,19 @@ char	*get_next_line(int fd, size_t BUFFER_SIZE)
 {
 	static char	*line;
 	char		*buffer;
-	ssize_t		rb;
+	ssize_t		br;
 	char		*newline;
 
-	buffer = calloc(BUFFER_SIZE + 1, 1);
-	rb = read(fd, buffer, BUFFER_SIZE);
-	while (rb != -1 && rb != 0)
+	buffer = malloc(BUFFER_SIZE);
+	br = read(fd, buffer, BUFFER_SIZE);
+	while (br > 0)
 	{
-		if (!ft_strjoin(&line, buffer))
+		if (!ft_strjoin(&line, buffer, br))
 			ft_return_null(line, buffer);
 		newline = strchr(line, '\n');
 		if (newline)
 			return (ft_return_new(&line, newline, buffer));
-		rb = read(fd, buffer, BUFFER_SIZE);
-		buffer[rb] = '\0';
+		br = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (line && *line)
 	{

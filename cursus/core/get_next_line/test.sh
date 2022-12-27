@@ -6,10 +6,10 @@ NC='\033[0m'
 
 rm output
 touch output
-make all
+make fclean all clean
 clear
 
-test=1
+test=0
 if [[ $# -eq 1 ]]; then
 	echo ./get_next_line $1
 	./get_next_line $1
@@ -22,6 +22,8 @@ if [[ $# -eq 1 ]]; then
 		diff lorem output
 		echo -e "${RED}\nERROR IN TEST NUMBER $1\n${NC}"
 		test=0
+	else
+		test=1
 	fi
 elif [[ $# -eq 2 ]]; then
 	for BUFFER_SIZE in $(seq $1 $2)
@@ -42,6 +44,7 @@ elif [[ $# -eq 2 ]]; then
 			break
 		fi
 	done
+	test=1
 fi
 
 if [[ $test -eq 1 ]]; then
