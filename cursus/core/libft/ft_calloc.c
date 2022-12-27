@@ -19,7 +19,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	buffer_len = nmemb * size;
 	if (buffer_len < nmemb || buffer_len < size)
-		buffer_len = -1;
+		buffer_len = 0;
 	output = malloc(buffer_len);
 	if (!output)
 		return (NULL);
