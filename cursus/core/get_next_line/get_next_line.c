@@ -2,7 +2,8 @@
 
 static void	*ft_return_null(char *line, char *buffer)
 {
-	free(line);
+	if (line)
+		free(line);
 	free(buffer);
 	return (NULL);
 }
@@ -17,24 +18,37 @@ static char	*ft_return_new(char **line, char *newline, char *buffer)
 	output = malloc(sizeof(char) * (len + 1));
 	memcpy(output, *line, len);
 	output[len] = '\0';
-	++newline;
-	tmp = ft_strdup(newline, ft_strlen(newline));
+	tmp = ft_strdup(newline + 1, ft_strlen(newline + 1));
 	free(*line);
 	*line = tmp;
 	free(buffer);
 	return (output);
 }
 
-static char	*ft_return_last(char **line)
+static char	*ft_return_last(char **line, char *buffer)
 {
 	char	*output;
 
 	output = *line;
 	*line = NULL;
+	free(buffer);
 	return (output);
 }
 
-char	*get_next_line(int fd, size_t BUFFER_SIZE)
+/*char	*ft_return(char *line, char *buffer)
+{
+	char	*newline;
+
+	free(buffer);
+	if (line && *line)
+		newline = ft_strchr(line, '\n');
+		if (newline)
+			return (ft_return_new());
+		return (ft_return_last());
+	return (ft_return_null());
+}*/
+
+char	*get_next_line(int fd)
 {
 	static char	*line;
 	char		*buffer;
@@ -57,7 +71,8 @@ char	*get_next_line(int fd, size_t BUFFER_SIZE)
 		newline = strchr(line, '\n');
 		if (newline)
 			return (ft_return_new(&line, newline, buffer));
-		return (ft_return_last(&line));
+		return (ft_return_last(&line, buffer));
 	}
-	return (NULL);
+	return (ft_return_null(line, buffer));
+//	return (ft_return(&line, buffer));
 }

@@ -2,7 +2,7 @@ NAME		=	get_next_line
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -D BUFFER_SIZE=42
 
 SRCS		=	get_next_line.c get_next_line_utils.c
 
@@ -15,7 +15,7 @@ BONUS_OBJS	=	$(BONUS_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -g ../main.c $(SRCS) -o $(NAME) -lbsd
+	$(CC) $(CFLAGS) -c $(SRCS)
 
 RM			=	rm -fr
 
