@@ -1,52 +1,30 @@
 #include "get_next_line.h"
 
-static void	*ft_return_null(char *line, char *buffer)
+static char	*ft_free_and_return(char *line, char *buffer, char *output)
 {
-	if (line)
-		free(line);
+	free(line);
 	free(buffer);
-	return (NULL);
+	return (output);
 }
 
-static char	*ft_return_new(char **line, char *newline, char *buffer)
+static char	*ft_return(char **line, char *newline, char *buffer)
 {
 	char	*output;
 	char	*tmp;
-	size_t	len;
 
-	len = newline - *line + 1;
-	output = malloc(sizeof(char) * (len + 1));
-	memcpy(output, *line, len);
-	output[len] = '\0';
-	tmp = ft_strdup(newline + 1, ft_strlen(newline + 1));
-	free(*line);
-	*line = tmp;
-	free(buffer);
-	return (output);
-}
-
-static char	*ft_return_last(char **line, char *buffer)
-{
-	char	*output;
-
-	output = *line;
+	if (!**line)
+		return (ft_free_and_return(*line, buffer, NULL));
+	if (newline)
+	{
+		output = ft_strdup(*line, newline - *line + 1);
+		tmp = *line;
+		*line = ft_strdup(newline + 1, ft_strlen(newline + 1));
+		return (ft_free_and_return(tmp, buffer, output));
+	}
+	tmp = *line;
 	*line = NULL;
-	free(buffer);
-	return (output);
+	return (ft_free_and_return(NULL, buffer, tmp));
 }
-
-/*char	*ft_return(char *line, char *buffer)
-{
-	char	*newline;
-
-	free(buffer);
-	if (line && *line)
-		newline = ft_strchr(line, '\n');
-		if (newline)
-			return (ft_return_new());
-		return (ft_return_last());
-	return (ft_return_null());
-}*/
 
 char	*get_next_line(int fd)
 {
@@ -55,24 +33,20 @@ char	*get_next_line(int fd)
 	ssize_t		br;
 	char		*newline;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buffer = malloc(BUFFER_SIZE);
 	br = read(fd, buffer, BUFFER_SIZE);
 	while (br > 0)
 	{
 		if (!ft_strjoin(&line, buffer, br))
-			ft_return_null(line, buffer);
-		newline = strchr(line, '\n');
+			return (ft_free_and_return(line, buffer, NULL));
+		newline = ft_strchr(line, '\n');
 		if (newline)
-			return (ft_return_new(&line, newline, buffer));
+			return (ft_return(&line, newline, buffer));
 		br = read(fd, buffer, BUFFER_SIZE);
 	}
-	if (line && *line)
-	{
-		newline = strchr(line, '\n');
-		if (newline)
-			return (ft_return_new(&line, newline, buffer));
-		return (ft_return_last(&line, buffer));
-	}
-	return (ft_return_null(line, buffer));
-//	return (ft_return(&line, buffer));
+	if (line)
+		return (ft_return(&line, ft_strchr(line, '\n'), buffer));
+	return (ft_free_and_return(line, buffer, NULL));
 }

@@ -1,5 +1,17 @@
 #include "get_next_line.h"
 
+char	*ft_strchr(char *s, char input)
+{
+	char	read;
+
+	read = *s;
+	while (read && read != input)
+		read = *++s;
+	if (read == input)
+		return ((char *) s);
+	return (NULL);
+}
+
 size_t	ft_strlen(char *s)
 {
 	char	*tmp;
