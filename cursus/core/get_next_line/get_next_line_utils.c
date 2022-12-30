@@ -1,39 +1,32 @@
 #include "get_next_line.h"
 
-void	ft_init(unsigned long *input, char c, unsigned long *one, char **output, char **zero)
+void	ft_init(unsigned long *input, char c, unsigned long *one)
 {
 	unsigned long	word;
 
-	word = c | (c << 8) | (c << 16);
+	word = c | (c << 8);
+	word |= (word << 16);
 	if (sizeof(unsigned long) > 4)
 		word |= ((word << 16) << 16);
+	*input = word;
 	word = 0x01010101L;
 	if (sizeof(unsigned long) > 4)
 		word |= ((word << 16) << 16);
-	*output = 0;
-	*zero = 0;
+	*one = word;
 }
 
-char	*ft_strchr(char *s, char input)
+void	ft_checkword(char *src, unsigned long input, unsigned long one, char **output)
 {
-	char	read;
+		unsigned long	word;
 
-	read = *s;
-	while (read && read != input)
-		read = *++s;
-	if (read == input)
-		return ((char *) s);
-	return (NULL);
-}
-
-size_t	ft_strlen(char *s)
-{
-	char	*tmp;
-
-	tmp = s;
-	while (*s)
-		s++;
-	return (s - tmp);
+        word = (*(unsigned long *)src) ^ input;
+        word = ((word - one) & ~word) & (one << 7); 
+        if (word != 0)
+        {
+            *output = src;
+            while (**output != (char) input)
+                (*output)++;
+        }
 }
 
 char	*ft_strdup(char *s, size_t len)
@@ -61,7 +54,7 @@ char	*ft_strjoin(char **s1, char *s2, size_t br)
 		output = ft_strdup(s2, br);
 	else
 	{
-		len1 = ft_strlen(*s1);
+		len1 = ft_strchr(*s1, '\0') - *s1;
 		output = malloc(len1 + br + 1);
 		if (!output)
 			return (NULL);
