@@ -2,7 +2,7 @@ NAME		=	get_next_line
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror -D BUFFER_SIZE=0
+CFLAGS		=	-Wall -Wextra -Werror -D BUFFER_SIZE=1
 
 SRCS		=	get_next_line.c get_next_line_utils.c
 
