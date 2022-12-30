@@ -6,11 +6,11 @@ NC='\033[0m'
 
 rm output
 touch output
-make fclean all clean
 clear
 
 test=0
 if [[ $# -eq 1 ]]; then
+	gcc -g ../main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=$1 -o get_next_line
 	echo ./get_next_line $1
 	./get_next_line $1
 	if [[ $(diff lorem output) ]]; then
@@ -30,6 +30,7 @@ elif [[ $# -eq 2 ]]; then
 	do
 		rm output
 		touch output
+		gcc -g ../main.c get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=$BUFFER_SIZE -o get_next_line
 		echo ./get_next_line $BUFFER_SIZE
 		./get_next_line $BUFFER_SIZE
 		if [[ $(diff lorem output) ]]; then

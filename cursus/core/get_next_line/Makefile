@@ -15,7 +15,7 @@ BONUS_OBJS	=	$(BONUS_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -c $(SRCS)
+	$(CC) $(CFLAGS) -c $(SRCS) $(BONUS_SRCS)
 
 RM			=	rm -fr
 
