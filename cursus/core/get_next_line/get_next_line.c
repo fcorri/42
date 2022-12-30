@@ -18,51 +18,12 @@ static char	*ft_return(char **line, char *newline, char *buffer)
 	{
 		output = ft_strdup(*line, newline - *line + 1);
 		tmp = *line;
-		*line = ft_strdup(newline + 1, (ft_strchr(newline + 1, '\0') - newline + 1));
+		*line = ft_strdup(newline + 1, ft_strlen(newline + 1));
 		return (ft_free_and_return(tmp, buffer, output));
 	}
 	tmp = *line;
 	*line = NULL;
 	return (ft_free_and_return(NULL, buffer, tmp));
-}
-
-static char	*ft_check_words(char *src, char c)
-{
-	unsigned long	word;
-	unsigned long	input;
-	unsigned long	one;
-	char			*output;
-	char			*zero;
-
-	ft_init(&input, c, &one);
-	output = NULL;
-	zero = NULL;
-	while (1)
-	{
-		ft_checkword(src, input, one, &output);
-		if (c)
-			ft_checkword(src, '\0', one, &zero);
-		if (output && (output <= zero || !zero))
-			return (output);
-		else if (zero)
-			return (NULL);
-		src += sizeof(word);
-	}
-}
-
-char	*ft_strchr(char *src, char c)
-{
-	char		word;
-
-	while ((size_t) src % sizeof(unsigned long))
-	{
-		word = *src++;
-		if (word == c)
-			return (src - 1);
-		if (word == '\0')
-			return (NULL);
-	}
-	return (ft_check_words(src, c));
 }
 
 char	*get_next_line(int fd)
