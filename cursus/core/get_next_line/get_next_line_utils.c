@@ -1,5 +1,19 @@
 #include "get_next_line.h"
 
+void	ft_init(unsigned long *input, char c, unsigned long *one, char **output, char **zero)
+{
+	unsigned long	word;
+
+	word = c | (c << 8) | (c << 16);
+	if (sizeof(unsigned long) > 4)
+		word |= ((word << 16) << 16);
+	word = 0x01010101L;
+	if (sizeof(unsigned long) > 4)
+		word |= ((word << 16) << 16);
+	*output = 0;
+	*zero = 0;
+}
+
 char	*ft_strchr(char *s, char input)
 {
 	char	read;

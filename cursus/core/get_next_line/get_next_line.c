@@ -26,6 +26,55 @@ static char	*ft_return(char **line, char *newline, char *buffer)
 	return (ft_free_and_return(NULL, buffer, tmp));
 }
 
+static void	ft_check_word(char *src, unsigned long input, unsigned long one, char **output, char **zero)
+{
+	unsigned long	word;
+
+	word = *(unsigned long *)src ^ input;
+	word = ((word - one) & ~word) & (one << 7);
+	if (word != 0)
+	{
+		*output = src;
+		while (*output != input)
+			output++;
+	}
+	word = *(unsigned long *)src ^ 0x0;
+	word = ((word - one) & ~word) & (one << 7);
+	if (word != 0)
+	{
+		zero = src;
+		while (*(char *)zero != 0)
+			zero++;
+	}
+}
+
+static char	*ft_memchr(char *s, char c)
+{
+	unsigned long	input;
+	unsigned long	one;
+	char		word;
+	char		*output;
+	char		*zero;
+
+	while ((size_t) s % sizeof(unsigned long))
+	{
+		word = *s++;
+		if (word == c)
+			return (s - 1);
+		if (word == '\0')
+			return (NULL);
+	}
+	ft_init(&input, c, &one, &output, &zero);
+	while (output && zero)
+	{
+		ft_check_word(s, input, one, &output, &zero);
+		s = s + sizeof(unsigned long);
+	}
+	if (output && zero && output <= zero)
+		return (output);
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*line;
