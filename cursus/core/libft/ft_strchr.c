@@ -58,8 +58,7 @@ static char	*ft_check_words(char *src, char c)
 	while (1)
 	{
 		ft_checkword(src, input, one, &output);
-		if (c)
-			ft_checkword(src, '\0', one, &zero);
+		ft_checkword(src, '\0', one, &zero);
 		if (output && (output <= zero || !zero))
 			return (output);
 		else if (zero)
