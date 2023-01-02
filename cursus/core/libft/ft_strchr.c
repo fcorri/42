@@ -46,7 +46,6 @@ static void	ft_checkword(char *src, unsigned long input, unsigned long one,
 
 static char	*ft_check_words(char *src, char c)
 {
-	unsigned long	word;
 	unsigned long	input;
 	unsigned long	one;
 	char			*output;
@@ -63,7 +62,7 @@ static char	*ft_check_words(char *src, char c)
 			return (output);
 		else if (zero)
 			return (NULL);
-		src += sizeof(word);
+		src += sizeof(unsigned long);
 	}
 }
 
