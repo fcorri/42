@@ -5,58 +5,76 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 17:02:09 by fcorri            #+#    #+#             */
-/*   Updated: 2022/11/12 18:18:52 by fcorri           ###   ########.fr       */
+/*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
+/*   Updated: 2022/10/23 01:33:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_init_words(char const *s, char c)
+static char	**ft_free_and_return(t_list *lst, int ok)
 {
-	size_t	output;
+	char	**output;
 	size_t	index;
+	t_list	*tmp;
 
-	if (!s)
-		return (0);
-	output = 0;
+	if (ok)
+		output = malloc(sizeof(char *) * ((size_t)lst->content + 1));
 	index = 0;
-	if (s[index] && s[index] != c)
-		output++;
-	while (s[index] && s[index + 1])
+	tmp = lst->next;
+	free(lst);
+	lst = tmp;
+	while (lst)
 	{
-		if (s[index] == c && s[index + 1] != c)
-			output++;
-		index++;
+		if (ok)
+			output[index++] = lst->content;
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
 	}
+	if (!ok)
+		return (NULL);
+	output[index] = NULL;
 	return (output);
+}
+
+static int	ft_lstadd_back_split(t_list **tail, t_list *node)
+{
+	if (!node)
+		return (0);
+	(**tail).next = node;
+	*tail = (**tail).next;
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	words;
-	char	**output;
+	t_list	*head;
+	t_list	*tail;
+	char	*str;
 	size_t	index;
 	size_t	len;
 
-	words = ft_init_words(s, c);
-	output = malloc(sizeof(char *) * (words + 1));
-	if (!output)
+	if (!s)
 		return (NULL);
-	output[words] = NULL;
+	head = ft_lstnew(NULL);
+	tail = head;
 	index = 0;
-	while (words)
+	while (s[index])
 	{
-		len = 0;
-		while (*s == c)
-			s++;
-		while (*s && *s != c)
-		{
-			len++;
-			s++;
-		}
-		output[index++] = ft_substr(s - len, 0, len);
-		words--;
+		str = ft_strchr(s + index, c);
+		if (str)
+			len = str - (s + index);
+		else
+			len = ft_strlen(s + index);
+		str = malloc(len + 1);
+		if(!str)
+			return (ft_free_and_return(head, 0));
+		ft_strlcpy(str, s + index, len + 1);
+		head->content = (int *)((size_t) head->content + 1);
+		if (!ft_lstadd_back_split(&tail, ft_lstnew(str)))
+			return (ft_free_and_return(head, 0));
+		index += len + 1;
 	}
-	return (output);
+	return (ft_free_and_return(head, 1));
 }
