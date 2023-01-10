@@ -68,10 +68,10 @@ static int	ft_concat_arr(char ***output, char *next)
 		if (!*output)
 			return (0);
 		(*output)[0] = (char *)(len * 2);
-		(*output)[n + 2] = next;
 		index = 1;
 		while (++index < n + 2)
 			(*output)[index] = tmp[index];
+		(*output)[n + 2] = next;
 		(*output)[len + 2] = NULL;
 		free(tmp);
 	}
@@ -93,16 +93,12 @@ static char	*ft_len_and_str(char *input, char c, size_t *n)
 	else
 		len = (size_t)(ft_strchr(input, '\0') - input);
 	if (len)
-	{
-		output = malloc(sizeof(char) * (len + 1));
-		if (output)
-			ft_strlcpy(output, input, len + 1);
-	}
+		output = ft_substr(input, 0, len);
 	*n = len;
 	return (output);
 }
 
-char	**ft_new_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**output;
 	size_t	index;
@@ -116,7 +112,7 @@ char	**ft_new_split(char const *s, char c)
 	index = 0;
 	while (s[index])
 	{
-		str = ft_len_and_str((char *)s + index, c, &len);
+		str = ft_len_and_str((char *) s + index, c, &len);
 		if (!str || (len && !ft_concat_arr(&output, str)))
 			return (ft_free_and_return(output, 1));
 		if (s[index + len])
