@@ -102,7 +102,7 @@ static char	*ft_len_and_str(char *input, char c, size_t *n)
 	return (output);
 }
 
-char	**ft_new_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**output;
 	size_t	index;
