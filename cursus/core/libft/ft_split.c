@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/23 01:33:26 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/01/16 16:30:10 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,32 @@ static int	ft_init_arr(char ***output)
 	return (0);
 }
 
-static int	ft_concat_arr(char ***output, char *next)
+static int	ft_concat(char ***arr, char *next_str)
 {
 	char	**tmp;
 	size_t	len;
 	size_t	n;
 	size_t	index;
 
-	tmp = *output;
+	tmp = *arr;
 	len = (size_t) tmp[0];
 	n = (size_t) tmp[1];
 	if (n + 1 > len - 1)
 	{
-		*output = malloc(sizeof(char *) * (len * 2 + 2));
-		if (!*output)
+		*arr = malloc(sizeof(char *) * (len * 2 + 2));
+		if (!*arr)
 			return (0);
-		(*output)[0] = (char *)(len * 2);
+		(*arr)[0] = (char *)(len * 2);
 		index = 1;
 		while (++index < n + 2)
-			(*output)[index] = tmp[index];
-		(*output)[n + 2] = next;
-		(*output)[len + 2] = NULL;
+			(*arr)[index] = tmp[index];
+		(*arr)[n + 2] = next_str;
+		(*arr)[len + 2] = NULL;
 		free(tmp);
 	}
 	else
-		(*output)[n + 2] = next;
-	(*output)[1] = (char *) n + 1;
+		(*arr)[n + 2] = next_str;
+	(*arr)[1] = (char *) n + 1;
 	return (1);
 }
 
@@ -113,7 +113,7 @@ char	**ft_split(char const *s, char c)
 	while (s[index])
 	{
 		str = ft_len_and_str((char *) s + index, c, &len);
-		if (!str || (len && !ft_concat_arr(&output, str)))
+		if (!str || (len && !ft_concat(&output, str)))
 			return (ft_free_and_return(output, 1));
 		if (s[index + len])
 			index += len + 1;
