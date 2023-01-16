@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:21:35 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/22 16:47:10 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/01/16 15:58:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,14 @@ static char	*ft_check_words(char *src, char c)
 	ft_init(&input, c);
 	output = NULL;
 	zero = NULL;
-	while (1)
+	while (!zero)
 	{
 		ft_checkword(src, input, &output, &zero);
 		if (output && (output <= zero || !zero))
 			return (output);
-		else if (zero)
-			return (NULL);
 		src += sizeof(unsigned long);
 	}
+	return (NULL);
 }
 
 char	*ft_strchr(const char *src, int c)
