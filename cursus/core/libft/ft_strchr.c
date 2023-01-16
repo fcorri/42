@@ -6,79 +6,84 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:21:35 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/22 16:47:10 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/01/16 15:58:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_init(unsigned long *input, char c, unsigned long *one)
+static void	ft_init(unsigned long *input, char c)
 {
 	unsigned long	word;
-	size_t			size;
 
-	size = sizeof(unsigned long);
 	word = c | (c << 8);
 	word |= (word << 16);
-	if (size > 4)
+	if (sizeof(unsigned long) > 4)
 		word |= ((word << 16) << 16);
 	*input = word;
-	word = 0x01010101L;
-	if (size > 4)
-		word |= ((word << 16) << 16);
-	*one = word;
 }
 
-static void	ft_checkword(char *src, unsigned long input, unsigned long one,
-	char **output)
+static void	ft_checkword(char *src, unsigned long input, char **p_output,
+	char **p_zero)
 {
-	unsigned long	word;
+	unsigned long	output;
+	unsigned long	zero;
+	unsigned long	one;
+	size_t			index;
 
-	word = (*(unsigned long *)src) ^ input;
-	word = ((word - one) & ~word) & (one << 7);
-	if (word != 0)
+	one = 0x01010101L;
+	if (sizeof(unsigned long) > 4)
+		one |= ((one << 16) << 16);
+	zero = (*(unsigned long *)src);
+	output = zero ^ input;
+	output = ((output - one) & ~output) & (one << 7);
+	index = 0;
+	if (output != 0)
 	{
-		*output = src;
-		while (**output != (char) input)
-			(*output)++;
+		while (src[index] != (char) input)
+			index++;
+		*p_output = src + index;
+	}
+	zero = ((zero - one) & ~zero) & (one << 7);
+	if (zero != 0)
+	{
+		while (*src)
+			src++;
+		*p_zero = src;
 	}
 }
 
 static char	*ft_check_words(char *src, char c)
 {
-	unsigned long	word;
 	unsigned long	input;
-	unsigned long	one;
 	char			*output;
 	char			*zero;
 
-	ft_init(&input, c, &one);
+	ft_init(&input, c);
 	output = NULL;
 	zero = NULL;
-	while (1)
+	while (!zero)
 	{
-		ft_checkword(src, input, one, &output);
-		ft_checkword(src, '\0', one, &zero);
+		ft_checkword(src, input, &output, &zero);
 		if (output && (output <= zero || !zero))
 			return (output);
-		else if (zero)
-			return (NULL);
-		src += sizeof(word);
+		src += sizeof(unsigned long);
 	}
+	return (NULL);
 }
 
 char	*ft_strchr(const char *src, int c)
 {
-	char	word;
+	char	byte;
 	size_t	size;
 
 	size = sizeof(unsigned long);
 	while ((size_t) src % size)
 	{
-		word = *src++;
-		if (word == (char) c)
+		byte = *src++;
+		if (byte == (char) c)
 			return ((char *)(src - 1));
-		if (word == '\0')
+		if (byte == '\0')
 			return (NULL);
 	}
 	return (ft_check_words((char *)src, c));

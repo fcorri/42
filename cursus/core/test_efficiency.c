@@ -39,10 +39,23 @@ void prn_time(void)
 	"Real time: ", field_width, real_time, " seconds");
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
-	int reading = open("");
+	if (argc == 1)
+	{
+		printf("ERRORE: passami lunghezza file come secondo argomento!\n");
+		return (1);
+	}
+	int	bytes = ft_atoi(argv[1]);
+	int file = open("../lorem", O_RDONLY);
+	char *input = malloc(sizeof(char) * bytes);
+	read(file, input, bytes);
 	start_time();
+	ft_split(input, ' ');
 	prn_time();
+	printf("\n");
+	ft_new_split(input, ' ');
+	prn_time();
+	printf("\n");
 	return (0);
 }
