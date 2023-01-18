@@ -6,18 +6,20 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:10:56 by fcorri            #+#    #+#             */
-/*   Updated: 2023/01/09 16:10:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/01/18 20:22:39 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*ft_strdup(char *s, size_t len)
+static char	*ft_strndup_gnl(char *s, size_t len)
 {
 	char	*output;
 	size_t	index;
+	size_t	size;
 
-	output = malloc(len + 1);
+	size = sizeof(unsigned long);
+	output = ft_calloc_gnl(size, (len + 1) / size + 1);
 	if (!output)
 		return (NULL);
 	index = -1;
@@ -32,13 +34,15 @@ static char	*ft_strjoin(char **s1, char *s2, size_t br)
 	char	*output;
 	size_t	len1;
 	size_t	index;
+	size_t	size;
 
 	if (!*s1)
-		output = ft_strdup(s2, br);
+		output = ft_strndup_gnl(s2, br);
 	else
 	{
-		len1 = ft_strlen_gnl(*s1);
-		output = malloc(len1 + br + 1);
+		size = sizeof(unsigned long);
+		len1 = ft_strchr_gnl(*s1, '\0') - *s1;
+		output = ft_calloc_gnl(size, (len1 + br + 1) / size + 1);
 		if (!output)
 			return (NULL);
 		index = -1;
@@ -70,9 +74,10 @@ static char	*ft_return(char **line, char *newline, char *buffer)
 		return (ft_free_and_return(*line, buffer, NULL));
 	if (newline)
 	{
-		output = ft_strdup(*line, newline - *line + 1);
+		output = ft_strndup_gnl(*line, newline - *line + 1);
 		tmp = *line;
-		*line = ft_strdup(newline + 1, ft_strlen_gnl(newline + 1));
+		*line = ft_strndup_gnl(newline + 1,
+				ft_strchr_gnl(newline + 1, '\0') - (newline + 1));
 		return (ft_free_and_return(tmp, buffer, output));
 	}
 	tmp = *line;
@@ -86,10 +91,12 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	ssize_t		br;
 	char		*newline;
+	size_t		size;
 
 	if (fd < 0 || fd > 1023 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE);
+	size = sizeof(unsigned long);
+	buffer = ft_calloc_gnl(size, BUFFER_SIZE / size + 1);
 	if (!buffer)
 		return (NULL);
 	br = read(fd, buffer, BUFFER_SIZE);

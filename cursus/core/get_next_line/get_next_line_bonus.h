@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 16:11:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/01/09 16:11:12 by fcorri           ###   ########.fr       */
+/*   Created: 2023/01/18 20:19:38 by fcorri            #+#    #+#             */
+/*   Updated: 2023/01/18 20:19:39 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 
 char	*get_next_line(int fd);
 char	*ft_strchr_gnl(char *s, char input);
-size_t	ft_strlen_gnl(char *s);
+void	*ft_calloc_gnl(size_t nmemb, size_t size);
 
 #endif
