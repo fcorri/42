@@ -33,6 +33,8 @@ static char	**ft_free_and_return(char **output, int null)
 	index = (size_t) output[1] + 1;
 	tmp = output;
 	output = malloc(sizeof(char *) * index);
+	if (!output)
+		return (ft_free_and_return(tmp, 1));
 	while (index--)
 		output[index] = tmp[2 + index];
 	free(tmp);
