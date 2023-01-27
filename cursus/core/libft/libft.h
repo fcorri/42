@@ -13,8 +13,12 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+// INCLUDES
+
 # include <stdlib.h>
 # include <unistd.h>
+
+// MANDATORY
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -27,6 +31,7 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlcpy_new(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
@@ -50,6 +55,21 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+// MEMORY UTILS
+
+unsigned long	ft_init_word(unsigned char c);
+unsigned long	ft_init_one(void);
+size_t	ft_chr_words(size_t *p_dest, unsigned long input, size_t n);
+int	ft_cmp_words(size_t *p_p1, size_t *p_p2, size_t *p_n);
+unsigned long	ft_read_word(size_t src);
+int	ft_cmp_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n);
+size_t	ft_cpy_words(size_t *p_dest, size_t *p_src, size_t n);
+size_t	ft_move_words(size_t *p_dest, size_t *p_src, size_t n);
+void	ft_move_word(size_t dest, size_t src);
+void	ft_set_words(uintptr_t *p_dest, unsigned long word, size_t *p_n);
+
+// BONUS
 
 typedef struct s_list
 {

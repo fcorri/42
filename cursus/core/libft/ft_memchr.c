@@ -12,53 +12,6 @@
 
 #include "libft.h"
 
-static unsigned long	ft_input(unsigned char c)
-{
-	unsigned long	input;
-
-	input = c | (c << 8);
-	input |= input << 16;
-	if (sizeof(unsigned long) > 4)
-		input |= ((input << 16) << 16);
-	return (input);
-}
-
-static unsigned long	ft_init_one(void)
-{
-	unsigned long	one;
-
-	one = 0x01 | (0x01 << 8);
-	one |= one << 16;
-	if (sizeof(unsigned long) > 4)
-		one |= ((one << 16) << 16);
-	return (one);
-}
-
-static size_t	ft_check_words(size_t *p_dest, size_t n, unsigned long input)
-{
-	size_t			dest;
-	unsigned long	word;
-	unsigned long	one;
-	size_t			quozient;
-	size_t			size;
-
-	dest = *p_dest;
-	one = ft_init_one();
-	size = sizeof(unsigned long);
-	quozient = n / size;
-	while (quozient--)
-	{
-		word = *((unsigned long *) dest) ^ input;
-		word = ((word - one) & ~word) & (one << 7);
-		if (word != 0)
-			break ;
-		n -= size;
-		dest += size;
-	}
-	*p_dest = dest;
-	return (n);
-}
-
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t	dest;
@@ -76,7 +29,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		while (size - remainder++)
 			if (*((unsigned char *) dest++) == (unsigned char) c)
 				return ((void *)(dest - 1));
-		n = ft_check_words(&dest, n, ft_input(c));
+		n = ft_chr_words(&dest, ft_init_word(c), n);
 	}
 	while (n--)
 	{
