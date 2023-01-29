@@ -14,14 +14,14 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	size_t	p1;
-	size_t	p2;
-	int		output;
+	uintptr_t	p1;
+	uintptr_t	p2;
+	short		output;
 
 	if (n == 0)
 		return (0);
-	p1 = (size_t) s1;
-	p2 = (size_t) s2;
+	p1 = (uintptr_t) s1;
+	p2 = (uintptr_t) s2;
 	if (n >= 4 * sizeof(unsigned long)
 		&& (ft_cmp_bytes(&p1, &p2, &n) || ft_cmp_words(&p1, &p2, &n)))
 		return (*(unsigned char *)p1 - *(unsigned char *)p2);

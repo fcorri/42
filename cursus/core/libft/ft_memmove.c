@@ -14,26 +14,28 @@
 
 void	*ft_memmove(void *p_dest, const void *p_src, size_t n)
 {
-	size_t	dest;
-	size_t	src;
-	size_t	remainder;
+	uintptr_t	dest;
+	uintptr_t	src;
+	unsigned short	remainder;
+	unsigned short	size;
 
 	if (!n || p_dest == p_src)
 		return (p_dest);
 	if (p_src > p_dest)
 		return (ft_memcpy(p_dest, p_src, n));
-	dest = (size_t) p_dest + n - 1;
-	src = (size_t) p_src + n - 1;
-	if (n >= 4 * sizeof(unsigned long))
+	dest = (uintptr_t) p_dest + n - 1;
+	src = (uintptr_t) p_src + n - 1;
+	size = sizeof(unsigned long);
+	if (n >= 4 * size)
 	{
-		remainder = src % sizeof(unsigned long);
+		remainder = src & (size - 1);
 		n -= remainder + 1;
 		while (remainder--)
-			*((unsigned char *) dest--) = *((unsigned char *) src--);
-		*((unsigned char *) dest) = *((unsigned char *) src);
+			*(unsigned char *)dest-- = *(unsigned char *)src--;
+		*(unsigned char *)dest = *(unsigned char *)src;
 		n = ft_move_words(&dest, &src, n);
 	}
 	while (n--)
-		*((unsigned char *) dest--) = *((unsigned char *) src--);
+		*(unsigned char *)dest-- = *(unsigned char *) src--;
 	return (p_dest);
 }

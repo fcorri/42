@@ -14,17 +14,17 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	dest;
-	size_t	remainder;
-	size_t	size;
+	uintptr_t	dest;
+	unsigned short	remainder;
+	unsigned short	size;
 
 	if (n == 0)
 		return (NULL);
-	dest = (size_t) s;
+	dest = (uintptr_t) s;
 	size = sizeof(unsigned long);
 	if (n >= 4 * size)
 	{
-		remainder = dest % size;
+		remainder = dest & (size - 1);
 		n -= (size - remainder);
 		while (size - remainder++)
 			if (*((unsigned char *) dest++) == (unsigned char) c)

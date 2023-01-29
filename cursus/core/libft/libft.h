@@ -60,14 +60,14 @@ void	ft_putnbr_fd(int n, int fd);
 
 unsigned long	ft_init_word(unsigned char c);
 unsigned long	ft_init_one(void);
-size_t	ft_chr_words(size_t *p_dest, unsigned long input, size_t n);
-int	ft_cmp_words(size_t *p_p1, size_t *p_p2, size_t *p_n);
-unsigned long	ft_read_word(size_t src);
-int	ft_cmp_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n);
-size_t	ft_cpy_words(size_t *p_dest, size_t *p_src, size_t n);
-size_t	ft_move_words(size_t *p_dest, size_t *p_src, size_t n);
-void	ft_move_word(size_t dest, size_t src);
-void	ft_set_words(uintptr_t *p_dest, unsigned long word, size_t *p_n);
+unsigned long	ft_read_word(uintptr_t src);
+int	ft_cmp_bytes(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n);
+int	ft_cmp_words(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n);
+size_t	ft_chr_words(uintptr_t *p_dest, unsigned long input, size_t n);
+size_t	ft_cpy_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n);
+void	ft_move_word(uintptr_t dest, uintptr_t src);
+size_t	ft_move_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n);
+size_t	ft_set_words(uintptr_t *p_dest, unsigned long word, size_t n);
 
 // BONUS
 

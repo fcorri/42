@@ -15,18 +15,17 @@ unsigned long	ft_init_one(void)
 {
 	unsigned long	one;
 
-	one = 0x01 | (0x01 << 8);
-	one |= one << 16;
+	one = 0x01010101;
 	if (sizeof(unsigned long) > 4)
 		one |= ((one << 16) << 16);
 	return (one);
 }
 
-void	ft_move_word(size_t dest, size_t src)
+void	ft_move_word(uintptr_t dest, uintptr_t src)
 {
-	int	right;
-	int	left;
-	size_t	size;
+	unsigned short	right;
+	unsigned short	left;
+	unsigned short	size;
 
 	size = sizeof(unsigned long);
 	right = dest & (size - 1);
@@ -37,19 +36,19 @@ void	ft_move_word(size_t dest, size_t src)
 		left = (size - right);
 		*(unsigned long *)(dest + left) = (*(unsigned long *)(dest + left)
 				>> right * 8) << right * 8
-			| *(unsigned long *)src >> left * 8;
+			| *(unsigned long *) src >> left * 8;
 		*(unsigned long *)(dest - right) = (*(unsigned long *)(dest - right)
 				<< left * 8) >> left * 8
-			| *(unsigned long*)src << right * 8;
+			| *(unsigned long *) src << right * 8;
 	}
 }
 
-size_t	ft_move_words(size_t *p_dest, size_t *p_src, size_t n)
+size_t	ft_move_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n)
 {
-	size_t	dest;
-	size_t	src;
-	size_t	quozient;
-	size_t	size;
+	uintptr_t	dest;
+	uintptr_t	src;
+	size_t		quozient;
+	unsigned short	size;
 
 	dest = *p_dest;
 	src = *p_src;
@@ -64,27 +63,25 @@ size_t	ft_move_words(size_t *p_dest, size_t *p_src, size_t n)
 		src -= size;
 		ft_move_word(dest, src);
 	}
-	*p_dest = dest - 1;
-	*p_src = src - 1;
+	*p_dest = (uintptr_t) dest - 1;
+	*p_src = (uintptr_t) src - 1;
 	return (n);
 }
 
-void	ft_set_words(uintptr_t *p_dest, unsigned long word, size_t *p_n)
+size_t	ft_set_words(uintptr_t *p_dest, unsigned long word, size_t n)
 {
 	unsigned long	*dest;
-	size_t	quozient;
-	size_t	size;
-	size_t	n;
+	size_t		quozient;
+	unsigned short	size;
 
-	dest = (unsigned long *)*p_dest;
+	dest = (unsigned long *) *p_dest;
 	size = sizeof(unsigned long);
-	n = *p_n;
 	quozient = n / size;
-	n -= quozient * size;
 	if (!quozient)
-		return ;
+		return (n);
+	n -= quozient * size;
 	while (quozient--)
 		*dest++ = word;
 	*p_dest = (uintptr_t) dest;
-	*p_n = n;
+	return (n);
 }

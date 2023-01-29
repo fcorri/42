@@ -15,8 +15,8 @@
 void	*ft_memset(void *p_dest, int c, size_t n)
 {
 	uintptr_t	dest;
-	unsigned int	remainder;
-	unsigned int	size;
+	unsigned short	remainder;
+	unsigned short	size;
 
 	if (!n)
 		return (p_dest);
@@ -28,7 +28,7 @@ void	*ft_memset(void *p_dest, int c, size_t n)
 		n -= (size - remainder);
 		while (size - remainder++)
 			*(unsigned char *)dest++ = (unsigned char) c;
-		ft_set_words(&dest, ft_init_word(c), &n);
+		n = ft_set_words(&dest, ft_init_word(c), n);
 	}
 	while (n--)
 		*(unsigned char *)dest++ = (unsigned char) c;

@@ -1,15 +1,34 @@
 #include "libft.h"
 
-size_t	ft_chr_words(size_t *p_dest, unsigned long input, size_t n)
+unsigned long	ft_read_word(uintptr_t src)
 {
-	size_t			dest;
+	unsigned short	right;
+	unsigned short	left;
+	unsigned short	size;
+
+	size = sizeof(unsigned long);
+	right = src & (size - 1);
+	if (right == 0)
+		return (*(unsigned long *)src);
+	left = size - right;
+	return (
+		*(unsigned long *)(src - right) >> (right * 8)
+		| *(unsigned long *)(src + left) << (left * 8)
+	);
+}
+
+size_t	ft_chr_words(uintptr_t *p_dest, unsigned long input, size_t n)
+{
+	uintptr_t	dest;
 	unsigned long	word;
 	unsigned long	one;
-	size_t			quozient;
-	size_t			size;
+	size_t		quozient;
+	unsigned short	size;
 
 	dest = *p_dest;
-	one = ft_init_one();
+	one = 0x01010101;
+	if (sizeof(unsigned long) > 4)
+		one |= ((one << 16) << 16);
 	size = sizeof(unsigned long);
 	quozient = n / size;
 	while (quozient--)
@@ -25,12 +44,12 @@ size_t	ft_chr_words(size_t *p_dest, unsigned long input, size_t n)
 	return (n);
 }
 
-int	ft_cmp_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n)
+int	ft_cmp_bytes(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n)
 {
-	size_t	p1;
-	size_t	p2;
-	int		remainder;
-	size_t	size;
+	uintptr_t	p1;
+	uintptr_t	p2;
+	unsigned short	remainder;
+	unsigned short	size;
 
 	p1 = *p_p1;
 	p2 = *p_p2;
@@ -48,29 +67,12 @@ int	ft_cmp_bytes(size_t *p_p1, size_t *p_p2, size_t *p_n)
 	return (size - remainder);
 }
 
-unsigned long	ft_read_word(size_t src)
+int	ft_cmp_words(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n)
 {
-	int		right;
-	int		left;
-	size_t	size;
-
-	size = sizeof(unsigned long);
-	right = src & (size - 1);
-	if (right == 0)
-		return (*(unsigned long *)src);
-	left = size - right;
-	return (
-		*(unsigned long *)(src - right) >> (right * 8)
-		| *(unsigned long *)(src + left) << (left * 8)
-	);
-}
-
-int	ft_cmp_words(size_t *p_p1, size_t *p_p2, size_t *p_n)
-{
-	size_t	p1;
-	size_t	p2;
-	int		quozient;
-	size_t	size;
+	uintptr_t	p1;
+	uintptr_t	p2;
+	size_t		quozient;
+	unsigned short	size;
 
 	p1 = *p_p1;
 	p2 = *p_p2;
@@ -93,12 +95,12 @@ int	ft_cmp_words(size_t *p_p1, size_t *p_p2, size_t *p_n)
 	return (0);
 }
 
-size_t	ft_cpy_words(size_t *p_dest, size_t *p_src, size_t n)
+size_t	ft_cpy_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n)
 {
-	size_t	dest;
-	size_t	src;
-	size_t	quozient;
-	size_t	size;
+	uintptr_t	dest;
+	uintptr_t	src;
+	unsigned short	quozient;
+	unsigned short	size;
 
 	dest = *p_dest;
 	src = *p_src;
@@ -109,7 +111,7 @@ size_t	ft_cpy_words(size_t *p_dest, size_t *p_src, size_t n)
 	n -= quozient * size;
 	while (quozient--)
 	{
-		*((unsigned long *) dest) = ft_read_word(src);
+		*(unsigned long *)dest = ft_read_word(src);
 		dest += size;
 		src += size;
 	}
