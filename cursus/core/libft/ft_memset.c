@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:14:03 by fcorri            #+#    #+#             */
-/*   Updated: 2022/11/21 15:04:00 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:35:21 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memset(void *p_dest, int c, size_t n)
 {
-	uintptr_t	dest;
+	uintptr_t		dest;
 	unsigned short	remainder;
 	unsigned short	size;
 

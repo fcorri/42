@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memutils1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/20 18:35:37 by fcorri            #+#    #+#             */
+/*   Updated: 2023/03/20 18:36:15 by fcorri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 unsigned long	ft_read_word(uintptr_t src)
@@ -19,10 +31,10 @@ unsigned long	ft_read_word(uintptr_t src)
 
 size_t	ft_chr_words(uintptr_t *p_dest, unsigned long input, size_t n)
 {
-	uintptr_t	dest;
+	uintptr_t		dest;
 	unsigned long	word;
 	unsigned long	one;
-	size_t		quozient;
+	size_t			quozient;
 	unsigned short	size;
 
 	dest = *p_dest;
@@ -46,8 +58,8 @@ size_t	ft_chr_words(uintptr_t *p_dest, unsigned long input, size_t n)
 
 int	ft_cmp_bytes(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n)
 {
-	uintptr_t	p1;
-	uintptr_t	p2;
+	uintptr_t		p1;
+	uintptr_t		p2;
 	unsigned short	remainder;
 	unsigned short	size;
 
@@ -69,9 +81,9 @@ int	ft_cmp_bytes(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n)
 
 int	ft_cmp_words(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n)
 {
-	uintptr_t	p1;
-	uintptr_t	p2;
-	size_t		quozient;
+	uintptr_t		p1;
+	uintptr_t		p2;
+	size_t			quozient;
 	unsigned short	size;
 
 	p1 = *p_p1;
@@ -97,8 +109,8 @@ int	ft_cmp_words(uintptr_t *p_p1, uintptr_t *p_p2, size_t *p_n)
 
 size_t	ft_cpy_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n)
 {
-	uintptr_t	dest;
-	uintptr_t	src;
+	uintptr_t		dest;
+	uintptr_t		src;
 	unsigned short	quozient;
 	unsigned short	size;
 

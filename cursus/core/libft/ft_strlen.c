@@ -14,5 +14,7 @@
 
 size_t	ft_strlen(const char *s)
 {
+	if (!s)
+		return (0);
 	return ((char *)ft_memchr(s, '\0', -1) - s);
 }

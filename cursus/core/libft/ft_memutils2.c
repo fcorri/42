@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memutils2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/20 18:33:54 by fcorri            #+#    #+#             */
+/*   Updated: 2023/03/20 18:34:58 by fcorri           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 unsigned long	ft_init_word(unsigned char c)
@@ -45,9 +57,9 @@ void	ft_move_word(uintptr_t dest, uintptr_t src)
 
 size_t	ft_move_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n)
 {
-	uintptr_t	dest;
-	uintptr_t	src;
-	size_t		quozient;
+	uintptr_t		dest;
+	uintptr_t		src;
+	size_t			quozient;
 	unsigned short	size;
 
 	dest = *p_dest;
@@ -71,7 +83,7 @@ size_t	ft_move_words(uintptr_t *p_dest, uintptr_t *p_src, size_t n)
 size_t	ft_set_words(uintptr_t *p_dest, unsigned long word, size_t n)
 {
 	unsigned long	*dest;
-	size_t		quozient;
+	size_t			quozient;
 	unsigned short	size;
 
 	dest = (unsigned long *) *p_dest;

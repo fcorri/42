@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:21:00 by fcorri            #+#    #+#             */
-/*   Updated: 2022/11/21 15:12:13 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:33:08 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memcpy(void *p_dest, const void *p_src, size_t n)
 {
-	uintptr_t	dest;
-	uintptr_t	src;
+	uintptr_t		dest;
+	uintptr_t		src;
 	unsigned short	remainder;
 	unsigned short	size;
 

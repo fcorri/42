@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:20:52 by fcorri            #+#    #+#             */
-/*   Updated: 2022/11/09 17:17:40 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/03/20 18:35:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	uintptr_t	dest;
+	uintptr_t		dest;
 	unsigned short	remainder;
 	unsigned short	size;
 
