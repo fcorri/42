@@ -12,20 +12,19 @@
 
 NAME		=	libftprintf.a
 
-CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
 
 LIBFT		=	../
-SRC_DIR		=	./src
-OBJ_DIR		=	./obj
-PRNTRS_DIR	= $(SRC_DIR)/printers
+SRCS_DIR	=	./src
+OBJS_DIR	=	./build/obj
+PRNTRS_DIR	= 	printers
 
 AR			=	ar crs
 RM			=	rm -fr
 
 SRCS		=	ft_printf.c \
-				$(SRC_DIR)/specification.c \
-				$(SRC_DIR)/utils.c \
+				specification.c \
+				utils.c \
 				$(PRNTRS_DIR)/printer.c \
 				$(PRNTRS_DIR)/default_printer.c \
 				$(PRNTRS_DIR)/default_num_printer.c \
@@ -39,12 +38,17 @@ SRCS		=	ft_printf.c \
 				$(PRNTRS_DIR)/max_hex_printer.c \
 				$(PRNTRS_DIR)/percentage_printer.c
 
-OBJS		=	$(SRCS:.c=.o)
+OBJS		=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS) 
+	$(AR) $(NAME) $(OBJS)
+
+$(OBJS_DIR)/%.o: $(addprefix $(SRCS_DIR)/, $(notdir %.c))
+	cc -c $< -o $@
+
+bonus: all
 
 clean:
 	$(RM) $(OBJS)
@@ -54,4 +58,3 @@ fclean: clean
 
 re: fclean all
 
-bonus: all

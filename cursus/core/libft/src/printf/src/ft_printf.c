@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 t_default_abstract_printer	*g_printer;
 t_printing_specification	*g_specification;

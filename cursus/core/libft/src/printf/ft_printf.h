@@ -26,7 +26,7 @@
 # include <unistd.h>
 
 // OTHER HEADERS
-# include "../libft.h"
+# include "../../libft.h"
 # include "include/printer.h"
 # include "include/default_printers.h"
 # include "include/specification.h"
