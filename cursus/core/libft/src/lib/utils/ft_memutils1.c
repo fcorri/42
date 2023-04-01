@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../libft.h"
+#include "libft.h"
 
 unsigned long	ft_read_word(uintptr_t src)
 {

@@ -6,11 +6,11 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:36:05 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/22 19:50:40 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/04/01 19:07:27 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "specification.h"
 
 void	ft_reset_specification(void)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_printf.h"
+#include "./printf/ft_printf.h"
 
 void	ft_percentage_init_string_len(void)
 {

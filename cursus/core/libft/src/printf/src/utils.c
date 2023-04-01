@@ -6,11 +6,12 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:36:25 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/17 16:44:10 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/04/01 19:07:17 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "./printf/ft_printf.h"
+#include "utils.h"
 
 int	ft_atoi_decorator(char **p_input, size_t index)
 {

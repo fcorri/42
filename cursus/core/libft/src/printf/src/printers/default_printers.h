@@ -6,14 +6,14 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:17:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/19 19:46:24 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/04/01 19:32:14 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFAULT_PRINTERS_H
 # define DEFAULT_PRINTERS_H
 
-# include "../ft_printf.h"
+# include "./printf/printer.h"
 
 // ABSTRACT DEFAULT PRINTER
 
@@ -31,6 +31,16 @@ typedef struct hex_printer
 	t_default_printer	default_base;
 	char				ch;
 }	t_hex_printer;
+
+// UNIONS
+typedef union abstract_printer
+{
+	t_printer			as_base;
+	t_default_printer	as_default_printer;
+	t_hex_printer		as_hex_printer;
+}	t_default_abstract_printer;
+
+extern	t_default_abstract_printer	*g_printer;
 
 void	ft_new_default_printer(char *sub, size_t sub_len);
 

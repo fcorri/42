@@ -6,11 +6,11 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:38:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/22 19:51:28 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/04/01 20:03:11 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_printf.h"
+#include "./printf/ft_printf.h"
 
 int	ft_super_final_write_n_free(void)
 {

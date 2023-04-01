@@ -6,20 +6,25 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/03/08 16:07:26 by fcorri           ###   ########.fr        #
+#    Updated: 2023/04/01 18:32:56 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	$(BUILDS_DIR)/libft.a
+NAME		=	$(BUILD_DIR)/libft.a
 
 CFLAGS		=	-Wall -Wextra -Werror
+
+BUILD_DIR	=	./build
+INC_DIR		=	$(BUILD_DIR)/inc
+OBJS_DIR	=	$(BUILD_DIR)/obj
 
 SRCS_DIR	=	./src
 LIB_DIR		=	$(SRCS_DIR)/lib
 BONUS_DIR	=	$(LIB_DIR)/bonus
 UTILS_DIR	=	$(LIB_DIR)/utils
-BUILDS_DIR	=	./build
-OBJS_DIR	=	$(BUILDS_DIR)/obj
+
+GNL_DIR		=	$(SRCS_DIR)/gnl
+PRINTF_DIR	=	$(SRCS_DIR)/printf
 
 SRCS		=	$(LIB_DIR)/ft_atoi.c \
 				$(LIB_DIR)/ft_bzero.c \
@@ -59,6 +64,9 @@ SRCS		=	$(LIB_DIR)/ft_atoi.c \
 				$(UTILS_DIR)/ft_malloc_soul.c \
 				$(UTILS_DIR)/ft_memutils1.c \
 				$(UTILS_DIR)/ft_memutils2.c \
+				\
+				$(GNL_DIR)/get_next_line.c \
+				$(GNL_DIR)/get_next_line_utils.c \
 
 BONUS_SRCS	=	$(BONUS_DIR)/ft_lstadd_back.c \
 				$(BONUS_DIR)/ft_lstadd_front.c \
@@ -69,6 +77,11 @@ BONUS_SRCS	=	$(BONUS_DIR)/ft_lstadd_back.c \
 				$(BONUS_DIR)/ft_lstmap.c \
 				$(BONUS_DIR)/ft_lstnew.c \
 				$(BONUS_DIR)/ft_lstsize.c \
+				\
+				$(GNL_DIR)/get_next_line_bonus.c \
+				$(GNL_DIR)/get_next_line_utils_bonus.c \
+
+SUB_LIBS	=	$(BUILD_DIR)/libftprintf.a \
 
 OBJS		=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 BONUS_OBJS	=	$(BONUS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
@@ -79,18 +92,24 @@ RM			=	rm -fr
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
-
-bonus: $(OBJS) $(BONUS_OBJS)
-	$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
+	$(MAKE) -C $(PRINTF_DIR)
+	ar -x $(SUB_LIBS)
+	$(AR) $(NAME) $(OBJS) ./*.o
+	rm ./*.o
 
 $(OBJS_DIR)/%.o: $(addprefix $(SRCS_DIR)/, $(notdir %.c))
-	cc -c $< -o $@
+	cc -I $(INC_DIR)/libft/ -c $< -o $@
 
-re: fclean all
-
-fclean: clean
-	$(RM) $(NAME)
+bonus: $(OBJS) $(BONUS_OBJS)
+	$(MAKE) bonus -C $(PRINTF_DIR)
+	$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
 
 clean:
+	$(MAKE) clean -C $(PRINTF_DIR)
 	$(RM) $(OBJS) $(BONUS_OBJS)
+
+fclean: clean
+	$(RM) $(SUB_LIBS)
+	$(RM) $(NAME)
+
+re: fclean all

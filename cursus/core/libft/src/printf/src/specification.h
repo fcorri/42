@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:17:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/17 16:18:13 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/04/01 19:11:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ typedef struct printing_specification
 }	t_printing_specification;
 
 void	ft_reset_specification(void);
+
+extern t_printing_specification	*g_specification;
 
 #endif
