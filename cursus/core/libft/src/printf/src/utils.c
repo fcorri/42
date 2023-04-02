@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./printf/ft_printf.h"
+#include "libft/libft.h"
 #include "utils.h"
 
 int	ft_atoi_decorator(char **p_input, size_t index)

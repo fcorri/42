@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./printf/ft_printf.h"
+#include "default_printers.h"
+#include "../specification.h"
 
 static void	ft_default_init_string_len(void)
 {

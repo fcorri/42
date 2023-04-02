@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./printf/ft_printf.h"
+#include "default_printers.h"
+#include "../specification.h"
 
 void	ft_new_string_printer(char *s)
 {

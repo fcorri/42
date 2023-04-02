@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./printf/ft_printf.h"
+#include "default_printers.h"
+#include "../specification.h"
 
 void	ft_new_default_num_printer(char *sub, size_t sub_len,
 	void (*ft_num_build_string_right)(void))

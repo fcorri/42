@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./printf/ft_printf.h"
+#include "default_printers.h"
 
 void	ft_new_min_hex_printer(unsigned int x)
 {

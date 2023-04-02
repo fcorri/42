@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./printf/ft_printf.h"
+#include "default_printers.h"
+#include "../specification.h"
+#include "../utils.h"
 
 void	ft_hex_build_string_right(void)
 {

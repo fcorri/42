@@ -20,8 +20,8 @@ typedef struct printing_specification
 	int	precision;
 }	t_printing_specification;
 
-void	ft_reset_specification(void);
+t_printing_specification	*g_specification;
 
-extern t_printing_specification	*g_specification;
+void	ft_reset_specification(void);
 
 #endif

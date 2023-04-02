@@ -15,7 +15,7 @@
 #include "specification.h"
 #include "utils.h"
 
-va_list	g_ap;
+va_list			g_ap;
 
 static void	ft_specify_printer_with(char **conversion_specifier)
 {

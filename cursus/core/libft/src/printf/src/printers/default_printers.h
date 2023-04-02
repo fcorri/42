@@ -13,9 +13,17 @@
 #ifndef DEFAULT_PRINTERS_H
 # define DEFAULT_PRINTERS_H
 
-# include "./printf/printer.h"
+# include "libft/libft.h"
+# include "printf/printer.h"
 
-// ABSTRACT DEFAULT PRINTER
+// MACROS
+# define BASE_D		10
+# define BASE_X		16
+# define DIGITS_D	"0123456789"
+# define DIGITS_X	"0123456789abcdef"
+# define DIGITS_XX	"0123456789ABCDEF"
+
+// ABSTRACT DEFAULT PRINTERS
 
 typedef struct default_printer
 {
@@ -32,7 +40,7 @@ typedef struct hex_printer
 	char				ch;
 }	t_hex_printer;
 
-// UNIONS
+// UNION
 typedef union abstract_printer
 {
 	t_printer			as_base;
@@ -40,16 +48,17 @@ typedef union abstract_printer
 	t_hex_printer		as_hex_printer;
 }	t_default_abstract_printer;
 
-extern	t_default_abstract_printer	*g_printer;
+// GLOBAL VARIABLES
+
+t_default_abstract_printer	*g_printer;
+
+// VARIOUS ABSTRACT PRINTERS CONSTRUCTORS
 
 void	ft_new_default_printer(char *sub, size_t sub_len);
-
-// ABSTRACT EXTENDING DEFAULT PRINTER
-
 void	ft_new_default_num_printer(char *sub, size_t sub_len,
 			void (*ft_num_build_string_right)(void));
 
-// VARIOUS CONCRETE PRINTERS
+// VARIOUS CONCRETE PRINTERS CONSTRUCTORS
 
 void	ft_new_char_printer(char c);
 void	ft_new_string_printer(char *s);
