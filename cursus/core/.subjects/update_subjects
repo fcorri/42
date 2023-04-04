@@ -1,12 +1,14 @@
 #!/bin/bash
 
-n=3
+n=5
 
 projects=(
-"lib"
+"libft"
 "gnl"
 "printf"
 "b2br"
+"minitalk"
+"pipex"
 )
 
 urls=(
@@ -14,13 +16,16 @@ urls=(
 "https://cdn.intra.42.fr/pdf/pdf/70139/en.subject.pdf"
 "https://cdn.intra.42.fr/pdf/pdf/81372/en.subject.pdf"
 "https://cdn.intra.42.fr/pdf/pdf/68664/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/56849/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/66249/en.subject.pdf"
 )
 
 for i in $(seq 0 $n)
 do
 	filename=${projects[$i]}.pdf
-	echo "Downloading ${urls[$i]} in $filename . . ."
+	echo "Downloading ${urls[$i]} in $filename ..."
 	curl ${urls[$i]} --output $filename
 done
 
 echo "Download completato"
+git add *.pdf
