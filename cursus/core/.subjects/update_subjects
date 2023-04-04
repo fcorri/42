@@ -1,0 +1,26 @@
+#!/bin/bash
+
+n=3
+
+projects=(
+"lib"
+"gnl"
+"printf"
+"b2br"
+)
+
+urls=(
+"https://cdn.intra.42.fr/pdf/pdf/70131/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/70139/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/81372/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/68664/en.subject.pdf"
+)
+
+for i in $(seq 0 $n)
+do
+	filename=${projects[$i]}.pdf
+	echo "Downloading ${urls[$i]} in $filename . . ."
+	curl ${urls[$i]} --output $filename
+done
+
+echo "Download completato"
