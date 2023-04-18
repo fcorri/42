@@ -63,6 +63,7 @@ $(NAME): $(OBJS) $(LIBFT_OBJS)
 	$(AR) $(NAME) $(OBJS) $(LIBFT_OBJS)
 
 $(OBJS_DIR)/%.o: $(addprefix $(SRCS_DIR)/, $(notdir %.c))
+	@mkdir -p $(@D)
 	cc -I $(INC_DIR) -I $(SRCS_DIR) -c $< -o $@
 
 $(LIBFT_OBJS_DIR)/%.o: $(addprefix $(LIBFT_DIR)/, $(notdir %.c))

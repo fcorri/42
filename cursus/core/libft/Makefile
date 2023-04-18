@@ -98,6 +98,7 @@ $(NAME): $(OBJS)
 	rm ./*.o
 
 $(OBJS_DIR)/%.o: $(addprefix $(SRCS_DIR)/, $(notdir %.c))
+	@mkdir -p $(@D)
 	cc -I $(INC_DIR)/libft/ -c $< -o $@
 
 bonus: $(OBJS) $(BONUS_OBJS)
