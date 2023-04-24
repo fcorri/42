@@ -1,6 +1,6 @@
 #!/bin/bash
 
-n=5
+n=9
 
 projects=(
 "libft"
@@ -9,6 +9,10 @@ projects=(
 "b2br"
 "minitalk"
 "pipex"
+"so_long"
+"fdf"
+"fract-ol"
+"push_swap"
 )
 
 urls=(
@@ -18,6 +22,10 @@ urls=(
 "https://cdn.intra.42.fr/pdf/pdf/81774/en.subject.pdf"
 "https://cdn.intra.42.fr/pdf/pdf/56849/en.subject.pdf"
 "https://cdn.intra.42.fr/pdf/pdf/66249/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/83099/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/70122/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/65475/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/70135/en.subject.pdf"
 )
 
 for i in $(seq 0 $n)
