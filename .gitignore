@@ -3,3 +3,4 @@ a.out.dSYM
 .DS_STORE
 *.o
 *.a
+*.swp
