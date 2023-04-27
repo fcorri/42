@@ -50,7 +50,7 @@ typedef union abstract_printer
 
 // GLOBAL VARIABLES
 
-t_default_abstract_printer	*g_printer;
+extern t_default_abstract_printer	*g_printer;
 
 // VARIOUS ABSTRACT PRINTERS CONSTRUCTORS
 

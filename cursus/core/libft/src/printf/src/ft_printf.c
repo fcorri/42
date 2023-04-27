@@ -15,6 +15,8 @@
 #include "specification.h"
 #include "utils.h"
 
+t_default_abstract_printer	*g_printer;
+t_printing_specification	*g_specification;
 va_list			g_ap;
 
 static void	ft_specify_printer_with(char **conversion_specifier)
