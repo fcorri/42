@@ -30,7 +30,7 @@ urls=(
 
 for i in $(seq 0 $n)
 do
-	filename=${projects[$i]}.pdf
+	filename=~/42/cursus/core/.subjects/${projects[$i]}.pdf
 	echo "Downloading ${urls[$i]} in $filename ..."
 	curl ${urls[$i]} --output $filename
 done
