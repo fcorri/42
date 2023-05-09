@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:05:46 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/20 18:37:20 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:42:46 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
+
+# include "printf/ft_printf.h"
+# include "gnl/get_next_line.h"
 
 // DEFINES
 # define SIZE	8
