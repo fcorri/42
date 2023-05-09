@@ -6,11 +6,11 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:10:56 by fcorri            #+#    #+#             */
-/*   Updated: 2023/01/18 20:22:39 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:44:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "gnl/get_next_line_bonus.h"
 
 static char	*ft_strndup_gnl(char *s, size_t len)
 {

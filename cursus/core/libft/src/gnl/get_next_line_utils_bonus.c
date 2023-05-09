@@ -6,11 +6,11 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:01:10 by fcorri            #+#    #+#             */
-/*   Updated: 2023/01/18 20:14:52 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:45:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "gnl/get_next_line_bonus.h"
 
 void	*ft_calloc_gnl(size_t nmemb, size_t size)
 {
