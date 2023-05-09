@@ -1,0 +1,21 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    .todo                                              :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/05/09 19:16:27 by fcorri            #+#    #+#              #
+#    Updated: 2023/05/09 19:24:40 by fcorri           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+CLEAN CODE:
+	GNL
+		utils functions to be rewritten using libft functions
+		bonus to become normal gnl
+	PRINTF
+		Makefile to be rewritten following the standard
+		printer.h to become private header
+	Makefile standar
+		Libft dependecies to be handled the way PRINTF do
