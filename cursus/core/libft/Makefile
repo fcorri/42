@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/09 17:17:44 by fcorri           ###   ########.fr        #
+#    Updated: 2023/05/09 17:50:41 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	$(BUILD_DIR)/libft.a
 
 CFLAGS			=	-g
 REQUIRED_FLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
-CPPFLAGS		=	-I$(INC_DIR)/libft
+CPPFLAGS		=	-I$(INC_DIR)/libft -I$(INC_DIR)
 
 BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
@@ -101,7 +101,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
-	cc -c $< $(REQUIRED_FLAGS) $(CPPFLAGS) -o $@
+	$(CC) -c $< $(REQUIRED_FLAGS) $(CPPFLAGS) -o $@
 
 bonus: $(OBJS) $(BONUS_OBJS)
 	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) bonus -C $(LIB_DIR);)
