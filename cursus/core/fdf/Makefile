@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/15 01:18:07 by fcorri           ###   ########.fr        #
+#    Updated: 2023/05/15 01:26:43 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,11 @@ RM				=	rm -fr
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT_DIR)/$(BUILD_DIR)/libft.a $(OBJS)
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+
+$(LIBFT_DIR)%.a:
+	make -C $(addsuffix .., $(dir $@))
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
