@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:05:46 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/09 17:42:46 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/21 18:07:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 # include "printf/ft_printf.h"
 # include "gnl/get_next_line.h"
 
+
 // DEFINES
+
 # define SIZE	8
+
 
 // MANDATORY
 
@@ -63,8 +66,11 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 
+
 // NON MANDATORY
+
 char			*ft_strndup(const char *s, size_t n);
+
 
 // MEMORY UTILS
 
@@ -79,8 +85,11 @@ unsigned long	ft_init_word(unsigned char c);
 unsigned long	ft_init_one(void);
 unsigned long	ft_read_word(uintptr_t src);
 
+
 // DECORATORS
+
 void			*ft_malloc_soul(size_t size);
+
 
 // BONUS
 
