@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/15 09:46:09 by fcorri           ###   ########.fr        #
+#    Updated: 2023/05/21 17:42:49 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	$(BUILD_DIR)/fdf
 
 CFLAGS			=	-g -O3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
-CPPFLAGS		=	$(addprefix -I, $(INC_DIR) /usr/include $(MLX_DIR))
+CPPFLAGS		=	$(addprefix -I, $(LIBFT_DIR)/$(INC_DIR) $(INC_DIR) /usr/include $(MLX_DIR))
 LDFLAGS			=	$(addprefix -L, $(LIBFT_DIR)/$(BUILD_DIR) $(MLX_DIR) /usr/lib)
 LDLIBS			=	$(addprefix -l, ft mlx_Linux Xext X11 m z)
 
