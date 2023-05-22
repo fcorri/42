@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/22 23:47:39 by fcorri           ###   ########.fr       */
+/*   Created: 2023/05/22 19:58:36 by fcorri            #+#    #+#             */
+/*   Updated: 2023/05/22 22:03:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-int main(int argc, char **argv)
+int	ft_check_args(int argc, char **argv)
 {
-	t_mlx	*mlx;
-	t_map	*map;
+	int errsv;
+	int fd;
 
-	if (ft_check_args(argc, argv))
-		exit(EXIT_FAILURE);
-	map = ft_init_map();
-	mlx = ft_init_mlx();
-	if (!mlx)
-		exit(EXIT_FAILURE);
-	ft_init_hooks(&mlx);
-	// loop
-	return (0);
+	errsv = 0;
+	if (argc == 1)
+		errsv = 22;
+	else if (argc != 2)
+		errsv = 7;
+	if (errsv)
+		return (ft_error(strerror(errsv)));
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return (ft_error(strerror(errno)));
+	return (fd);
 }
