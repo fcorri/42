@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_p.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/21 22:11:55 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/22 10:38:51 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <X11/keysym.h>
 
 # include <errno.h>
+# include <string.h>
+# include <fcntl.h>
 
 # include "libft/libft.h"
 
@@ -30,7 +32,5 @@ typedef struct s_mlx
 	void	*obj;
 	void	*win;
 }	t_mlx;
-
-int	ft_error(char *input);
 
 #endif
