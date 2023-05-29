@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 09:17:48 by fcorri            #+#    #+#             */
-/*   Updated: 2023/04/01 19:33:53 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/29 09:23:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 t_default_abstract_printer	*g_printer;
 t_printing_specification	*g_specification;
-va_list			g_ap;
+va_list						g_ap;
 
 static void	ft_specify_printer_with(char **conversion_specifier)
 {
