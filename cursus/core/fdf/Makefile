@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/21 22:05:38 by fcorri           ###   ########.fr        #
+#    Updated: 2023/05/23 19:19:24 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ SRCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
 SRCS			=	$(SRCS_DIR)/main.c \
-					$(SRCS_DIR)/utils.c \
-#					$(SRCS_DIR)/
+					$(SRCS_DIR)/args.c \
+					$(SRCS_DIR)/error.c \
+					$(SRCS_DIR)/init.c
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 

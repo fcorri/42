@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/22 22:06:08 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/23 19:37:11 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ typedef struct s_map
 }	t_map;
 
 int		ft_error(char *with_message);
-int		ft_check_args(int argc, char **argv);
-t_map	*ft_init_map(int with_fd);
+void	*ft_null_error(char *with_message);
+int		ft_check_args(int argc);
+t_map	*ft_init_map(char *filename);
 t_mlx	*ft_init_mlx(void);
 void	ft_init_hooks(t_mlx *mlx);
-
 
 #endif

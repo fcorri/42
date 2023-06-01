@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:05:47 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/22 20:41:53 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/23 19:36:47 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,11 @@
 int	ft_error(char *with_message)
 {
 	ft_printf("ERROR: %s\n", with_message);
-	return (-1);
+	return (1);
+}
+
+void	*ft_null_error(char *with_message)
+{
+	ft_error(with_message);
+	return (NULL);
 }
