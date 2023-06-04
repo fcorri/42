@@ -6,32 +6,64 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:48:17 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/03 17:31:33 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/04 16:23:44 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <mlx.h>
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*this;
 	char	*addr;
 	int		bpp;
 	int		ll;
 	int		endian;
-}	image;
+}	t_image;
 
-static void	ft_pixel_put(image *img, int x, int y, int color)
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+static void	ft_put_pixel(t_image *img, int x, int y, int color)
 {
 	*(unsigned int *)(img->addr + (y * img->ll + x * (img->bpp / 8))) = color;
 }
 
-int main(void)
+static void	ft_put_line(t_image *img, t_point p0, t_point p1, int color)
+{
+	int	dx;
+	int	dy;
+	int	d;
+	int	x;
+	int	y;
+
+	x = p0.x;
+	y = p0.y;
+	dx = p1.x - x;
+	dy = p1.y - y;
+	d = (2 * dy) - dx;
+	while (x != p1.x)
+	{
+		ft_put_pixel(img, x, y, color);
+		if (d > 0)
+		{
+			d -= 2 * dx;
+			y += 1;
+		}
+		d += 2 * dy;
+		x += 1;
+	}
+}
+
+int	main(void)
 {
 	void	*mlx;
 	void	*win;
-	image	img;
+	t_image	img;
 
 	mlx = mlx_init();
 	if (!mlx)
@@ -50,9 +82,8 @@ int main(void)
 		return (1);
 	}
 	img.addr = mlx_get_data_addr(img.this, &img.bpp, &img.ll, &img.endian);
-	ft_pixel_put(img, 50, 50, 0x00FF0000);
+	ft_put_line(&img, (t_point){500, 250}, (t_point){600, 300}, 0x00ff0000);
 	mlx_put_image_to_window(mlx, win, img.this, 0, 0);
 	mlx_loop(mlx);
 	return (0);
 }
-
