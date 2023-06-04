@@ -6,13 +6,13 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 19:58:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/23 19:19:39 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/01 19:10:58 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-int	ft_check_args(int argc)
+t_map	*ft_check_args_and_init_map(int argc, char *filename)
 {
 	int errsv;
 
@@ -22,6 +22,6 @@ int	ft_check_args(int argc)
 	else if (argc != 2)
 		errsv = 7;
 	if (errsv)
-		return (ft_error(strerror(errsv)));
-	return (0);
+		return (ft_null_error(strerror(errsv)));
+	return (ft_init_map(filename));
 }

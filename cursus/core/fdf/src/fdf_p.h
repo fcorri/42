@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/23 19:37:11 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/01 19:46:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ typedef struct s_mlx
 
 typedef struct s_map
 {
-	t_list	points;
+	int		x;
+	int		y;
+	t_list	*points;
 }	t_map;
 
 int		ft_error(char *with_message);
 void	*ft_null_error(char *with_message);
-int		ft_check_args(int argc);
+t_map	*ft_check_args_and_init_map(int argc, char *filename);
 t_map	*ft_init_map(char *filename);
 t_mlx	*ft_init_mlx(void);
 void	ft_init_hooks(t_mlx *mlx);
