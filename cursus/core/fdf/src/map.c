@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/22 19:58:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/01 19:10:58 by fcorri           ###   ########.fr       */
+/*   Created: 2023/05/22 22:10:26 by fcorri            #+#    #+#             */
+/*   Updated: 2023/06/06 11:24:21 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-t_map	*ft_check_args_and_init_map(int argc, char *filename)
+t_map	*ft_init_map(char *filename)
 {
-	int errsv;
+	int		fd;
+	t_map	*map;
 
-	errsv = 0;
-	if (argc == 1)
-		errsv = 22;
-	else if (argc != 2)
-		errsv = 7;
-	if (errsv)
-		return (ft_null_error(strerror(errsv)));
-	return (ft_init_map(filename));
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (ft_null_error(strerror(errno)));
+	map = malloc(sizeof(*map));
+	if (!map)
+		return(ft_null_error(strerror(errno)));
+	ft_init_points(fd, map);
+	return (map);
 }

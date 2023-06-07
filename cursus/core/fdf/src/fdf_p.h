@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/01 19:46:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/06 11:18:33 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,38 @@
 # define HEIGHT	500
 # define TITLE	"fil de fer"
 
-typedef struct s_mlx
+typedef struct mlx
 {
-	void	*instance;
-	void	*window;
+	void	*this;
+	void	*win;
+	t_image	*image;
 }	t_mlx;
 
-typedef struct s_map
+typedef struct map
 {
-	int		x;
-	int		y;
+	int		width;
+	int		height;
 	t_list	*points;
 }	t_map;
 
+typedef struct image
+{
+	void	*this;
+	char	*addr;
+	int		bpp;
+	int		ll;
+	int		endian;
+}	t_image;
+
+typedef struct vector
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_vector;
+
 int		ft_error(char *with_message);
 void	*ft_null_error(char *with_message);
-t_map	*ft_check_args_and_init_map(int argc, char *filename);
 t_map	*ft_init_map(char *filename);
 t_mlx	*ft_init_mlx(void);
 void	ft_init_hooks(t_mlx *mlx);
