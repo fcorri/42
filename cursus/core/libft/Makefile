@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/09 17:50:41 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/06 10:21:57 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ BONUS_SRCS		=	$(BONUS_DIR)/ft_lstadd_back.c \
 					$(BONUS_DIR)/ft_lstmap.c \
 					$(BONUS_DIR)/ft_lstnew.c \
 					$(BONUS_DIR)/ft_lstsize.c \
+					$(BONUS_DIR)/ft_unsafe_lstadd_back.c \
 					\
 					$(GNL_DIR)/get_next_line_bonus.c \
 					$(GNL_DIR)/get_next_line_utils_bonus.c
@@ -93,21 +94,15 @@ RM				=	rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(BONUS_OBJS)
 	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) -C $(LIB_DIR);)
-	$(foreach LIB, $(LIBS), ar -x $(LIB); $(RM) $(LIB);)
-	$(AR) $(NAME) $(OBJS) ./*.o
+	$(foreach LIB, $(LIBS), ar -x $(LIB))
+	$(AR) $(NAME) $(OBJS) $(BONUS_OBJS) ./*.o
 	$(RM) ./*.o
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) -c $< $(REQUIRED_FLAGS) $(CPPFLAGS) -o $@
-
-bonus: $(OBJS) $(BONUS_OBJS)
-	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) bonus -C $(LIB_DIR);)
-	$(foreach LIB, $(LIBS), ar -x $(LIB); $(RM) $(LIB);)
-	$(AR) $(NAME) $(OBJS) $(BONUS_OBJS) ./*.o
-	$(RM) ./*.o
 
 clean:
 	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) clean -C $(LIB_DIR);)
