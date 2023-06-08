@@ -6,13 +6,13 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/23 19:19:24 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/08 18:21:11 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/fdf
 
-CFLAGS			=	-g -O3
+CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
 CPPFLAGS		=	$(addprefix -I, $(LIBFT_DIR)/$(INC_DIR) /usr/include $(MLX_DIR))
 LDFLAGS			=	$(addprefix -L, $(LIBFT_DIR)/$(BUILD_DIR) $(MLX_DIR) /usr/lib)
@@ -26,9 +26,11 @@ SRCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
 SRCS			=	$(SRCS_DIR)/main.c \
-					$(SRCS_DIR)/args.c \
 					$(SRCS_DIR)/error.c \
-					$(SRCS_DIR)/init.c
+					$(SRCS_DIR)/init_map.c \
+					$(SRCS_DIR)/mlx.c \
+					$(SRCS_DIR)/vector.c \
+					$(SRCS_DIR)/decorators.c \
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
