@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/08 20:04:00 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/09 01:04:00 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ typedef struct mlx
 
 typedef struct map
 {
-	int		width;
-	int		height;
-	int		**points;
+	int		rows;
+	int		columns;
+	int		**matrix;
 }	t_map;
 
 typedef struct image
@@ -62,7 +62,8 @@ void	*ft_null_error(char *with_message);
 t_map	*ft_init_map(char *filename);
 t_mlx	*ft_init_mlx(void);
 void	ft_init_hooks(t_mlx *mlx);
-size_t	ft_split_decorator_init_line_len(int fd, t_map *map);
-void	ft_split_decorator_init_points_with(char *line, t_map *map);
+size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
+void	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
+void	ft_malloc_decorator(t_map *map, int height);
 
 #endif

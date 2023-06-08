@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/08 18:21:11 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/09 00:23:33 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(NAME): $(LIBFT_DIR)/$(BUILD_DIR)/libft.a $(OBJS)
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 
 $(LIBFT_DIR)/$(BUILD_DIR)/libft.a:
-	make -C $(addsuffix .., $(dir $@))
+	make -C $(LIBFT_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
