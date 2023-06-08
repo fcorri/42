@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/09 00:24:04 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/09 01:28:30 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS_DIR		=	src
 LIB_DIR			=	$(SRCS_DIR)/lib
 BONUS_DIR		=	$(LIB_DIR)/bonus
 UTILS_DIR		=	$(LIB_DIR)/utils
-GNL_DIR			=	$(SRCS_DIR)/gnl/src
+GNL_DIR			=	$(SRCS_DIR)/gnl
 
 SRCS			=	$(LIB_DIR)/ft_atoi.c \
 					$(LIB_DIR)/ft_bzero.c \
