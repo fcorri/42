@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/06 10:21:57 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/09 00:24:04 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS_DIR		=	src
 LIB_DIR			=	$(SRCS_DIR)/lib
 BONUS_DIR		=	$(LIB_DIR)/bonus
 UTILS_DIR		=	$(LIB_DIR)/utils
-GNL_DIR			=	$(SRCS_DIR)/gnl
+GNL_DIR			=	$(SRCS_DIR)/gnl/src
 
 SRCS			=	$(LIB_DIR)/ft_atoi.c \
 					$(LIB_DIR)/ft_bzero.c \
@@ -78,9 +78,6 @@ BONUS_SRCS		=	$(BONUS_DIR)/ft_lstadd_back.c \
 					$(BONUS_DIR)/ft_lstnew.c \
 					$(BONUS_DIR)/ft_lstsize.c \
 					$(BONUS_DIR)/ft_unsafe_lstadd_back.c \
-					\
-					$(GNL_DIR)/get_next_line_bonus.c \
-					$(GNL_DIR)/get_next_line_utils_bonus.c
 
 LIBS			=	$(BUILD_DIR)/libftprintf.a \
 

@@ -5,48 +5,44 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/12 09:42:39 by fcorri            #+#    #+#              #
-#    Updated: 2023/05/12 10:26:59 by fcorri           ###   ########.fr        #
+#    Created: 2023/06/08 23:58:10 by fcorri            #+#    #+#              #
+#    Updated: 2023/06/09 00:19:54 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	gnl
-
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
-CPPFLAGS		=	-I$(INC_DIR)
-LDFLAGS			=	-L$(LIBFT_DIR)/build
-LDLIBS			=	-lft
+CPPFLAGS		=	$(addprefix -I, $(LIBFT_DIR)/$(INC_DIR))
+LDFLAGS			=	$(addprefix -L, $(LIBFT_DIR)/$(BUILD_DIR))
+LDLIBS			=	$(addprefix -l, ft)
 
-BUILD_DIR		=	../../build
+BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
-OBJS_DIR		=	obj
+OBJS_DIR		=	$(BUILD_DIR)/obj/gnl
 LIBFT_DIR		=	../..
-SRCS_DIR		=	.
+SRCS_DIR		=	src
 
 SRCS			=	$(SRCS_DIR)/get_next_line.c \
 					$(SRCS_DIR)/get_next_line_utils.c \
-					$(SRCS_DIR)/main.c \
 #					$(SRCS_DIR)/
 
-OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
+OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(LIBFT_DIR)/$(OBJS_DIR)%.o)
 
 RM				=	rm -fr
 
-all: $(NAME)
+all: $(LIBFT_DIR)/$(BUILD_DIR)/libft.a $(OBJS) 
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
-
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+$(LIBFT_DIR)/$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) -c $< $(REQUIRED_CFLAGS) $(CPPFLAGS) -o $@
+
+$(LIBFT_DIR)/$(BUILD_DIR)/libft.a:
+	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
 
 re: fclean all
 
