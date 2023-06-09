@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/09 00:23:33 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/09 18:03:55 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS			=	$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/init_map.c \
 					$(SRCS_DIR)/mlx.c \
 					$(SRCS_DIR)/vector.c \
-					$(SRCS_DIR)/decorators.c \
+					$(SRCS_DIR)/decorators.c
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 

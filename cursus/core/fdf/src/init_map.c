@@ -6,13 +6,27 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:10:26 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/09 01:05:48 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/09 18:11:50 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static t_map	*ft_init_points(char *filename, int old_fd, t_map *map)
+static void	ft_allocate(t_map *map, int rows)
+{
+	int	i;
+	int	columns;
+	int	**matrix;
+
+	i = -1;
+	columns = map->columns;
+	matrix = malloc(sizeof(int *) * rows);
+	while (++i < rows)
+		matrix[i] = malloc(sizeof(int) * columns);
+	map->matrix = matrix;
+}
+
+static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line_len)
 {
 	int		new_fd;
 	char	*line;
@@ -21,12 +35,10 @@ static t_map	*ft_init_points(char *filename, int old_fd, t_map *map)
 	if (new_fd < 0)
 		return (ft_null_error(strerror(errno)));
 	close(old_fd);
-	line = get_next_line(new_fd);
-	while (line)
-	{
+	line = malloc(sizeof(char) * (line_len + 1));
+	line[line_len] = '\0';
+	while (read(new_fd, line, line_len))
 		ft_split_decorator_to_init_map_matrix_with(line, map);
-		line = get_next_line(new_fd);
-	}
 	free(line);
 	close(new_fd);
 	return (map);
@@ -57,6 +69,6 @@ t_map	*ft_init_map(char *filename)
 		rows++;
 	free(line);
 	map->rows = rows;
-	ft_malloc_decorator(map, rows);
-	return (ft_init_points(filename, fd, map));
+	ft_allocate(map, rows);
+	return (ft_init_points(filename, fd, map, line_len));
 }

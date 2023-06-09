@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:51:45 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/08 17:30:06 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/09 17:59:31 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,16 @@ t_mlx	*ft_init_mlx(void)
 
 	this = mlx_init();
 	if (!this)
-	{
-		ft_error(strerror(errno));
-		return (NULL);
-	}
+		return (ft_null_error(strerror(errno)));
 	win = mlx_new_window(this, WIDTH, HEIGHT, TITLE);
 	if (!win)
 	{
 		errsv = errno;
 		free(this);
-		ft_error(strerror(errsv));
-		return (NULL);
+		return (ft_null_error(strerror(errsv)));
 	}
 	mlx = malloc(sizeof(*mlx));
 	mlx->this = this;
 	mlx->win = win;
 	return (mlx);
-}
-
-static int	ft_no_event(t_mlx *mlx)
-{
-	(void) mlx;
-	return (0);
-}
-
-static int	ft_exit(int keycode, t_mlx *mlx)
-{
-	if (keycode == XK_Escape)
-		mlx_destroy_window(mlx->this, mlx->win);
-	return (0);
-}
-
-void	ft_init_hooks(t_mlx *mlx)
-{
-	mlx_loop_hook(mlx->this, ft_no_event, &mlx);
-	mlx_hook(mlx->win, 2, 1L<<0, ft_exit, &mlx);
 }

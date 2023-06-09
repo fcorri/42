@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/09 01:04:16 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/09 18:54:15 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,24 @@ static t_map	*ft_check_args_and_init_map(int argc, char *filename)
 	return (ft_init_map(filename));
 }
 
+static int	ft_render(t_mlx *mlx)
+{
+	(void) mlx;
+	return (0);
+}
+
+static int	ft_key_down(int keycode, t_mlx *mlx)
+{
+	if (keycode == XK_Escape)
+		mlx_destroy_window(mlx->this, mlx->win);
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_mlx	*mlx;
 	t_map	*map;
+//	t_image	*img;
 
 	map = ft_check_args_and_init_map(argc, argv[1]);
 	if (!map)
@@ -37,7 +51,9 @@ int main(int argc, char **argv)
 	mlx = ft_init_mlx();
 	if (!mlx)
 		exit(EXIT_FAILURE);
-	ft_init_hooks(mlx->this);
+//	if (!ft_init_img(mlx, &img))
+	mlx_loop_hook(mlx->this, ft_render, mlx);
+	mlx_hook(mlx->win, 2, 1L<<0, ft_key_down, mlx);
 	mlx_loop(mlx->this);
 	mlx_destroy_display(mlx->this);
 	free(mlx->this);
