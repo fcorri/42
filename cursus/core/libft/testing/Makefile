@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/09 19:13:05 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/09 19:15:09 by fcorri           ###   ########.fr        #
+#    Created: 2023/06/11 18:53:41 by fcorri            #+#    #+#              #
+#    Updated: 2023/06/13 18:52:44 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LDLIBS			=	$(addprefix -l, ft)
 BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
 OBJS_DIR		=	$(BUILD_DIR)/obj
-LIBFT_DIR		=	../
+LIBFT_DIR		=	..
 SRCS_DIR		=	src
 
 SRCS			=	$(SRCS_DIR)/main.c \
