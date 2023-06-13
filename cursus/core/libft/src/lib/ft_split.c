@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_new_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2023/01/16 16:30:10 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:04:05 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+#define INITIAL_LEN	100
 
 static char	**ft_free_and_return(char **output, int null)
 {
@@ -21,18 +23,18 @@ static char	**ft_free_and_return(char **output, int null)
 	if (null)
 	{
 		index = 2;
-		str = output[index];
+		str = output[index++];
 		while (str)
 		{
 			free(str);
-			str = output[index];
+			str = output[index++];
 		}
 		free(output);
 		return (NULL);
 	}
-	index = (size_t) output[1] + 1;
+	index = (size_t) (output[0] - output[1]);
 	tmp = output;
-	output = malloc(sizeof(char *) * index);
+	output = ft_calloc(sizeof(char *), index + 1);
 	if (!output)
 		return (ft_free_and_return(tmp, 1));
 	while (index--)
@@ -41,66 +43,65 @@ static char	**ft_free_and_return(char **output, int null)
 	return (output);
 }
 
-static int	ft_init_arr(char ***output)
+static char	**ft_init_arr(size_t len)
 {
-	*output = malloc(sizeof(char *) * 3);
-	if (*output)
-	{
-		(*output)[0] = (char *) 1;
-		(*output)[1] = 0;
-		(*output)[2] = NULL;
-		return (1);
-	}
-	return (0);
+	char	**output;
+
+	output = ft_calloc(sizeof(char *), (len + 2));
+	if (!output)
+		return (NULL);
+	output[0] = (char *) len;
+	output[1] = (char *) len;
+	return (output);
 }
 
-static int	ft_concat(char ***arr, char *next_str)
+static char	**ft_concat(char **arr, char *next_str)
 {
 	char	**tmp;
 	size_t	len;
 	size_t	n;
-	size_t	index;
 
-	tmp = *arr;
+	tmp = arr;
 	len = (size_t) tmp[0];
 	n = (size_t) tmp[1];
-	if (n + 1 > len - 1)
+	if (!n)
 	{
-		*arr = malloc(sizeof(char *) * (len * 2 + 2));
-		if (!*arr)
-			return (0);
-		(*arr)[0] = (char *)(len * 2);
-		index = 1;
-		while (++index < n + 2)
-			(*arr)[index] = tmp[index];
-		(*arr)[n + 2] = next_str;
-		(*arr)[len + 2] = NULL;
+		arr = ft_init_arr(len * 2);
+		if (!arr)
+			return (NULL);
+		while (len--)
+			arr[2 + len] = tmp[2 + len];
+		len = (size_t) tmp[0];
+		arr[len + 2] = next_str;
+		arr[1] = (char *) (len - 1);
 		free(tmp);
 	}
 	else
-		(*arr)[n + 2] = next_str;
-	(*arr)[1] = (char *) n + 1;
-	return (1);
+	{
+		arr[len - n + 2] = next_str;
+		arr[1] = (char *) (n - 1);
+	}
+	return (arr);
 }
 
-static char	*ft_len_and_str(char *input, char c, size_t *n)
+static char	*ft_len_and_str(char *input, char c, size_t *len)
 {
-	size_t	len;
-	char	*output;
+	uintptr_t	tmp;
+	char		*output;
 
 	output = input;
-	len = (size_t) ft_strchr(input, c);
-	if (len)
-		len -= (size_t) input;
+	tmp = (uintptr_t) ft_strchr(input, c);
+	if (tmp)
+		tmp -= (uintptr_t) input;
 	else
-		len = (size_t)(ft_strchr(input, '\0') - input);
-	if (len)
-		output = ft_substr(input, 0, len);
-	*n = len;
+		tmp = (uintptr_t)(ft_strchr(input, '\0') - input);
+	if (tmp)
+		output = ft_substr(input, 0, tmp);
+	*len = tmp;
 	return (output);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_new_split(char const *s, char c)
 {
 	char	**output;
 	size_t	index;
@@ -109,13 +110,15 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	if (!ft_init_arr(&output))
-		return (ft_free_and_return(output, 1));
+	output = ft_init_arr(INITIAL_LEN);
+	if (!output)
+		return (NULL);
 	index = 0;
 	while (s[index])
 	{
 		str = ft_len_and_str((char *) s + index, c, &len);
-		if (!str || (len && !ft_concat(&output, str)))
+		output = ft_concat(output, str);
+		if (!str || (len && !output))
 			return (ft_free_and_return(output, 1));
 		if (s[index + len])
 			index += len + 1;
