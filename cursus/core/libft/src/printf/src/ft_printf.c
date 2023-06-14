@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 09:17:48 by fcorri            #+#    #+#             */
-/*   Updated: 2023/04/01 19:33:53 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 14:02:39 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_init_printing_specification_with(char **subformat)
 	ft_specify_printer_with(subformat);
 }
 
-int	ft_free_and_return(int output)
+static int	ft_free_and_return(int output)
 {
 	free(g_printer);
 	free(g_specification);
