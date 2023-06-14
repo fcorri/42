@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx.c                                              :+:      :+:    :+:   */
+/*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 10:51:45 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:02:19 by fcorri           ###   ########.fr       */
+/*   Created: 2023/06/14 21:50:38 by fcorri            #+#    #+#             */
+/*   Updated: 2023/06/14 22:09:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-t_mlx	*ft_init_mlx(t_map *map)
+void	ft_draw_map_as_vertical_projection(t_mlx *mlx)
 {
-	t_mlx	*mlx;
-	void	*this;
-	void	*win;
-	int		errsv;
+	(void) mlx;
+}
 
-	this = mlx_init();
-	if (!this)
-		return (ft_null_error("MLX_INIT", strerror(errno)));
-	win = mlx_new_window(this, WIDTH, HEIGHT, TITLE);
-	if (!win)
+int	ft_init_image(t_mlx *mlx)
+{
+	t_image	*image;
+
+	image = mlx_new_image(mlx->this, WIDTH, HEIGHT);
+	if (!image)
 	{
-		errsv = errno;
-		free(this);
-		return (ft_null_error("MLX_NEW_WINDOW", strerror(errsv)));
+		mlx_destroy_window(mlx->this, mlx->win);
+		return (ft_error("MLX_NEW_IMAGE", strerror(errno)));
 	}
-	mlx = malloc(sizeof(*mlx));
-	mlx->this = this;
-	mlx->win = win;
-	mlx->map = map;
-	return (mlx);
+	mlx->image = image;
+	mlx->ft_draw = ft_draw_map_as_vertical_projection;
+	return (1);
 }

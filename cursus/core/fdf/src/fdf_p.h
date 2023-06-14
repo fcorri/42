@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 18:11:08 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:00:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ void	*ft_null_error(char *callee, char *with_message);
 
 t_map	*ft_init_map(char *filename);
 
+int		ft_init_image(t_mlx *mlx);
+void	ft_draw_map_as_vertical_projection(t_mlx *mlx);
+
 t_mlx	*ft_init_mlx(t_map *map);
 
-size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
-void	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
+size_t	ft_split_decorator_init_line_len(int fd, t_map *map);
+void	ft_split_decorator_init_map_matrix(char *line, t_map *map);
 
 #endif

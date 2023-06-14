@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 18:11:17 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:08:04 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ static t_map	*ft_check_args_and_init_map(int argc, char *filename)
 	return (ft_init_map(filename));
 }
 
+static int	ft_free_and_return(void *mlx, int value)
+{
+	mlx_destroy_display(mlx);
+	free(mlx);
+	return (value);
+}
+
 static int	ft_render(t_mlx *mlx)
 {
 	(void) mlx;
@@ -43,7 +50,6 @@ int main(int argc, char **argv)
 {
 	t_mlx	*mlx;
 	t_map	*map;
-//	t_image	*img;
 
 	map = ft_check_args_and_init_map(argc, argv[1]);
 	if (!map)
@@ -51,11 +57,10 @@ int main(int argc, char **argv)
 	mlx = ft_init_mlx(map);
 	if (!mlx)
 		exit(EXIT_FAILURE);
-//	if (!ft_init_img(mlx, &img))
+	if (!ft_init_image(mlx))
+		return (ft_free_and_return(mlx->this, 1));
 	mlx_loop_hook(mlx->this, ft_render, mlx);
 	mlx_hook(mlx->win, 2, 1L<<0, ft_key_down, mlx);
 	mlx_loop(mlx->this);
-	mlx_destroy_display(mlx->this);
-	free(mlx->this);
-	return (0);
+	return (ft_free_and_return(mlx->this, 0));
 }
