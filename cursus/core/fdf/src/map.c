@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                         :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:10:26 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/09 18:11:50 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 18:06:42 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line
 
 	new_fd = open(filename, O_RDONLY);
 	if (new_fd < 0)
-		return (ft_null_error(strerror(errno)));
+		return (ft_null_error("OPEN", strerror(errno)));
 	close(old_fd);
 	line = malloc(sizeof(char) * (line_len + 1));
 	line[line_len] = '\0';
@@ -54,15 +54,15 @@ t_map	*ft_init_map(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (ft_null_error(strerror(errno)));
+		return (ft_null_error("OPEN", strerror(errno)));
 	map = malloc(sizeof(*map));
 	if (!map)
-		return(ft_null_error(strerror(errno)));
+		return(ft_null_error("MALLOC", strerror(errno)));
 	line_len = ft_split_decorator_to_init_line_len(fd, map);
 	close(fd);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (ft_null_error(strerror(errno)));
+		return (ft_null_error("OPEN", strerror(errno)));
 	rows = 0;
 	line = malloc(sizeof(char) * line_len);
 	while (read(fd, line, line_len))

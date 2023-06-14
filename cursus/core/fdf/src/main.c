@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/09 18:54:15 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 18:03:45 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_map	*ft_check_args_and_init_map(int argc, char *filename)
 	else if (argc != 2)
 		errsv = 7;
 	if (errsv)
-		return (ft_null_error(strerror(errsv)));
+		return (ft_null_error("ARGS", strerror(errsv)));
 	return (ft_init_map(filename));
 }
 
