@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:08:04 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:51:46 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_free_and_return(void *mlx, int value)
 
 static int	ft_render(t_mlx *mlx)
 {
-	(void) mlx;
+	mlx->ft_draw(mlx);
 	return (0);
 }
 

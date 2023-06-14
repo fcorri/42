@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:00:59 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:48:22 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,13 @@ void	ft_split_decorator_init_map_matrix(char *line, t_map *map)
 		matrix[y-1][x++] = ft_atoi(number);
 		number = *tmp++;
 	}
+}
+
+int	ft_put_pixel_decorator(t_image img, t_vector p, int color, int main)
+{
+	if (main)
+		ft_put_pixel(img, p.x, p.y, color);
+	else
+		ft_put_pixel(img, p.y, p.x, color);
+	return (x);
 }

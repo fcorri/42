@@ -6,11 +6,18 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:50:38 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:09:49 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 23:35:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
+
+/*void	ft_draw_map_as_isometric_projection(t_mlx *mlx)
+{
+	int	**matrix;
+
+	matrix = mlx->map->matrix;
+}*/
 
 void	ft_draw_map_as_vertical_projection(t_mlx *mlx)
 {
