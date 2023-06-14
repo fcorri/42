@@ -6,13 +6,13 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:51:45 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/09 17:59:31 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 18:10:46 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-t_mlx	*ft_init_mlx(void)
+t_mlx	*ft_init_mlx(t_map *map)
 {
 	t_mlx	*mlx;
 	void	*this;
@@ -32,5 +32,6 @@ t_mlx	*ft_init_mlx(void)
 	mlx = malloc(sizeof(*mlx));
 	mlx->this = this;
 	mlx->win = win;
-	return (mlx);
+	mlx->map = map;
+	return (mlx)
 }

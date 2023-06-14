@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 18:04:35 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 18:11:08 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@
 # define HEIGHT	500
 # define TITLE	"fil de fer"
 
-typedef struct mlx
-{
-	void	*this;
-	void	*win;
-}	t_mlx;
-
 typedef struct map
 {
 	int		rows;
@@ -50,6 +44,15 @@ typedef struct image
 	int		endian;
 }	t_image;
 
+typedef struct mlx
+{
+	void	*this;
+	void	*win;
+	t_map	*map;
+	t_image	*image;
+	void	(*ft_draw)(struct mlx *mlx);
+}	t_mlx;
+
 typedef struct vector
 {
 	int	x;
@@ -59,8 +62,11 @@ typedef struct vector
 
 int		ft_error(char *callee, char *with_message);
 void	*ft_null_error(char *callee, char *with_message);
+
 t_map	*ft_init_map(char *filename);
-t_mlx	*ft_init_mlx(void);
+
+t_mlx	*ft_init_mlx(t_map *map);
+
 size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
 void	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 

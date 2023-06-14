@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 18:03:45 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 18:11:17 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	map = ft_check_args_and_init_map(argc, argv[1]);
 	if (!map)
 		exit(EXIT_FAILURE);
-	mlx = ft_init_mlx();
+	mlx = ft_init_mlx(map);
 	if (!mlx)
 		exit(EXIT_FAILURE);
 //	if (!ft_init_img(mlx, &img))
