@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_split.c                                     :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/13 18:04:05 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 17:29:43 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char	*ft_len_and_str(char *input, char c, size_t *len)
 	return (output);
 }
 
-char	**ft_new_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**output;
 	size_t	index;
