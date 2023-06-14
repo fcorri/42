@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 17:35:31 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/14 18:00:02 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ char	**ft_split(char const *s, char c)
 	while (s[index])
 	{
 		str = ft_len_and_str((char *) s + index, c, &len);
-		output = ft_concat(output, str);
-		if (!str || (len && !output))
+		if (!str || (len && !ft_concat(output, str)))
 			return (ft_free_and_return(output, 1));
 		if (s[index + len])
 			index += len + 1;
