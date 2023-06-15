@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:10:26 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:01:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 11:25:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line
 {
 	int		new_fd;
 	char	*line;
+	int		max_z;
+	int		tmp;
 
 	new_fd = open(filename, O_RDONLY);
 	if (new_fd < 0)
@@ -37,8 +39,14 @@ static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line
 	close(old_fd);
 	line = malloc(sizeof(char) * (line_len + 1));
 	line[line_len] = '\0';
+	max_z = 0;
 	while (read(new_fd, line, line_len))
-		ft_split_decorator_init_map_matrix(line, map);
+	{
+		tmp = ft_split_decorator_init_map_matrix(line, map);
+		if (tmp > max_z)
+			max_z = tmp;
+	}
+	map->max_z = max_z;
 	free(line);
 	close(new_fd);
 	return (map);

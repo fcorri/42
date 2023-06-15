@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/08 17:24:45 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 12:22:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_vector	*ft_mul_scalar(t_vector a, int k)
 	return (ft_new_vector(a.x * k, a.y * k, a.z * k));
 }
 
-int	ft_dot_product(t_vector a, t_vector b)
+/*int	ft_dot_product(t_vector a, t_vector b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
@@ -47,4 +47,4 @@ t_vector	*ft_cross_product(t_vector a, t_vector b)
 			a.z * b.x - a.x * b.z,
 			a.x * b.y - a.y * b.x
 		));
-}
+}*/

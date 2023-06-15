@@ -6,11 +6,22 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:50:49 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 11:38:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
+#include "fdf_p.h"
+
+static struct s_vars
+{
+	int	dmain;
+	int	dcross;
+	int	d;
+	int	imain;
+	int	icross;
+};
+
+static int	ft_init(struct s_vars *vars, int *stop, int y1)
 {
 	int	change_start;
 
@@ -39,27 +50,27 @@ static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 	return (change_start);
 }
 
-static void	ft_put_basic_line(t_image img, t_vector start, t_vector d, int color)
+static void	ft_put_basic_line(t_image img, t_point start, t_point d, int color)
 {
-	int	magnitude;
+	int	length;
 	int	direction;
 
-	magnitude = ft_magnitude(d);
+	length = ft_length(d);
 	direction = ft_direction(d);
-	if (!magnitude)
+	if (!length)
 	{
 		ft_put_pixel(img, start.x, start.y, color);
 		return ;
 	}
 	if (direction == 1)
-		while (magnitude--)
+		while (length--)
 			ft_put_pixel(img, start.x, start.y++, color);
 	else
-		while (magnitude--)
+		while (length--)
 			ft_put_pixel(img, start.x++, start.y, color);
 }
 
-void	ft_put_line(t_image img, t_vector p0, t_vector p1, int color)
+void	ft_put_line(t_image img, t_point p0, t_point p1, int color)
 {
 	struct s_line_vars	vars;
 	int					start;
@@ -72,9 +83,9 @@ void	ft_put_line(t_image img, t_vector p0, t_vector p1, int color)
 	vars.dmain = p1.x - p0.x;
 	vars.dcross = p1.y - p0.y;
 	if (vars.dmain == 0)
-		return (ft_put_basic_line(img, p0, (t_vector){vars.dcross, 90}, color));
+		return (ft_put_basic_line(img, p0, (t_point){vars.dcross, 90}, color));
 	if (vars.dcross == 0)
-		return (ft_put_basic_line(img, p0, (t_vector){vars.dmain, 0}, color));
+		return (ft_put_basic_line(img, p0, (t_point){vars.dmain, 0}, color));
 	tmp = p0.y;
 	main = 1;
 	if (ft_init(&vars, &stop, p1.y))

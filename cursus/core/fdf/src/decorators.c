@@ -6,11 +6,18 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 22:48:22 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 11:33:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
+
+static struct s_vars
+{
+	int	y;
+	int	max_z;
+	int	tmp;
+};
 
 size_t	ft_split_decorator_init_line_len(int fd, t_map *map)
 {
@@ -38,24 +45,35 @@ size_t	ft_split_decorator_init_line_len(int fd, t_map *map)
 	return (output);
 }
 
-void	ft_split_decorator_init_map_matrix(char *line, t_map *map)
+int	ft_split_decorator_init_map_matrix(char *line, t_map *map)
 {
-	char		**tmp;
-	int			**matrix;
-	int			x;
-	static int	y;
-	char		*number;
+	char			**tmp;
+	int				**matrix;
+	struct s_vars	vars;
+	static int		x;
+	char			*number;
 
-	x = 0;
-	y++;
+	vars.y  = 0;
+	x++;
 	tmp = ft_split(line, ' ');
-	number = *tmp++;
+	number = tmp[vars.y];
 	matrix = map->matrix;
+	vars.max_z = 0;
 	while (number)
 	{
-		matrix[y-1][x++] = ft_atoi(number);
-		number = *tmp++;
+		if (*number == '0')
+			matrix[x-1][vars.y] = 0;
+		else
+		{
+			vars.tmp = ft_atoi(number);
+			if (vars.tmp > vars.max_z)
+				vars.max_z = vars.tmp;
+			matrix[x-1][vars.y] = vars.tmp;
+		}
+		number = tmp[++vars.y];
 	}
+	free(tmp);
+	return (vars.max_z);
 }
 
 int	ft_put_pixel_decorator(t_image img, t_vector p, int color, int main)
@@ -64,5 +82,5 @@ int	ft_put_pixel_decorator(t_image img, t_vector p, int color, int main)
 		ft_put_pixel(img, p.x, p.y, color);
 	else
 		ft_put_pixel(img, p.y, p.x, color);
-	return (x);
+	return (p.x);
 }
