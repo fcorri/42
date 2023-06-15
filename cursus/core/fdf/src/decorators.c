@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 11:33:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 16:27:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static struct s_vars
 	int	tmp;
 };
 
-size_t	ft_split_decorator_init_line_len(int fd, t_map *map)
+size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map)
 {
 	int		columns;
 	char	*line;
@@ -45,7 +45,7 @@ size_t	ft_split_decorator_init_line_len(int fd, t_map *map)
 	return (output);
 }
 
-int	ft_split_decorator_init_map_matrix(char *line, t_map *map)
+int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char			**tmp;
 	int				**matrix;

@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 11:32:36 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 16:24:39 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 # define START_COLOR	0x0000FF84
 # define END_COLOR		0x00FF4F00
 
+typedef struct mlx
+{
+	void	*this;
+	void	*win;
+}	t_mlx;
+
 typedef struct map
 {
 	int		rows;
@@ -38,6 +44,7 @@ typedef struct map
 	int		start_color;
 	int		end_color;
 	int		max_z;
+	void	(*ft_draw)(struct vars *vars);
 }	t_map;
 
 typedef struct image
@@ -49,21 +56,12 @@ typedef struct image
 	int		endian;
 }	t_image;
 
-typedef struct mlx
-{
-	void	*this;
-	void	*win;
-	t_map	*map;
-	t_image	*image;
-	void	(*ft_draw)(struct mlx *mlx);
-}	t_mlx;
-
-/*typedef struct vars
+typedef struct vars
 {
 	void	*mlx;
 	void	*map;
 	void	*image;
-}*/
+}	t_vars;
 
 typedef struct vector
 {
@@ -83,14 +81,14 @@ void	*ft_null_error(char *callee, char *with_message);
 
 t_map	*ft_init_map(char *filename);
 
-int		ft_init_image(t_mlx *mlx);
+t_image	*ft_init_image(t_mlx *mlx);
 
 void	ft_draw_map_as_isometric_projection(t_mlx *mlx);
 void	ft_draw_map_as_vertical_projection(t_mlx *mlx);
 
 void	ft_put_line(t_image image, t_point p0, t_point p1, int color);
 
-t_mlx	*ft_init_mlx(t_map *map);
+t_mlx	*ft_init_mlx(void);
 
 size_t	ft_split_decorator_init_line_len(int fd, t_map *map);
 int		ft_split_decorator_init_map_matrix(char *line, t_map *map);

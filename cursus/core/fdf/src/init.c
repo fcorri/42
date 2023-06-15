@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/22 22:10:26 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 11:25:16 by fcorri           ###   ########.fr       */
+/*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
+/*   Updated: 2023/06/15 16:28:19 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line
 	max_z = 0;
 	while (read(new_fd, line, line_len))
 	{
-		tmp = ft_split_decorator_init_map_matrix(line, map);
+		tmp = ft_split_decorator_to_init_map_matrix_with(line, map);
 		if (tmp > max_z)
 			max_z = tmp;
 	}
@@ -66,7 +66,7 @@ t_map	*ft_init_map(char *filename)
 	map = malloc(sizeof(*map));
 	if (!map)
 		return(ft_null_error("MALLOC", strerror(errno)));
-	line_len = ft_split_decorator_init_line_len(fd, map);
+	line_len = ft_split_decorator_to_init_line_len(fd, map);
 	close(fd);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -79,4 +79,40 @@ t_map	*ft_init_map(char *filename)
 	map->rows = rows;
 	ft_allocate(map, rows);
 	return (ft_init_points(filename, fd, map, line_len));
+}
+
+t_mlx	*ft_init_mlx(void)
+{
+	t_mlx	*mlx;
+	void	*this;
+	void	*win;
+	int		errsv;
+
+	this = mlx_init();
+	if (!this)
+		return (ft_null_error("MLX_INIT", strerror(errno)));
+	win = mlx_new_window(this, WIDTH, HEIGHT, TITLE);
+	if (!win)
+	{
+		errsv = errno;
+		free(this);
+		return (ft_null_error("MLX_NEW_WINDOW", strerror(errsv)));
+	}
+	mlx = malloc(sizeof(*mlx));
+	mlx->this = this;
+	mlx->win = win;
+	return (mlx);
+}
+
+t_image	*ft_init_image(t_mlx *mlx)
+{
+	t_image	*image;
+
+	image = mlx_new_image(mlx->this, WIDTH, HEIGHT);
+	if (!image)
+	{
+		mlx_destroy_window(mlx->this, mlx->win);
+		return (ft_null_error("MLX_NEW_IMAGE", strerror(errno)));
+	}
+	return (image);
 }

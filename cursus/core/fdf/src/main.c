@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 11:25:02 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 16:23:56 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,40 @@ static int	ft_free_and_return(void *mlx, int value)
 	return (value);
 }
 
-static int	ft_render(t_mlx *mlx)
+static int	ft_render(t_vars *vars)
 {
-	mlx->ft_draw(mlx);
+	t_map	*map;
+
+	map = vars->map;
+	map->ft_draw(vars);
 	return (0);
 }
 
-static int	ft_key_down(int keycode, t_mlx *mlx)
+static int	ft_key_down(int keycode, t_vars *vars)
 {
 	if (keycode == XK_Escape)
-		mlx_destroy_window(mlx->this, mlx->win);
+		mlx_destroy_window(vars->mlx->this, vars->mlx->win);
 	return (0);
 }
 
 int main(int argc, char **argv)
 {
-	t_mlx	*mlx;
-	t_map	*map;
+	t_vars	vars;
 
-	map = ft_check_args_and_init_map(argc, argv[1]);
-	if (!map)
+	vars = malloc(sizeof(vars));
+	if (!vars)
+		return (ft_error("MALLOC", strerror(errno)));
+	vars.map = ft_check_args_and_init_map(argc, argv[1]);
+	if (!vars.map)
 		exit(EXIT_FAILURE);
-	mlx = ft_init_mlx(map);
-	if (!mlx)
+	vars.mlx = ft_init_mlx();
+	if (!vars.mlx)
 		exit(EXIT_FAILURE);
-	if (!ft_init_image(mlx))
-		return (ft_free_and_return(mlx->this, 1));
-	mlx_loop_hook(mlx->this, ft_render, mlx);
-	mlx_hook(mlx->win, 2, 1L<<0, ft_key_down, mlx);
-	mlx_loop(mlx->this);
-	return (ft_free_and_return(mlx->this, 0));
+	vars.image = ft_init_image(vars.mlx);
+	if (!vars.image)
+		return (ft_free_and_return(vars.mlx->this, 1));
+	mlx_loop_hook(vars.mlx->this, ft_render, vars.mlx);
+	mlx_hook(vars.mlx->win, 2, 1L<<0, ft_key_down, vars.mlx);
+	mlx_loop(vars.mlx->this);
+	return (ft_free_and_return(vars.mlx->this, 0));
 }
