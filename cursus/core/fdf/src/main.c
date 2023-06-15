@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 16:23:56 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 18:04:22 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	ft_render(t_vars *vars)
 static int	ft_key_down(int keycode, t_vars *vars)
 {
 	if (keycode == XK_Escape)
-		mlx_destroy_window(vars->mlx->this, vars->mlx->win);
+		mlx_destroy_window((vars->mlx)->this, vars->mlx->win);
 	return (0);
 }
 
@@ -53,9 +53,6 @@ int main(int argc, char **argv)
 {
 	t_vars	vars;
 
-	vars = malloc(sizeof(vars));
-	if (!vars)
-		return (ft_error("MALLOC", strerror(errno)));
 	vars.map = ft_check_args_and_init_map(argc, argv[1]);
 	if (!vars.map)
 		exit(EXIT_FAILURE);

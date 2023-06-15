@@ -6,13 +6,13 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 16:27:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:59:50 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static struct s_vars
+struct s_pixel_vars
 {
 	int	y;
 	int	max_z;
@@ -49,7 +49,7 @@ int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char			**tmp;
 	int				**matrix;
-	struct s_vars	vars;
+	struct s_pixel_vars	vars;
 	static int		x;
 	char			*number;
 
@@ -76,11 +76,11 @@ int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	return (vars.max_z);
 }
 
-int	ft_put_pixel_decorator(t_image img, t_vector p, int color, int main)
+int	ft_put_pixel_decorator(t_image *img, t_point p, int color, int main)
 {
 	if (main)
-		ft_put_pixel(img, p.x, p.y, color);
+		ft_put_pixel(*img, p.x, p.y, color);
 	else
-		ft_put_pixel(img, p.y, p.x, color);
+		ft_put_pixel(*img, p.y, p.x, color);
 	return (p.x);
 }

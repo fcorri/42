@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 16:24:39 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 18:22:50 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define START_COLOR	0x0000FF84
 # define END_COLOR		0x00FF4F00
 
+typedef struct s_vars	t_vars;
+
 typedef struct mlx
 {
 	void	*this;
@@ -44,7 +46,7 @@ typedef struct map
 	int		start_color;
 	int		end_color;
 	int		max_z;
-	void	(*ft_draw)(struct vars *vars);
+	void	(*ft_draw)(t_vars *vars);
 }	t_map;
 
 typedef struct image
@@ -56,12 +58,12 @@ typedef struct image
 	int		endian;
 }	t_image;
 
-typedef struct vars
+struct s_vars
 {
-	void	*mlx;
-	void	*map;
-	void	*image;
-}	t_vars;
+	t_mlx	*mlx;
+	t_map	*map;
+	t_image	*image;
+};
 
 typedef struct vector
 {
@@ -69,6 +71,12 @@ typedef struct vector
 	int	y;
 	int	z;
 }	t_vector;
+
+typedef struct dvector
+{
+	int	mod;
+	int	dir;
+}	t_dvector;
 
 typedef struct point
 {
@@ -83,16 +91,16 @@ t_map	*ft_init_map(char *filename);
 
 t_image	*ft_init_image(t_mlx *mlx);
 
-void	ft_draw_map_as_isometric_projection(t_mlx *mlx);
-void	ft_draw_map_as_vertical_projection(t_mlx *mlx);
+void	ft_draw_map_as_isometric_projection(t_vars *vars);
+void	ft_draw_map_as_vertical_projection(t_vars *vars);
 
-void	ft_put_line(t_image image, t_point p0, t_point p1, int color);
+void	ft_put_line(t_image *image, t_point p0, t_point p1, int color);
 
 t_mlx	*ft_init_mlx(void);
 
-size_t	ft_split_decorator_init_line_len(int fd, t_map *map);
-int		ft_split_decorator_init_map_matrix(char *line, t_map *map);
-int		ft_put_pixel_decorator(t_image image, t_vector p, int color, int main);
+size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
+int		ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
+int		ft_put_pixel_decorator(t_image *image, t_point p, int color, int main);
 
 void	ft_swap(int *first, int *second);
 void	ft_put_pixel(t_image img, int x, int y, int color);

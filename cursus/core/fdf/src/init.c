@@ -6,24 +6,27 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 16:28:19 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 18:29:22 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static void	ft_allocate(t_map *map, int rows)
+static void	ft_init_matrix_and_drawing_function(t_map *map)
 {
 	int	i;
+	int	rows;
 	int	columns;
 	int	**matrix;
 
 	i = -1;
+	rows = map->rows;
 	columns = map->columns;
 	matrix = malloc(sizeof(int *) * rows);
 	while (++i < rows)
 		matrix[i] = malloc(sizeof(int) * columns);
 	map->matrix = matrix;
+	map->ft_draw = ft_draw_map_as_isometric_projection;
 }
 
 static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line_len)
@@ -77,7 +80,7 @@ t_map	*ft_init_map(char *filename)
 		rows++;
 	free(line);
 	map->rows = rows;
-	ft_allocate(map, rows);
+	ft_init_matrix_and_drawing_function(map);
 	return (ft_init_points(filename, fd, map, line_len));
 }
 
