@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 11:38:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/15 15:20:52 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ static int	ft_init(struct s_vars *vars, int *stop, int y1)
 static void	ft_put_basic_line(t_image img, t_point start, t_point d, int color)
 {
 	int	length;
-	int	direction;
+	int	dir;
 
 	length = ft_length(d);
-	direction = ft_direction(d);
+	dir = ft_dir(d);
 	if (!length)
 	{
 		ft_put_pixel(img, start.x, start.y, color);
 		return ;
 	}
-	if (direction == 1)
+	if (dir == 1)
 		while (length--)
 			ft_put_pixel(img, start.x, start.y++, color);
 	else
