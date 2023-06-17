@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/16 09:46:52 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:54:55 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 	vars->image = ft_init_image(vars->mlx);
 	if (!vars->image)
 		return (ft_free_and_return(vars->mlx->this, 1));
-	mlx_loop_hook(vars->mlx->this, ft_render, (void *)&vars);
+	mlx_loop_hook(vars->mlx->this, ft_render, (void *)vars);
 	mlx_hook(vars->mlx->win, 2, 1L<<0, ft_key_down, (void *)&vars);
 	mlx_loop(vars->mlx->this);
 	return (ft_free_and_return(vars->mlx->this, 0));

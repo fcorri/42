@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 18:29:22 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/17 19:19:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ t_image	*ft_init_image(t_mlx *mlx)
 		mlx_destroy_window(mlx->this, mlx->win);
 		return (ft_null_error("MLX_NEW_IMAGE", strerror(errno)));
 	}
+	image->addr = mlx_get_data_addr(image->this, &(image->bpp), &(image->ll), &(image->end));
 	return (image);
 }

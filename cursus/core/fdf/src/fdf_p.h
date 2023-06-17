@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 18:22:50 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/17 19:19:40 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct image
 	char	*addr;
 	int		bpp;
 	int		ll;
-	int		endian;
+	int		end;
 }	t_image;
 
 struct s_vars

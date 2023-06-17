@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 17:58:38 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/17 19:01:04 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,10 @@ void	ft_put_line(t_image *img, t_point p0, t_point p1, int color)
 		vars.d += 2 * vars.dcross;
 		start = ft_put_pixel_decorator(img, (t_point){start, tmp}, color, main) + vars.imain;
 	}
+}
+
+void	ft_put_pixel(t_image img, int x, int y, int color)
+{
+	if ((0 <= x && x < WIDTH) && (0 <= y && y < HEIGHT))
+		*(unsigned int *)(img.addr + (y * img.ll + x * (img.bpp / 8))) = color;
 }
