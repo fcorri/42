@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 17:59:50 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:21:36 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 				vars.max_z = vars.tmp;
 			matrix[x-1][vars.y] = vars.tmp;
 		}
+		free(number);
 		number = tmp[++vars.y];
 	}
 	free(tmp);
