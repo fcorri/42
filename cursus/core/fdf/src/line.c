@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/17 19:01:04 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/19 00:15:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ struct s_line_vars
 	int	imain;
 	int	icross;
 };
+
+static int	ft_calculate_color(t_bvector z, t_bvector color)
+{
+	if (z.x == z.y)
+		return ();
+}
 
 static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 {
@@ -50,17 +56,21 @@ static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 	return (change_start);
 }
 
-static void	ft_put_basic_line(t_image *img, t_point start, t_dvector d, int color)
+static void	ft_put_basic_line(t_image *img, t_vector start, t_vector end, t_bvector color)
 {
 	int	incremento;
+	int	color;
 
 	if (!d.mod)
-		ft_put_pixel(*img, start.x, start.y, color);
+		ft_put_pixel(*img, start.x, start.y, ft_calculate_color((t_bvector){start.z, end.z}, color));
 	else
 	{
 		incremento = 1;
 		if (d.mod < 0)
+		{
 			incremento = -1;
+			d.mod *= -1;
+		}
 		while (d.mod--)
 		{
 			ft_put_pixel(*img, start.x, start.y, color);

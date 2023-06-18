@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/17 19:19:49 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/18 15:25:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,22 @@ t_mlx	*ft_init_mlx(void)
 
 t_image	*ft_init_image(t_mlx *mlx)
 {
+	int		errsv;
 	t_image	*image;
-
-	image = mlx_new_image(mlx->this, WIDTH, HEIGHT);
+	
+	image = malloc(sizeof(*image));
 	if (!image)
 	{
+		errsv = errno;
 		mlx_destroy_window(mlx->this, mlx->win);
-		return (ft_null_error("MLX_NEW_IMAGE", strerror(errno)));
+		return (ft_null_error("MALLOC", strerror(errsv)));
+	}
+	image->this = mlx_new_image(mlx->this, WIDTH, HEIGHT);
+	if (!image->this)
+	{
+		errsv = errno;
+		mlx_destroy_window(mlx->this, mlx->win);
+		return (ft_null_error("MLX_NEW_IMAGE", strerror(errsv)));
 	}
 	image->addr = mlx_get_data_addr(image->this, &(image->bpp), &(image->ll), &(image->end));
 	return (image);

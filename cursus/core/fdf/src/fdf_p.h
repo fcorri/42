@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/17 19:19:40 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/18 19:22:22 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # define WIDTH			1000
 # define HEIGHT			500
 # define TITLE			"fil de fer"
+# define RED			0x00FF0000
+# define GREEN			0x0000FF00
+# define BLUE			0x000000FF
 # define START_COLOR	0x0000FF84
 # define END_COLOR		0x00FF4F00
 
@@ -40,13 +43,13 @@ typedef struct mlx
 
 typedef struct map
 {
-	int		rows;
-	int		columns;
-	int		**matrix;
-	int		start_color;
-	int		end_color;
-	int		max_z;
-	void	(*ft_draw)(t_vars *vars);
+	int	rows;
+	int	columns;
+	int	**matrix;
+	int	start_color;
+	int	end_color;
+	int	max_z;
+	int	(*ft_draw)(t_vars *vars);
 }	t_map;
 
 typedef struct image
@@ -72,6 +75,12 @@ typedef struct vector
 	int	z;
 }	t_vector;
 
+typedef struct bvector
+{
+	int	x;
+	int	y;
+}	t_bvector;
+
 typedef struct dvector
 {
 	int	mod;
@@ -91,8 +100,8 @@ t_map	*ft_init_map(char *filename);
 
 t_image	*ft_init_image(t_mlx *mlx);
 
-void	ft_draw_map_as_isometric_projection(t_vars *vars);
-void	ft_draw_map_as_vertical_projection(t_vars *vars);
+int		ft_draw_map_as_isometric_projection(t_vars *vars);
+int		ft_draw_map_as_vertical_projection(t_vars *vars);
 
 void	ft_put_line(t_image *image, t_point p0, t_point p1, int color);
 

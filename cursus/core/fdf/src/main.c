@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/17 18:54:55 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/18 17:06:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ static t_map	*ft_check_args_and_init_map(int argc, char *filename)
 	return (ft_init_map(filename));
 }
 
-static int	ft_free_and_return(void *mlx, int value)
+static int	ft_free_and_return(t_vars *vars, int value)
 {
-	mlx_destroy_display(mlx);
-	free(mlx);
+	int	errsv;
+
+	errsv = mlx_destroy_display(vars->mlx->this);
+	if (errsv)
+		return (ft_error("MLX_DESTROY_DISPLAY", strerror(errsv)));
+	free(vars->mlx->this);
 	return (value);
 }
 
@@ -44,8 +48,14 @@ static int	ft_render(t_vars *vars)
 
 static int	ft_key_down(int keycode, t_vars *vars)
 {
+	t_mlx	*mlx;
+
+	mlx = vars->mlx;
 	if (keycode == XK_Escape)
-		mlx_destroy_window((vars->mlx)->this, vars->mlx->win);
+	{
+		mlx_destroy_window(mlx->this, mlx->win);
+		mlx->win = NULL;
+	}
 	return (0);
 }
 
@@ -68,8 +78,8 @@ int main(int argc, char **argv)
 	vars->image = ft_init_image(vars->mlx);
 	if (!vars->image)
 		return (ft_free_and_return(vars->mlx->this, 1));
-	mlx_loop_hook(vars->mlx->this, ft_render, (void *)vars);
-	mlx_hook(vars->mlx->win, 2, 1L<<0, ft_key_down, (void *)&vars);
+	mlx_loop_hook(vars->mlx->this, ft_render, vars);
+	mlx_hook(vars->mlx->win, 2, 1L<<0, ft_key_down, vars);
 	mlx_loop(vars->mlx->this);
-	return (ft_free_and_return(vars->mlx->this, 0));
+	return (ft_free_and_return(vars, 0));
 }
