@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/22 17:19:51 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 18:09:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	**ft_free_and_return(char **output, int null)
 		free(output);
 		return (NULL);
 	}
-	index = (size_t) (output[0] - output[1]);
+	index = (size_t)(output[0] - output[1]);
 	tmp = output;
 	output = ft_calloc(sizeof(char *), index + 1);
 	if (!output)
@@ -73,13 +73,13 @@ static int	ft_concat(char ***input, char *next_str)
 			(*input)[2 + len] = tmp[2 + len];
 		len = (size_t) tmp[0];
 		(*input)[len + 2] = next_str;
-		(*input)[1] = (char *) (len - 1);
+		(*input)[1] = (char *)(len - 1);
 		free(tmp);
 	}
 	else
 	{
 		(*input)[len - n + 2] = next_str;
-		(*input)[1] = (char *) (n - 1);
+		(*input)[1] = (char *)(n - 1);
 	}
 	return (1);
 }
