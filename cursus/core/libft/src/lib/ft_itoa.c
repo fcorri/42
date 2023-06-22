@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 19:06:20 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/31 15:32:56 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 17:10:38 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_itoa(int n)
 	long	c_n;
 
 	digits = ft_digits(n);
-	output = malloc(sizeof(char) * (digits + 1));
+	output = ft_malloc_soul(sizeof(char) * (digits + 1));
 	if (!output)
 		return (NULL);
 	output[digits--] = '\0';
