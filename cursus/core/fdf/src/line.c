@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/19 00:15:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 18:04:59 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,37 @@
 
 struct s_line_vars
 {
-	int	dmain;
-	int	dcross;
+	int	dstart;
+	int	dstop;
 	int	d;
 	int	imain;
 	int	icross;
 };
-
-static int	ft_calculate_color(t_bvector z, t_bvector color)
-{
-	if (z.x == z.y)
-		return ();
-}
 
 static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 {
 	int	change_start;
 
 	change_start = 0;
-	if (vars->dmain < 0)
+	if (vars->dstart < 0)
 	{
 		vars->imain = -1;
-		vars->dmain *= -1;
+		vars->dstart *= -1;
 	}
 	else
 		vars->imain = 1;
-	if (vars->dcross < 0)
+	if (vars->dstop < 0)
 	{
 		vars->icross = -1;
-		vars->dcross *= -1;
+		vars->dstop *= -1;
 	}
 	else
 		vars->icross = 1;
-	if (vars->dcross > vars->dmain)
+	if (vars->dstop > vars->dstart)
 	{
 		change_start = 1;
 		*stop = y1;
-		ft_swap(&vars->dmain, &vars->dcross);
+		ft_swap(&vars->dstart, &vars->dstop);
 		ft_swap(&vars->imain, &vars->icross);
 	}
 	return (change_start);
@@ -92,12 +86,12 @@ void	ft_put_line(t_image *img, t_point p0, t_point p1, int color)
 
 	start = p0.x;
 	stop = p1.x;
-	vars.dmain = p1.x - p0.x;
-	vars.dcross = p1.y - p0.y;
-	if (vars.dmain == 0)
-		return (ft_put_basic_line(img, p0, (t_dvector){vars.dcross, 90}, color));
-	if (vars.dcross == 0)
-		return (ft_put_basic_line(img, p0, (t_dvector){vars.dmain, 0}, color));
+	vars.dstart = stop - start;
+	vars.dstop = p1.y - p0.y;
+	if (vars.dstart == 0)
+		return (ft_put_basic_line(img, p0, (t_dvector){vars.dstop, 90}, color));
+	if (vars.dstop == 0)
+		return (ft_put_basic_line(img, p0, (t_dvector){vars.dstart, 0}, color));
 	tmp = p0.y;
 	main = 1;
 	if (ft_init(&vars, &stop, p1.y))
@@ -106,15 +100,15 @@ void	ft_put_line(t_image *img, t_point p0, t_point p1, int color)
 		start = p0.y;
 		tmp = p0.x;
 	}
-	vars.d = (2 * vars.dcross) - vars.dmain;
+	vars.d = (2 * vars.dstop) - vars.dstart;
 	while (start != stop)
 	{
 		if (vars.d > 0)
 		{
-			vars.d -= 2 * vars.dmain;
+			vars.d -= 2 * vars.dstart;
 			tmp += vars.icross;
 		}
-		vars.d += 2 * vars.dcross;
+		vars.d += 2 * vars.dstop;
 		start = ft_put_pixel_decorator(img, (t_point){start, tmp}, color, main) + vars.imain;
 	}
 }

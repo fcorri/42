@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/15 12:22:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 17:55:45 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_vector	*ft_new_vector(long x, long y, long z)
 
 	if (x > INT_MAX || y > INT_MAX || z > INT_MAX)
 		return (NULL);
-	output = malloc(sizeof(t_vector));
+	output = ft_malloc_soul(sizeof(t_vector));
 	output->x = x;
 	output->y = y;
 	output->z = z;

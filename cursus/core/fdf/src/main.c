@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/18 17:06:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 17:54:25 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 {
 	t_vars	*vars;
 
-	vars = malloc(sizeof(*vars));
+	vars = ft_malloc_soul(sizeof(*vars));
 	if (!vars)
 	{
 		ft_error("MALLOC", strerror(errno));

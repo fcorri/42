@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/18 15:25:49 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 17:56:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	ft_init_matrix_and_drawing_function(t_map *map)
 	i = -1;
 	rows = map->rows;
 	columns = map->columns;
-	matrix = malloc(sizeof(int *) * rows);
+	matrix = ft_malloc_soul(sizeof(int *) * rows);
 	while (++i < rows)
-		matrix[i] = malloc(sizeof(int) * columns);
+		matrix[i] = ft_malloc_soul(sizeof(int) * columns);
 	map->matrix = matrix;
 	map->ft_draw = ft_draw_map_as_isometric_projection;
 }
@@ -40,7 +40,7 @@ static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line
 	if (new_fd < 0)
 		return (ft_null_error("OPEN", strerror(errno)));
 	close(old_fd);
-	line = malloc(sizeof(char) * (line_len + 1));
+	line = ft_malloc_soul(sizeof(char) * (line_len + 1));
 	line[line_len] = '\0';
 	max_z = 0;
 	while (read(new_fd, line, line_len))
@@ -66,7 +66,7 @@ t_map	*ft_init_map(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (ft_null_error("OPEN", strerror(errno)));
-	map = malloc(sizeof(*map));
+	map = ft_malloc_soul(sizeof(*map));
 	if (!map)
 		return(ft_null_error("MALLOC", strerror(errno)));
 	line_len = ft_split_decorator_to_init_line_len(fd, map);
@@ -75,7 +75,7 @@ t_map	*ft_init_map(char *filename)
 	if (fd < 0)
 		return (ft_null_error("OPEN", strerror(errno)));
 	rows = 0;
-	line = malloc(sizeof(char) * line_len);
+	line = ft_malloc_soul(sizeof(char) * line_len);
 	while (read(fd, line, line_len))
 		rows++;
 	free(line);
@@ -101,7 +101,7 @@ t_mlx	*ft_init_mlx(void)
 		free(this);
 		return (ft_null_error("MLX_NEW_WINDOW", strerror(errsv)));
 	}
-	mlx = malloc(sizeof(*mlx));
+	mlx = ft_malloc_soul(sizeof(*mlx));
 	mlx->this = this;
 	mlx->win = win;
 	return (mlx);
@@ -112,7 +112,7 @@ t_image	*ft_init_image(t_mlx *mlx)
 	int		errsv;
 	t_image	*image;
 	
-	image = malloc(sizeof(*image));
+	image = ft_malloc_soul(sizeof(*image));
 	if (!image)
 	{
 		errsv = errno;
