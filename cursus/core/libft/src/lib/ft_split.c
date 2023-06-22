@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:29:04 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 17:56:52 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/22 16:44:24 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,33 @@ static char	**ft_init_arr(size_t len)
 	return (output);
 }
 
-static char	**ft_concat(char **arr, char *next_str)
+static int	ft_concat(char ***input, char *next_str)
 {
 	char	**tmp;
 	size_t	len;
 	size_t	n;
 
-	tmp = arr;
+	tmp = *input;
 	len = (size_t) tmp[0];
 	n = (size_t) tmp[1];
 	if (!n)
 	{
-		arr = ft_init_arr(len * 2);
-		if (!arr)
-			return (NULL);
+		*input = ft_init_arr(len * 2);
+		if (!*input)
+			return (0);
 		while (len--)
-			arr[2 + len] = tmp[2 + len];
+			(*input)[2 + len] = tmp[2 + len];
 		len = (size_t) tmp[0];
-		arr[len + 2] = next_str;
-		arr[1] = (char *) (len - 1);
+		(*input)[len + 2] = next_str;
+		(*input)[1] = (char *) (len - 1);
 		free(tmp);
 	}
 	else
 	{
-		arr[len - n + 2] = next_str;
-		arr[1] = (char *) (n - 1);
+		(*input)[len - n + 2] = next_str;
+		(*input)[1] = (char *) (n - 1);
 	}
-	return (arr);
+	return (1);
 }
 
 static char	*ft_len_and_str(char *input, char c, size_t *len)
@@ -117,7 +117,7 @@ char	**ft_split(char const *s, char c)
 	while (s[index])
 	{
 		str = ft_len_and_str((char *) s + index, c, &len);
-		if (!str || (len && !ft_concat(output, str)))
+		if (!str || (len && !ft_concat(&output, str)))
 			return (ft_free_and_return(output, 1));
 		if (s[index + len])
 			index += len + 1;
