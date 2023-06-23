@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/18 19:22:22 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/23 22:34:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,17 @@ typedef struct vector
 	int	z;
 }	t_vector;
 
-typedef struct bvector
-{
-	int	x;
-	int	y;
-}	t_bvector;
-
 typedef struct dvector
 {
 	int	mod;
 	int	dir;
 }	t_dvector;
 
-typedef struct point
+typedef struct bvector
 {
 	int	x;
 	int	y;
-}	t_point;
+}	t_bvector;
 
 int		ft_error(char *callee, char *with_message);
 void	*ft_null_error(char *callee, char *with_message);
@@ -100,18 +94,24 @@ t_map	*ft_init_map(char *filename);
 
 t_image	*ft_init_image(t_mlx *mlx);
 
+int		ft_clear_image_and_set_ft_draw(t_vars *vars, int (*ft_draw)(t_vars *vars));
 int		ft_draw_map_as_isometric_projection(t_vars *vars);
 int		ft_draw_map_as_vertical_projection(t_vars *vars);
+int		ft_draw_test(t_vars *vars);
 
-void	ft_put_line(t_image *image, t_point p0, t_point p1, int color);
+void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
+void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
 
 t_mlx	*ft_init_mlx(void);
 
 size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
 int		ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
-int		ft_put_pixel_decorator(t_image *image, t_point p, int color, int main);
+t_vector	ft_new_vector_color_decorator(int color);
 
 void	ft_swap(int *first, int *second);
-void	ft_put_pixel(t_image img, int x, int y, int color);
+
+t_vector	ft_new_vector(long x, long y, long z);
+t_vector	ft_add_vector(t_vector a, t_vector b);
+t_vector	ft_mul_scalar(t_vector a, double k);
 
 #endif

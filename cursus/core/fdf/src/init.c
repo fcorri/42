@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/22 17:56:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/23 20:54:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	ft_init_matrix_and_drawing_function(t_map *map)
 	while (++i < rows)
 		matrix[i] = ft_malloc_soul(sizeof(int) * columns);
 	map->matrix = matrix;
-	map->ft_draw = ft_draw_map_as_isometric_projection;
+	//map->ft_draw = ft_draw_map_as_isometric_projection;
+	map->ft_draw = ft_draw_test;
 }
 
 static t_map	*ft_init_points(char *filename, int old_fd, t_map *map, size_t line_len)

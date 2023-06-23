@@ -1,5 +1,24 @@
-1)	fare la pulizia di memoria
+1)	fare pulizia di memoria
 1.1)	gestire la pulizia in un'unica funzione
 2)	disegnare linee "tridimensionali", ovvero le proiezioni sul piano XY
 3)	usare più immagini
 4)	stampare stringhe
+
+2)	Partiamo dalla cosa più rognosa, ovvero disegnare una linea che vive in 3 dimensioni; infatti la linea deve cambiare colore in base all'altezza del punto della linea che si sta disegnando.
+	Per fare ciò abbiamo bisogno di proiettare sullo schermo una linea tridimensionale, tenendo conto di due colori (START_COLOR e END_COLOR) e utilizzare l'algoritmo di interpolazione lineare per calcolare il colore di ogni pixel.
+	L'algoritmo che abbiamo scritto infatti, presupponeva un colore fisso, senza tener conto in generale quindi di una terza dimensione. Per disegnare la linea nelle tre dimensioni, la proiettiamo sul piano XY moltiplicandola con la matrice [[1,0,0],[0,1,0],[0,0,0]], mentre il colore di ogni pixel deve sottostare alla seguente formula:
+
+	 (n - i)	|Rs|	i	 |Re|
+	--------- *	|Gs| + --- * |Ge|
+		n		|Bs|	n	 |Be|
+
+	dove per [Rs,Gs,Bs], [Re,Ge,Be] si intende rispettivamente START_COLOR, END_COLOR; mentre invece n = (stop - start) sono il numero di pixel e i=0, ..., n è l'indice del pixel.
+	La precedente espressione può essere semplificata fino a:
+
+	|Rs|		|(Re-Rs)/n|
+	|Gs| + i *	|(Ge-Gs)/n|
+	|Bs|		|(Be-Bs)/n|
+
+	affinché la variabile che tiene conto del colore possa essere modificata ad ogni ciclo semplicemente aggiungendo la quantità costante a destra.
+
+	A parte qualche possibile e qualche necessario miglioramento, sono riuscito ad avere un risultato soddisfacente per quanto riguarda il disegno di linee in 3 dimensioni, anche se i colori dovranno essere di volta in volta calcolati in base ai valori z dei punti di inizio e di fine della linea.

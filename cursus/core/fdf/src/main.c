@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/22 17:54:25 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/23 20:55:07 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ static int	ft_free_and_return(t_vars *vars, int value)
 
 static int	ft_render(t_vars *vars)
 {
-	t_map	*map;
-
-	map = vars->map;
-	map->ft_draw(vars);
-	return (0);
+	return (vars->map->ft_draw(vars));
 }
 
 static int	ft_key_down(int keycode, t_vars *vars)
@@ -51,7 +47,12 @@ static int	ft_key_down(int keycode, t_vars *vars)
 	t_mlx	*mlx;
 
 	mlx = vars->mlx;
-	if (keycode == XK_Escape)
+	if (keycode == XK_v || keycode == XK_V)
+	{
+//		if (!ft_clear_image_and_set_ft_draw(vars, ft_draw_map_as_vertical_projection))
+			mlx->win = NULL;
+	}
+	else if (keycode == XK_Escape)
 	{
 		mlx_destroy_window(mlx->this, mlx->win);
 		mlx->win = NULL;

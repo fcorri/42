@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/22 18:04:59 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/23 23:03:27 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,107 +14,113 @@
 
 struct s_line_vars
 {
-	int	dstart;
-	int	dstop;
+	int	start;
+	int	stop;
+	int	dmain;
+	int	dcross;
 	int	d;
 	int	imain;
 	int	icross;
 };
+
+static int	ft_init_di(int *d, int *i)
+{
+	if (*d < 0)
+	{
+		*i = -1;
+		*d *= -1;
+		return (1);
+	}
+	*i = 1;
+	return (0);
+}
 
 static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 {
 	int	change_start;
 
 	change_start = 0;
-	if (vars->dstart < 0)
-	{
-		vars->imain = -1;
-		vars->dstart *= -1;
-	}
-	else
-		vars->imain = 1;
-	if (vars->dstop < 0)
-	{
-		vars->icross = -1;
-		vars->dstop *= -1;
-	}
-	else
-		vars->icross = 1;
-	if (vars->dstop > vars->dstart)
+	ft_init_di(&vars->dmain, &vars->imain);
+	ft_init_di(&vars->dcross, &vars->icross);
+	if (vars->dcross > vars->dmain)
 	{
 		change_start = 1;
 		*stop = y1;
-		ft_swap(&vars->dstart, &vars->dstop);
+		ft_swap(&vars->dmain, &vars->dcross);
 		ft_swap(&vars->imain, &vars->icross);
 	}
 	return (change_start);
 }
 
-static void	ft_put_basic_line(t_image *img, t_vector start, t_vector end, t_bvector color)
+static void	ft_put_basic_line(t_image *img, t_vector start, t_dvector d, t_bvector colors)
 {
 	int	incremento;
-	int	color;
+	t_vector	color;
+	t_vector	dcolor;
 
+	color = ft_new_vector_color_decorator(colors.x);
 	if (!d.mod)
-		ft_put_pixel(*img, start.x, start.y, ft_calculate_color((t_bvector){start.z, end.z}, color));
+		ft_put_pixel(img, (t_bvector){start.x, start.y}, color);
 	else
 	{
-		incremento = 1;
-		if (d.mod < 0)
-		{
-			incremento = -1;
-			d.mod *= -1;
-		}
+		dcolor = ft_mul_scalar(ft_add_vector(ft_new_vector_color_decorator(colors.y),ft_mul_scalar(color,-1)),1.0/(d.mod));
+		d.dir %= 180;
+		ft_init_di(&d.mod, &incremento);
 		while (d.mod--)
 		{
-			ft_put_pixel(*img, start.x, start.y, color);
-			if (d.dir % 180)
+			ft_put_pixel(img, (t_bvector){start.x, start.y}, color);
+			if (d.dir)
 				start.y += incremento;
 			else
 				start.x += incremento;
+			color = ft_add_vector(color, dcolor);
 		}
 	}
 }
 
-void	ft_put_line(t_image *img, t_point p0, t_point p1, int color)
+static void	ft_set_start_end_colors(t_bvector d, t_bvector z, t_bvector *colors)
+{
+	if (d.x < 0 || (d.x == 0 && (d.y < 0 || (d.y == 0 && z.y > z.x))))
+		ft_swap(&colors->x, &colors->y);
+}
+
+void	ft_put_line(t_image *img, t_vector v0, t_vector v1, t_bvector colors)
 {
 	struct s_line_vars	vars;
-	int					start;
-	int					stop;
-	int					tmp;
-	int					main;
+	int	start;
+	int	stop;
+	int	tmp;
+	t_vector	color;
+	t_vector	dcolor;
 
-	start = p0.x;
-	stop = p1.x;
-	vars.dstart = stop - start;
-	vars.dstop = p1.y - p0.y;
-	if (vars.dstart == 0)
-		return (ft_put_basic_line(img, p0, (t_dvector){vars.dstop, 90}, color));
-	if (vars.dstop == 0)
-		return (ft_put_basic_line(img, p0, (t_dvector){vars.dstart, 0}, color));
-	tmp = p0.y;
-	main = 1;
-	if (ft_init(&vars, &stop, p1.y))
+	start = v0.x;
+	stop = v1.x;
+	vars.dmain = stop - start;
+	vars.dcross = v1.y - v0.y;	
+	ft_set_start_end_colors((t_bvector){vars.dmain, vars.dcross}, (t_bvector){v0.z, v1.z}, &colors);
+	if (vars.dmain == 0)
+		return (ft_put_basic_line(img, v0, (t_dvector){vars.dcross, 90}, colors));
+	if (vars.dcross == 0)
+		return (ft_put_basic_line(img, v0, (t_dvector){vars.dmain, 0}, colors));
+	tmp = v0.y;
+	if (ft_init(&vars, &stop, v1.y))
 	{
-		main = 0;
-		start = p0.y;
-		tmp = p0.x;
+		start = v0.y;
+		tmp = v0.x;
 	}
-	vars.d = (2 * vars.dstop) - vars.dstart;
+	vars.d = (2 * vars.dcross) - vars.dmain;
+	color = ft_new_vector_color_decorator(colors.x);
+	dcolor = ft_mul_scalar(ft_add_vector(ft_new_vector_color_decorator(colors.y),ft_mul_scalar(color,-1)),1.0/(stop - start));
 	while (start != stop)
 	{
 		if (vars.d > 0)
 		{
-			vars.d -= 2 * vars.dstart;
+			vars.d -= 2 * vars.dmain;
 			tmp += vars.icross;
 		}
-		vars.d += 2 * vars.dstop;
-		start = ft_put_pixel_decorator(img, (t_point){start, tmp}, color, main) + vars.imain;
+		vars.d += 2 * vars.dcross;
+		ft_put_pixel(img, (t_bvector){start, tmp}, color);
+		start += vars.imain;
+		color = ft_add_vector(color, dcolor);
 	}
-}
-
-void	ft_put_pixel(t_image img, int x, int y, int color)
-{
-	if ((0 <= x && x < WIDTH) && (0 <= y && y < HEIGHT))
-		*(unsigned int *)(img.addr + (y * img.ll + x * (img.bpp / 8))) = color;
 }

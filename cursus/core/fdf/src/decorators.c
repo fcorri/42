@@ -6,13 +6,13 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/16 09:21:36 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/23 20:40:58 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-struct s_pixel_vars
+struct s_map_vars
 {
 	int	y;
 	int	max_z;
@@ -47,11 +47,11 @@ size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map)
 
 int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
-	char			**tmp;
-	int				**matrix;
-	struct s_pixel_vars	vars;
-	static int		x;
-	char			*number;
+	char				**tmp;
+	int					**matrix;
+	struct s_map_vars	vars;
+	static int			x;
+	char				*number;
 
 	vars.y  = 0;
 	x++;
@@ -77,11 +77,12 @@ int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	return (vars.max_z);
 }
 
-int	ft_put_pixel_decorator(t_image *img, t_point p, int color, int main)
+t_vector	ft_new_vector_color_decorator(int color)
 {
-	if (main)
-		ft_put_pixel(*img, p.x, p.y, color);
-	else
-		ft_put_pixel(*img, p.y, p.x, color);
-	return (p.x);
+	return ((t_vector)
+		{
+			color & RED,
+			color & GREEN,
+			color & BLUE
+		});
 }

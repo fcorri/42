@@ -6,31 +6,28 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/22 17:55:45 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/23 21:35:00 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-t_vector	*ft_new_vector(long x, long y, long z)
+t_vector	ft_new_vector(long x, long y, long z)
 {
-	t_vector	*output;
-
 	if (x > INT_MAX || y > INT_MAX || z > INT_MAX)
-		return (NULL);
-	output = ft_malloc_soul(sizeof(t_vector));
-	output->x = x;
-	output->y = y;
-	output->z = z;
-	return (output);
+	{
+		ft_error("NEW_VECTOR", strerror(EDOM));
+		return ((t_vector){0,0,0});
+	}
+	return ((t_vector){x, y, z});
 }
 
-t_vector	*ft_add_vector(t_vector a, t_vector b)
+t_vector	ft_add_vector(t_vector a, t_vector b)
 {
 	return (ft_new_vector(a.x + b.x, a.y + b.y, a.z + b.z));
 }
 
-t_vector	*ft_mul_scalar(t_vector a, int k)
+t_vector	ft_mul_scalar(t_vector a, double k)
 {
 	return (ft_new_vector(a.x * k, a.y * k, a.z * k));
 }
