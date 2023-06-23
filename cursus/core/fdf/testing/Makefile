@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/03 16:48:25 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/06 01:39:16 by fcorri           ###   ########.fr        #
+#    Updated: 2023/06/22 19:00:02 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ LDLIBS			=	$(addprefix -l, ft mlx_Linux Xext X11 m z)
 BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
 OBJS_DIR		=	$(BUILD_DIR)/obj
-LIBFT_DIR		=	../libft
+LIBFT_DIR		=	../../libft
 SRCS_DIR		=	src
-MLX_DIR			=	../minilibx-linux
+MLX_DIR			=	../../minilibx-linux
 
 SRCS			=	$(SRCS_DIR)/main.c \
 #					$(SRCS_DIR)/ \
