@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 18:07:10 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 01:28:03 by fcorri           ###   ########.fr       */
+/*   Created: 2023/01/09 16:10:56 by fcorri            #+#    #+#             */
+/*   Updated: 2023/06/28 01:26:52 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl/get_next_line.h"
+#include "gnl/get_next_line_p.h"
 
 static char	*ft_strndup_gnl(char *s, size_t len)
 {
@@ -29,7 +29,7 @@ static char	*ft_strndup_gnl(char *s, size_t len)
 	return (output);
 }
 
-static char	*ft_strjoin_gnl(char **s1, char *s2, size_t br)
+static char	*ft_strjoin(char **s1, char *s2, size_t br)
 {
 	char	*output;
 	size_t	len1;
@@ -85,31 +85,31 @@ static char	*ft_return(char **line, char *newline, char *buffer)
 	return (ft_free_and_return(NULL, buffer, tmp));
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
-	static char	*line;
+	static char	*line[1024];
 	char		*buffer;
 	ssize_t		br;
 	char		*newline;
 	size_t		size;
 
+	if (fd < 0 || fd > 1023 || BUFFER_SIZE <= 0)
+		return (NULL);
 	size = sizeof(unsigned long);
 	buffer = ft_calloc_gnl(size, BUFFER_SIZE / size + 1);
 	if (!buffer)
 		return (NULL);
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (ft_free_and_return(line, buffer, NULL));
 	br = read(fd, buffer, BUFFER_SIZE);
 	while (br > 0)
 	{
-		if (!ft_strjoin_gnl(&line, buffer, br))
-			return (ft_free_and_return(line, buffer, NULL));
-		newline = ft_strchr_gnl(line, '\n');
+		if (!ft_strjoin(&(line[fd]), buffer, br))
+			return (ft_free_and_return(line[fd], buffer, NULL));
+		newline = ft_strchr_gnl(line[fd], '\n');
 		if (newline)
-			return (ft_return(&line, newline, buffer));
+			return (ft_return(&(line[fd]), newline, buffer));
 		br = read(fd, buffer, BUFFER_SIZE);
 	}
-	if (line)
-		return (ft_return(&line, ft_strchr_gnl(line, '\n'), buffer));
-	return (ft_free_and_return(line, buffer, NULL));
+	if (line[fd])
+		return (ft_return(&(line[fd]), ft_strchr_gnl(line[fd], '\n'), buffer));
+	return (ft_free_and_return(line[fd], buffer, NULL));
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:01:10 by fcorri            #+#    #+#             */
-/*   Updated: 2023/05/09 17:44:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:45:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl/get_next_line.h"
+#include "gnl/get_next_line_bonus.h"
 
 void	*ft_calloc_gnl(size_t nmemb, size_t size)
 {
@@ -41,7 +41,7 @@ void	*ft_calloc_gnl(size_t nmemb, size_t size)
 	return ((void *)output);
 }
 
-static void	ft_check_word(void *src, unsigned long input, char **p_output,
+static void	ft_check_word(char *src, unsigned long input, char **p_output,
 	char **p_zero)
 {
 	unsigned long	output;
@@ -58,25 +58,24 @@ static void	ft_check_word(void *src, unsigned long input, char **p_output,
 	index = 0;
 	if (output != 0)
 	{
-		while (*(char *)(src + index) != (char) input)
+		while (src[index] != (char) input)
 			index++;
-		*p_output = (char *)(src + index);
+		*p_output = src + index;
 	}
 	zero = ((zero - one) & ~zero) & (one << 7);
 	if (zero != 0)
 	{
-		while (*(char *)src)
+		while (*src)
 			src++;
-		*p_zero = (char *)src;
+		*p_zero = src;
 	}
 }
 
-static char	*ft_check_words(size_t src, char c)
+static char	*ft_check_words(char *src, char c)
 {
 	unsigned long	input;
 	char			*output;
 	char			*zero;
-	size_t			size;
 
 	input = c | (c << 8);
 	input |= (input << 16);
@@ -84,33 +83,29 @@ static char	*ft_check_words(size_t src, char c)
 		input |= ((input << 16) << 16);
 	output = NULL;
 	zero = NULL;
-	size = sizeof(unsigned long);
 	while (!zero)
 	{
-		ft_check_word((void *)src, input, &output, &zero);
+		ft_check_word(src, input, &output, &zero);
 		if (output && (output <= zero || !zero))
 			return (output);
-		src += size;
+		src += sizeof(unsigned long);
 	}
 	return (NULL);
 }
 
-char	*ft_strchr_gnl(char *p_src, char c)
+char	*ft_strchr_gnl(char *src, char c)
 {
 	char	byte;
 	size_t	size;
-	size_t	src;
 
-	src = (size_t)p_src;
 	size = sizeof(unsigned long);
-	while (src % size)
+	while ((size_t) src % size)
 	{
-		byte = *(char *)src;
+		byte = *src++;
 		if (byte == c)
-			return ((char *)src);
+			return ((char *)(src - 1));
 		if (byte == '\0')
 			return (NULL);
-		src++;
 	}
-	return (ft_check_words(src, c));
+	return (ft_check_words((char *)src, c));
 }
