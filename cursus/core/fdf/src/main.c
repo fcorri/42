@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/27 23:06:32 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/28 00:47:00 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,30 @@
 
 static int	ft_free_and_return(t_vars *vars, int value)
 {
-	int	errsv;
+	int	index;
 
-	errsv = mlx_destroy_display(vars->mlx->this);
-	if (errsv)
-		return (ft_error("MLX_DESTROY_DISPLAY", strerror(errsv)));
-	free(vars->mlx->this);
+	if (vars->image)
+	{
+		mlx_destroy_image(vars->mlx->this, vars->image->this);
+		free(vars->image);
+	}
+	if (vars->mlx)
+	{
+		if (vars->mlx->win)
+			mlx_destroy_window(vars->mlx->this, vars->mlx->win);
+		mlx_destroy_display(vars->mlx->this);
+		free(vars->mlx->this);
+		free(vars->mlx);
+	}
+	index = 0;
+	if (vars->map && vars->map->matrix)
+	{
+		index = vars->map->rows;
+		while (index)
+			free((vars->map->matrix)[--index]);
+		free(vars->map->matrix);
+		free(vars->map);
+	}
 	return (value);
 }
 

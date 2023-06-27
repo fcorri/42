@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/27 23:03:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/27 23:49:33 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
 void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
 
 
-size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
+size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
 int		ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 t_vector	ft_new_vector_color_decorator(int color);
 

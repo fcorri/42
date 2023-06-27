@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:11:07 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/23 23:00:11 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/28 00:35:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int ft_draw_test(t_vars *vars)
 {
 	int x, y;
 	int X, Y;
+	t_vector	v0, v1;
+	t_bvector	color = {RED, BLUE};
 
 	X = 100;
 	Y = 50;
@@ -82,14 +84,23 @@ int ft_draw_test(t_vars *vars)
 		return (1);
 	x = (WIDTH - X)/2;
 	y = (HEIGHT - Y)/2;
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x+X,y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x-X,y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x,y+Y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x,y-Y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x+X,y+Y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x+X,y-Y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x-X,y+Y,10}, (t_bvector){0x00fa00ff,BLUE});
-	ft_put_line(vars->image, (t_vector){x,y,0}, (t_vector){x-X,y-Y,10}, (t_bvector){0x00fa00ff,BLUE});
+	v0 = (t_vector){x,y,0};
+	v1 = (t_vector){x+X,y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x-X,y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x,y+Y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x,y-Y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x+X,y+Y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x+X,y-Y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x-X,y+Y,10};
+	ft_put_line(vars->image, v0, v1, color);
+	v1 = (t_vector){x-X,y-Y,10};
+	ft_put_line(vars->image, v0, v1, color);
 	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	return 0;
 }
