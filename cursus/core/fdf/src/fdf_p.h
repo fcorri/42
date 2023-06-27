@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/23 22:34:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/27 23:03:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ typedef struct bvector
 int		ft_error(char *callee, char *with_message);
 void	*ft_null_error(char *callee, char *with_message);
 
-t_map	*ft_init_map(char *filename);
-
-t_image	*ft_init_image(t_mlx *mlx);
+int		ft_init_map(char *filename, t_map **p_map);
+int		ft_init_mlx(t_mlx **p_mlx);
+int		ft_init_image(t_mlx *mlx, t_image **p_image);
 
 int		ft_clear_image_and_set_ft_draw(t_vars *vars, int (*ft_draw)(t_vars *vars));
 int		ft_draw_map_as_isometric_projection(t_vars *vars);
@@ -102,7 +102,6 @@ int		ft_draw_test(t_vars *vars);
 void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
 void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
 
-t_mlx	*ft_init_mlx(void);
 
 size_t	ft_split_decorator_to_init_line_len(int fd, t_map *map);
 int		ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);

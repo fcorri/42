@@ -6,25 +6,11 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/23 20:55:07 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/27 23:06:32 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
-
-static t_map	*ft_check_args_and_init_map(int argc, char *filename)
-{
-	int errsv;
-
-	errsv = 0;
-	if (argc == 1)
-		errsv = 22;
-	else if (argc != 2)
-		errsv = 7;
-	if (errsv)
-		return (ft_null_error("ARGS", strerror(errsv)));
-	return (ft_init_map(filename));
-}
 
 static int	ft_free_and_return(t_vars *vars, int value)
 {
@@ -57,30 +43,22 @@ static int	ft_key_down(int keycode, t_vars *vars)
 		mlx_destroy_window(mlx->this, mlx->win);
 		mlx->win = NULL;
 	}
-	return (0);
+	return (1);
 }
 
 int main(int argc, char **argv)
 {
-	t_vars	*vars;
+	t_vars	vars;
 
-	vars = ft_malloc_soul(sizeof(*vars));
-	if (!vars)
-	{
-		ft_error("MALLOC", strerror(errno));
-		exit(EXIT_FAILURE);
-	}
-	vars->map = ft_check_args_and_init_map(argc, argv[1]);
-	if (!vars->map)
-		exit(EXIT_FAILURE);
-	vars->mlx = ft_init_mlx();
-	if (!vars->mlx)
-		exit(EXIT_FAILURE);
-	vars->image = ft_init_image(vars->mlx);
-	if (!vars->image)
-		return (ft_free_and_return(vars->mlx->this, 1));
-	mlx_loop_hook(vars->mlx->this, ft_render, vars);
-	mlx_hook(vars->mlx->win, 2, 1L<<0, ft_key_down, vars);
-	mlx_loop(vars->mlx->this);
-	return (ft_free_and_return(vars, 0));
+	ft_bzero(&vars, sizeof(vars));
+	if (argc == 1)
+		return (ft_error("ARGS", strerror(22)));
+	if (argc != 2)
+		return (ft_error("ARGS", strerror(7)));
+	if (!(ft_init_map(argv[1], &vars.map) && ft_init_mlx(&vars.mlx) && ft_init_image(vars.mlx, &vars.image)))
+		return (ft_free_and_return(&vars, 1));
+	mlx_loop_hook(vars.mlx->this, ft_render, &vars);
+	mlx_hook(vars.mlx->win, 2, 1L<<0, ft_key_down, &vars);
+	mlx_loop(vars.mlx->this);
+	return (ft_free_and_return(&vars, 0));
 }
