@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/27 23:49:33 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/28 18:57:11 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define WIDTH			1000
 # define HEIGHT			500
 # define TITLE			"fil de fer"
+
+# define WHITE			0x00FFFFFF
 # define RED			0x00FF0000
 # define GREEN			0x0000FF00
 # define BLUE			0x000000FF
@@ -49,6 +51,7 @@ typedef struct map
 	int	start_color;
 	int	end_color;
 	int	max_z;
+	char	*name;
 	int	(*ft_draw)(t_vars *vars);
 }	t_map;
 
@@ -98,6 +101,7 @@ int		ft_clear_image_and_set_ft_draw(t_vars *vars, int (*ft_draw)(t_vars *vars));
 int		ft_draw_map_as_isometric_projection(t_vars *vars);
 int		ft_draw_map_as_vertical_projection(t_vars *vars);
 int		ft_draw_test(t_vars *vars);
+int		ft_draw_null(t_vars *vars);
 
 void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
 void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);

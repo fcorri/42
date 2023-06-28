@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:11:07 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 00:35:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/28 19:39:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 int	ft_clear_image_and_set_ft_draw(t_vars *vars, int (*ft_draw)(t_vars *vars))
 {
-/*
-	mlx_destroy_image(vars->mlx->this, vars->image->this);
-	vars->image->this = ft_init_image(vars->mlx);
-	if (!vars->image->this)
-		return (0);
-*/
+	ft_bzero(vars->image->addr, WIDTH * HEIGHT * 4);
 	vars->map->ft_draw = ft_draw;
 	return (1);
 }
 /*
-int	ft_draw_map_as_vertical_projection(t_vars *vars)
+int	ft_draw_map_as_ortoghonal_projection(t_vars *vars)
 {
 	t_mlx		*mlx;
 	void		*tmp;
@@ -57,50 +52,41 @@ int	ft_draw_map_as_vertical_projection(t_vars *vars)
 
 int	ft_draw_map_as_isometric_projection(t_vars *vars)
 {
-	t_mlx	*mlx;
-	int	x, y;
-
-	x = WIDTH / 2;
-	y = HEIGHT / 2;
-	mlx = vars->mlx;
-	if (!mlx->win)
+	if (!vars->mlx->win)
 		return (1);
-	ft_put_line(vars->image, (t_vector){x, y}, (t_bvector){x + 100, y}, RED);
-	mlx_put_image_to_window(mlx->this, mlx->win, vars->image->this, 0, 0);
-	return (0);
+	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
+	return 0;
 }
 */
 
-int ft_draw_test(t_vars *vars)
+int ft_draw_null(t_vars *vars)
 {
-	int x, y;
-	int X, Y;
-	t_vector	v0, v1;
-	t_bvector	color = {RED, BLUE};
-
-	X = 100;
-	Y = 50;
 	if (!vars->mlx->win)
 		return (1);
-	x = (WIDTH - X)/2;
-	y = (HEIGHT - Y)/2;
-	v0 = (t_vector){x,y,0};
-	v1 = (t_vector){x+X,y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x-X,y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x,y+Y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x,y-Y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x+X,y+Y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x+X,y-Y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x-X,y+Y,10};
-	ft_put_line(vars->image, v0, v1, color);
-	v1 = (t_vector){x-X,y-Y,10};
-	ft_put_line(vars->image, v0, v1, color);
 	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
+	return 0;
+}
+
+static void	ft_draw_legend(t_vars *vars)
+{
+	int	y;
+
+	y = 20;
+	mlx_string_put(vars->mlx->this, vars->mlx->win, WIDTH/2 - 60, y, WHITE, vars->map->name);
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y, WHITE,       "ARROW KEYS    -> MOVE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 30, WHITE,  "+ / -         -> ZOOM IN / OUT");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 60, WHITE,  "x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 75, WHITE,  "y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 90, WHITE,  "z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 120, WHITE, "i / I         -> ISOMETRIC PROJECTION");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 135, WHITE, "p / P         -> PERSPECTIVE PROJECTION");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y + 165, WHITE, "ENTER         -> ANIMATE");
+}
+
+int ft_draw_test(t_vars *vars)
+{
+	if (!vars->mlx->win)
+		return (1);
+	ft_draw_legend(vars);
 	return 0;
 }

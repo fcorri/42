@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 01:11:58 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/28 18:57:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	ft_init_map(char *filename, t_map **p_map)
 		rows++;
 	free(line);
 	map->rows = rows;
+	map->name = "ISOMETRIC PROJECTION";
 	return (ft_init_matrix_and_drawing_function_for(p_map, map) && ft_init_points(filename, fd, map, line_len));
 }
 

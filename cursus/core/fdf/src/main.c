@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 00:47:00 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/06/28 19:00:14 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	ft_free_and_return(t_vars *vars, int value)
 		free(vars->mlx->this);
 		free(vars->mlx);
 	}
-	index = 0;
 	if (vars->map && vars->map->matrix)
 	{
 		index = vars->map->rows;
@@ -52,10 +51,7 @@ static int	ft_key_down(int keycode, t_vars *vars)
 
 	mlx = vars->mlx;
 	if (keycode == XK_v || keycode == XK_V)
-	{
-//		if (!ft_clear_image_and_set_ft_draw(vars, ft_draw_map_as_vertical_projection))
-			mlx->win = NULL;
-	}
+		ft_clear_image_and_set_ft_draw(vars, ft_draw_null);
 	else if (keycode == XK_Escape)
 	{
 		mlx_destroy_window(mlx->this, mlx->win);
