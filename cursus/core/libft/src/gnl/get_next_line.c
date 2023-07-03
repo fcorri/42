@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 18:07:10 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 01:28:03 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/03 16:12:52 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*get_next_line(int fd)
 	size = sizeof(unsigned long);
 	buffer = ft_calloc_gnl(size, BUFFER_SIZE / size + 1);
 	if (!buffer)
-		return (NULL);
+		return (ft_free_and_return(line, buffer, NULL));
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (ft_free_and_return(line, buffer, NULL));
 	br = read(fd, buffer, BUFFER_SIZE);
