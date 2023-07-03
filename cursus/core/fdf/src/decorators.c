@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 01:16:54 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/03 17:01:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,26 @@
 
 struct s_map_vars
 {
-	int	y;
-	int	max_z;
-	int	tmp;
+	int			y;
+	t_bvector	min_max;
+	int			tmp;
 };
+
+void	ft_bvector_swap_decorator(t_bvector value, t_bvector *to_be_checked)
+{
+	if (value.x < to_be_checked->x)
+		ft_swap(&value.x, &to_be_checked->x);
+	else if (value.y > to_be_checked->y)
+		ft_swap(&value.y, &to_be_checked->y);
+}
+
+static void	ft_int_swap_decorator(int value, t_bvector *to_be_checked)
+{
+	if (value < to_be_checked->x)
+		ft_swap(&value, &to_be_checked->x);
+	else if (value > to_be_checked->y)
+		ft_swap(&value, &to_be_checked->y);
+}
 
 size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename)
 {
@@ -36,7 +52,7 @@ size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename)
 	while (splitted[tmp])
 		free(splitted[tmp++]);
 	free(splitted);
-	map->columns = tmp;
+	map->dim.y = tmp;
 	tmp = ft_strlen(line);
 	free(line);
 	close(*fd);
@@ -44,7 +60,7 @@ size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename)
 	return (tmp);
 }
 
-int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
+t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char				**tmp;
 	int					**matrix;
@@ -57,23 +73,20 @@ int	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	tmp = ft_split(line, ' ');
 	number = tmp[vars.y];
 	matrix = map->matrix;
-	vars.max_z = 0;
+	vars.min_max = (t_bvector){INT_MAX, INT_MIN};
 	while (number)
 	{
 		if (*number == '0')
-			matrix[x-1][vars.y] = 0;
+			vars.tmp = 0;
 		else
-		{
 			vars.tmp = ft_atoi(number);
-			if (vars.tmp > vars.max_z)
-				vars.max_z = vars.tmp;
-			matrix[x-1][vars.y] = vars.tmp;
-		}
+		ft_int_swap_decorator(vars.tmp, &vars.min_max);
+		matrix[x-1][vars.y] = vars.tmp;
 		free(number);
 		number = tmp[++vars.y];
 	}
 	free(tmp);
-	return (vars.max_z);
+	return (vars.min_max);
 }
 
 t_vector	ft_new_vector_color_decorator(int color)

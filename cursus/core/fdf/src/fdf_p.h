@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 18:57:11 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/03 18:18:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,41 +35,7 @@
 # define START_COLOR	0x0000FF84
 # define END_COLOR		0x00FF4F00
 
-typedef struct s_vars	t_vars;
-
-typedef struct mlx
-{
-	void	*this;
-	void	*win;
-}	t_mlx;
-
-typedef struct map
-{
-	int	rows;
-	int	columns;
-	int	**matrix;
-	int	start_color;
-	int	end_color;
-	int	max_z;
-	char	*name;
-	int	(*ft_draw)(t_vars *vars);
-}	t_map;
-
-typedef struct image
-{
-	void	*this;
-	char	*addr;
-	int		bpp;
-	int		ll;
-	int		end;
-}	t_image;
-
-struct s_vars
-{
-	t_mlx	*mlx;
-	t_map	*map;
-	t_image	*image;
-};
+typedef struct s_vars		t_vars;
 
 typedef struct vector
 {
@@ -90,14 +56,48 @@ typedef struct bvector
 	int	y;
 }	t_bvector;
 
+typedef struct mlx
+{
+	void	*this;
+	void	*win;
+}	t_mlx;
+
+typedef struct map
+{
+	t_bvector	dim;
+	int			**matrix;
+	int			**points;
+	t_bvector	colors;
+	t_bvector	min_max_value;
+	char		*name;
+	int			draw;
+	int			(*ft_draw)(t_vars *vars);
+}	t_map;
+
+typedef struct image
+{
+	void	*this;
+	char	*addr;
+	int		bpp;
+	int		ll;
+	int		end;
+}	t_image;
+
+struct s_vars
+{
+	t_mlx	*mlx;
+	t_map	*map;
+	t_image	*image;
+};
+
 int		ft_error(char *callee, char *with_message);
-void	*ft_null_error(char *callee, char *with_message);
+void	ft_swap(int *first, int *second);
 
 int		ft_init_map(char *filename, t_map **p_map);
 int		ft_init_mlx(t_mlx **p_mlx);
 int		ft_init_image(t_mlx *mlx, t_image **p_image);
 
-int		ft_clear_image_and_set_ft_draw(t_vars *vars, int (*ft_draw)(t_vars *vars));
+int		ft_set_map(t_vars *vars, int (*ft_draw)(t_vars *vars));
 int		ft_draw_map_as_isometric_projection(t_vars *vars);
 int		ft_draw_map_as_vertical_projection(t_vars *vars);
 int		ft_draw_test(t_vars *vars);
@@ -106,12 +106,10 @@ int		ft_draw_null(t_vars *vars);
 void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
 void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
 
-
+void	ft_bvector_swap_decorator(t_bvector value, t_bvector *to_be_checked);
 size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
-int		ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
+t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 t_vector	ft_new_vector_color_decorator(int color);
-
-void	ft_swap(int *first, int *second);
 
 t_vector	ft_new_vector(long x, long y, long z);
 t_vector	ft_add_vector(t_vector a, t_vector b);

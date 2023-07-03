@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 19:00:14 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/03 18:25:42 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_free_and_return(t_vars *vars, int value)
 	}
 	if (vars->map && vars->map->matrix)
 	{
-		index = vars->map->rows;
+		index = vars->map->dim.x;
 		while (index)
 			free((vars->map->matrix)[--index]);
 		free(vars->map->matrix);
@@ -42,7 +42,14 @@ static int	ft_free_and_return(t_vars *vars, int value)
 
 static int	ft_render(t_vars *vars)
 {
-	return (vars->map->ft_draw(vars));
+	int	output;
+
+	if (!(vars->mlx->win && vars->map->draw))
+		return (1);
+	ft_bzero(vars->image->addr, WIDTH * HEIGHT * 4);
+	output = vars->map->ft_draw(vars);
+	vars->map->draw = 0;
+	return (output);
 }
 
 static int	ft_key_down(int keycode, t_vars *vars)
@@ -50,8 +57,13 @@ static int	ft_key_down(int keycode, t_vars *vars)
 	t_mlx	*mlx;
 
 	mlx = vars->mlx;
-	if (keycode == XK_v || keycode == XK_V)
-		ft_clear_image_and_set_ft_draw(vars, ft_draw_null);
+	if (keycode == XK_Left)
+		
+	else if (keycode == XK_Up)
+	else if (keycode == XK_Right)
+	else if (keycode == XK_Down)
+	else if (keycode == XK_v || keycode == XK_V)
+		ft_set_map(vars, ft_draw_null);
 	else if (keycode == XK_Escape)
 	{
 		mlx_destroy_window(mlx->this, mlx->win);

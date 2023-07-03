@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/27 22:16:43 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/03 17:10:40 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ int	ft_error(char *callee, char *with_message)
 {
 	ft_printf("ERROR %s: %s\n", callee, with_message);
 	return (0);
-}
-
-void	*ft_null_error(char *callee, char *with_message)
-{
-	ft_error(callee, with_message);
-	return (NULL);
 }
 
 void	ft_swap(int *first, int *second)

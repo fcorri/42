@@ -6,16 +6,16 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:11:07 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 19:39:49 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/03 18:11:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-int	ft_clear_image_and_set_ft_draw(t_vars *vars, int (*ft_draw)(t_vars *vars))
+int	ft_set_map(t_vars *vars, int (*ft_draw)(t_vars *vars))
 {
-	ft_bzero(vars->image->addr, WIDTH * HEIGHT * 4);
 	vars->map->ft_draw = ft_draw;
+	vars->map->draw = 1;
 	return (1);
 }
 /*
@@ -61,8 +61,6 @@ int	ft_draw_map_as_isometric_projection(t_vars *vars)
 
 int ft_draw_null(t_vars *vars)
 {
-	if (!vars->mlx->win)
-		return (1);
 	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	return 0;
 }
@@ -85,8 +83,6 @@ static void	ft_draw_legend(t_vars *vars)
 
 int ft_draw_test(t_vars *vars)
 {
-	if (!vars->mlx->win)
-		return (1);
 	ft_draw_legend(vars);
-	return 0;
+	return (0);
 }
