@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/03 17:08:46 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/04 00:44:07 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 struct s_line_vars
 {
-	int	start;
-	int	stop;
 	int	dmain;
 	int	dcross;
 	int	d;

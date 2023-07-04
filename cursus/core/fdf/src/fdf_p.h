@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/03 18:18:29 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/04 18:23:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,14 @@ typedef struct mlx
 typedef struct map
 {
 	t_bvector	dim;
-	int			**matrix;
-	int			**points;
-	t_bvector	colors;
-	t_bvector	min_max_value;
+// it should be named matrix if you don't need another one
+	int			**origin;
+//	int			**print;
+	t_vector	tr;
+	t_vector	zoom;
 	char		*name;
+	t_bvector	min_max;
+	t_bvector	colors;
 	int			draw;
 	int			(*ft_draw)(t_vars *vars);
 }	t_map;
@@ -92,19 +95,20 @@ struct s_vars
 
 int		ft_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
+void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
+int		ft_init_matrix(int ***p_matrix, int rows, int columns);
+t_bvector	ft_calculate_colors(t_vars *vars, int z1, int z2);
 
 int		ft_init_map(char *filename, t_map **p_map);
 int		ft_init_mlx(t_mlx **p_mlx);
 int		ft_init_image(t_mlx *mlx, t_image **p_image);
 
-int		ft_set_map(t_vars *vars, int (*ft_draw)(t_vars *vars));
+int		ft_set_map(t_vars *vars, int (*ft_draw)(t_vars *vars), char *name);
 int		ft_draw_map_as_isometric_projection(t_vars *vars);
-int		ft_draw_map_as_vertical_projection(t_vars *vars);
-int		ft_draw_test(t_vars *vars);
-int		ft_draw_null(t_vars *vars);
+int		ft_draw_map_as_orthogonal_projection(t_vars *vars);
+void	ft_draw_legend(t_vars *vars);
 
 void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
-void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
 
 void	ft_bvector_swap_decorator(t_bvector value, t_bvector *to_be_checked);
 size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
@@ -113,6 +117,11 @@ t_vector	ft_new_vector_color_decorator(int color);
 
 t_vector	ft_new_vector(long x, long y, long z);
 t_vector	ft_add_vector(t_vector a, t_vector b);
-t_vector	ft_mul_scalar(t_vector a, double k);
+t_vector	ft_sub_vector(t_vector a, t_vector b);
+t_vector	ft_mul_scalar(t_vector a, float k);
+t_vector	ft_div_scalar(t_vector a, float k);
+
+void	ft_zoom_on(t_vars *vars, int k);
+void	ft_zoom_off(t_vars *vars, int k);
 
 #endif
