@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/04 18:35:02 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:42:03 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ static int	ft_continue_initing_map(t_map **p_map, t_map *map)
 
 	rows = map->dim.x;
 	columns = map->dim.y;
-	if(!(ft_init_matrix(&map->origin, rows, columns)/* && ft_init_matrix(&map->print, rows, columns)*/))
+	if(!(ft_init_matrix(&map->matrix, rows, columns)/* && ft_init_matrix(&map->print, rows, columns)*/))
 		return (0);
 	map->tr = (t_vector){WIDTH/2, HEIGHT/2, 0};
 	map->zoom = (t_vector){10, 10, 0};
+	map->rot = (t_quaternion){1, 0, 0, 0};
 	map->name = "ISOMETRIC PROJECTION";
-	map->colors = (t_bvector){RED, GREEN};
+	map->colors = (t_bvector){RED, 0xFFFF00};
 	map->draw = 1;
 	map->ft_draw = ft_draw_map_as_orthogonal_projection;
 	*p_map = map;

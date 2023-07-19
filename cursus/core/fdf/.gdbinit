@@ -1,4 +1,2 @@
-b ft_draw_test
-b ft_set_map
-b ft_draw_null
+b ft_rot_x_cw
 r

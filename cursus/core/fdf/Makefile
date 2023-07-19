@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/04 18:34:03 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/18 19:50:38 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,16 @@ LIBFT_DIR		=	../libft
 SRCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
-SRCS			=	$(SRCS_DIR)/main.c \
-					$(SRCS_DIR)/vectors.c \
-					$(SRCS_DIR)/utils.c \
-					$(SRCS_DIR)/line.c \
-					$(SRCS_DIR)/init.c \
+SRCS			=	$(SRCS_DIR)/decorators.c \
 					$(SRCS_DIR)/draw.c \
+					$(SRCS_DIR)/init.c \
+					$(SRCS_DIR)/line.c \
+					$(SRCS_DIR)/main.c \
+					$(SRCS_DIR)/rotate.c \
+					$(SRCS_DIR)/utils.c \
+					$(SRCS_DIR)/vectors.c \
 					$(SRCS_DIR)/zoom.c \
-					$(SRCS_DIR)/decorators.c
+
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 

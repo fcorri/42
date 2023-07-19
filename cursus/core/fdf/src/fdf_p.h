@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/04 18:23:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:34:53 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+# include <math.h>
 # include <errno.h>
 # include <string.h>
 # include <fcntl.h>
@@ -34,6 +35,10 @@
 # define BLUE			0x000000FF
 # define START_COLOR	0x0000FF84
 # define END_COLOR		0x00FF4F00
+
+# define DEF_TR			5
+# define DEF_ZOOM		5
+# define DEF_ROT		5 * (M_PI / 180)
 
 typedef struct s_vars		t_vars;
 
@@ -56,6 +61,14 @@ typedef struct bvector
 	int	y;
 }	t_bvector;
 
+typedef struct quaternion
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+}	t_quaternion;
+
 typedef struct mlx
 {
 	void	*this;
@@ -64,17 +77,16 @@ typedef struct mlx
 
 typedef struct map
 {
-	t_bvector	dim;
-// it should be named matrix if you don't need another one
-	int			**origin;
-//	int			**print;
-	t_vector	tr;
-	t_vector	zoom;
-	char		*name;
-	t_bvector	min_max;
-	t_bvector	colors;
-	int			draw;
-	int			(*ft_draw)(t_vars *vars);
+	t_bvector		dim;
+	int				**matrix;
+	t_vector		tr;
+	t_vector		zoom;
+	t_quaternion	rot;
+	char			*name;
+	t_bvector		min_max;
+	t_bvector		colors;
+	int				draw;
+	int				(*ft_draw)(t_vars *vars);
 }	t_map;
 
 typedef struct image
@@ -120,8 +132,16 @@ t_vector	ft_add_vector(t_vector a, t_vector b);
 t_vector	ft_sub_vector(t_vector a, t_vector b);
 t_vector	ft_mul_scalar(t_vector a, float k);
 t_vector	ft_div_scalar(t_vector a, float k);
+t_vector	ft_rot(t_quaternion matrix, t_vector vector);
 
 void	ft_zoom_on(t_vars *vars, int k);
 void	ft_zoom_off(t_vars *vars, int k);
+
+void	ft_rot_x_cw(t_vars *vars);
+void	ft_rot_y_cw(t_vars *vars);
+void	ft_rot_z_cw(t_vars *vars);
+void	ft_rot_x_ccw(t_vars *vars);
+void	ft_rot_y_ccw(t_vars *vars);
+void	ft_rot_z_ccw(t_vars *vars);
 
 #endif

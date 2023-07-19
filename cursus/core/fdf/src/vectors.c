@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/04 12:13:53 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:42:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_vector	ft_div_scalar(t_vector a, float k)
 	return (ft_new_vector(a.x / k, a.y / k, a.z / k));
 }
 
-/*int	ft_dot_product(t_vector a, t_vector b)
+/*
+static int	ft_dot_product(t_vector a, t_vector b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

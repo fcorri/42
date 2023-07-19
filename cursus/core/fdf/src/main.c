@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/04 18:22:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:57:32 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,13 @@ static void	ft_free_map_and_matrices(t_map *map)
 	int	**matrix;
 
 	index = map->dim.x;
-	matrix = map->origin;
+	matrix = map->matrix;
 	if (matrix)
 	{
 		while (index)
 			free(matrix[--index]);
 		free(matrix);
 	}
-/*
-	index = map->dim.x;
-	matrix = map->print;
-	if (matrix)
-	{
-		while (index)
-			free(matrix[--index]);
-		free(matrix);
-	}
-*/
 	free(map);
 }
 
@@ -75,17 +65,29 @@ static int	ft_render(t_vars *vars)
 static int	ft_key_down(int keycode, t_vars *vars)
 {
 	if (keycode == XK_Left)
-		vars->map->tr.x -= 1;
+		vars->map->tr.x -= DEF_TR;
 	else if (keycode == XK_Up)
-		vars->map->tr.y -= 1;
+		vars->map->tr.y -= DEF_TR;
 	else if (keycode == XK_Right)
-		vars->map->tr.x += 1;
+		vars->map->tr.x += DEF_TR;
 	else if (keycode == XK_Down)
-		vars->map->tr.y += 1;
+		vars->map->tr.y += DEF_TR;
 	else if (keycode == XK_KP_Add)
-		ft_zoom_on(vars, 2);
+		ft_zoom_on(vars, DEF_ZOOM);
 	else if (keycode == XK_KP_Subtract)
-		ft_zoom_off(vars, 2);
+		ft_zoom_off(vars, DEF_ZOOM);
+	else if (keycode == XK_x)
+		ft_rot_x_cw(vars);
+	else if (keycode == XK_y)
+		ft_rot_y_cw(vars);
+	else if (keycode == XK_z)
+		ft_rot_z_cw(vars);
+	else if (keycode == XK_X)
+		ft_rot_x_ccw(vars);
+	else if (keycode == XK_Y)
+		ft_rot_y_ccw(vars);
+	else if (keycode == XK_Z)
+		ft_rot_z_ccw(vars);
 	else if (keycode == XK_o || keycode == XK_O)
 		ft_set_map(vars, ft_draw_map_as_orthogonal_projection, "ORTHOGONAL PROJECTION");
 	else if (keycode == XK_i || keycode == XK_I)

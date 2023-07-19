@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/03 23:28:21 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:19:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	x++;
 	tmp = ft_split(line, ' ');
 	number = tmp[vars.y];
-	matrix = map->origin;
+	matrix = map->matrix;
 	vars.min_max = (t_bvector){INT_MAX, INT_MIN};
 	while (number)
 	{
