@@ -6,17 +6,17 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:11:07 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/20 13:06:00 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:17:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-int	ft_set_map(t_vars *vars, int (*ft_draw)(t_vars *vars), char *name)
+int	ft_set_camera(t_vars *vars, int (*ft_draw)(t_vars *vars), char *name)
 {
-	vars->map->ft_draw = ft_draw;
-	vars->map->name = name;
-	vars->map->draw = 1;
+	vars->camera->ft_draw = ft_draw;
+	vars->camera->name = name;
+	vars->camera->draw = 1;
 	return (1);
 }
 
@@ -42,7 +42,7 @@ int	ft_test_draw(t_vars *vars)
 
 	row_col = (t_bvector){0, 0};
 	dim = vars->map->dim;
-	matrix = vars->map->matrix;
+	matrix = vars->camera->matrix;
 	while (row_col.x != dim.x - 1)
 	{
 		p1 = matrix[row_col.x][row_col.y];
@@ -78,7 +78,7 @@ void	ft_draw_legend(t_vars *vars)
 	int	y;
 
 	y = 20;
-	mlx_string_put(vars->mlx->this, vars->mlx->win, WIDTH/2 - 60, y, WHITE, vars->map->name);
+	mlx_string_put(vars->mlx->this, vars->mlx->win, WIDTH/2 - 60, y, WHITE, vars->camera->name);
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y, WHITE,       "ARROW KEYS    -> MOVE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE,  "+ / -         -> ZOOM IN / OUT");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE,  "c / C         -> CENTER");

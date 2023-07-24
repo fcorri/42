@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/20 13:39:10 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:12:31 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ static int	ft_continue_initing_map(t_map **p_map, t_map *map)
 
 	rows = map->dim.x;
 	cols = map->dim.y;
-	if(!(ft_init_matrix(&map->matrix, rows, cols)))
+	if(!(ft_init_int_matrix(&map->matrix, rows, cols)))
 		return (0);
-	map->name = "TEST PROJECTION";
 	map->colors = (t_bvector){RED, GREEN};
-	map->draw = 1;
-	map->ft_draw = ft_test_draw;
 	*p_map = map;
 	return (1);
 }
@@ -48,7 +45,6 @@ static int	ft_init_points(char *filename, int old_fd, t_map *map, size_t line_le
 	map->min_max = min_max;
 	free(line);
 	close(new_fd);
-	ft_zoom(map, 1);
 	return (1);
 }
 
@@ -80,6 +76,32 @@ int	ft_init_map(char *filename, t_map **p_map)
 	map->dim.x = rows;
 	// continue_initing_map can call init_points : *p_map = map necessary
 	return (ft_continue_initing_map(p_map, map) && ft_init_points(filename, fd, map, line_len));
+}
+
+int	ft_init_camera(t_vars *vars)
+{
+	t_camera	*camera;
+	t_bvector	dim;
+
+	camera = ft_malloc_soul(sizeof(t_camera));
+	if (!camera)
+		return (ft_error("CAMERA MALLOC", strerror(errno)));
+	dim = vars->map->dim;
+	if (!ft_init_vector_matrix(&camera->matrix, dim.x, dim.y))
+		return (0);
+	while (dim.x-- > 0)
+	{
+		dim.y = vars->map->dim.y;
+		while (dim.y-- > 0)
+			camera->matrix[dim.x][dim.y] = (t_vector){dim.x, dim.y, vars->map->matrix[dim.x][dim.y]};
+	}
+	camera->name = "TEST";
+	camera->draw = 1;
+	camera->ft_draw = ft_test_draw;
+	vars->camera = camera;
+	ft_to_center(vars);
+	ft_zoom_on(vars, DEF_ZOOM);
+	return (1);
 }
 
 int	ft_init_mlx(t_mlx **p_mlx)

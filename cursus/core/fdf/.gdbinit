@@ -1,2 +1,2 @@
-b transformations.c:49
+b ft_test_draw
 r

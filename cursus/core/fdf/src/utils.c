@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/20 13:06:15 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/24 19:59:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,27 @@ void	ft_put_pixel(t_image *img, t_bvector p, t_vector vcolor)
 		*(unsigned int *)(img->addr + (y * img->ll + x * (img->bpp / 8))) = color;
 }
 
-int	ft_init_matrix(t_vector ***p_matrix, int rows, int columns)
+int	ft_init_int_matrix(int ***p_matrix, int rows, int columns)
+{
+	int	**matrix;
+	int	i;
+
+	matrix = ft_malloc_soul(sizeof(int *) * rows);
+	if (!matrix)
+		return (ft_error("MATRIX MALLOC", strerror(errno)));
+	i = 0;
+	while (i < rows)
+	{
+		matrix[i] = ft_malloc_soul(sizeof(int) * columns);
+		if (!matrix[i])
+			return (ft_error("MATRIX[i] MALLOC", strerror(errno)));
+		i++;
+	}
+	*p_matrix = matrix;
+	return (1);
+}
+
+int	ft_init_vector_matrix(t_vector ***p_matrix, int rows, int columns)
 {
 	t_vector	**matrix;
 	int			i;
@@ -59,6 +79,7 @@ int	ft_init_matrix(t_vector ***p_matrix, int rows, int columns)
 	*p_matrix = matrix;
 	return (1);
 }
+
 
 t_bvector	ft_calculate_colors(t_vars *vars, int z1, int z2)
 {

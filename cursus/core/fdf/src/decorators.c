@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/20 10:35:15 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/24 19:08:42 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename)
 t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char				**tmp;
-	t_vector			**matrix;
+	int					**matrix;
 	struct s_map_vars	vars;
 	static int			x;
 	char				*number;
@@ -80,7 +80,7 @@ t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 		else
 			vars.z = ft_atoi(number);
 		ft_int_swap_decorator(vars.z, &vars.min_max);
-		matrix[x][vars.y] = (t_vector){vars.y, x, vars.z};
+		matrix[x][vars.y] = vars.z;
 		free(number);
 		number = tmp[++vars.y];
 	}

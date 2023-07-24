@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/20 16:53:21 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:19:48 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,19 @@ typedef struct mlx
 
 typedef struct map
 {
-	t_bvector		dim;
-	t_vector		**matrix;
-	char			*name;
-	t_bvector		min_max;
-	t_bvector		colors;
-	int				draw;
-	int				(*ft_draw)(t_vars *vars);
+	t_bvector	dim;
+	int			**matrix;
+	t_bvector	min_max;
+	t_bvector	colors;
 }	t_map;
+
+typedef struct camera
+{
+	t_vector	**matrix;
+	char		*name;
+	int			draw;
+	int			(*ft_draw)(t_vars *vars);
+}	t_camera;
 
 typedef struct image
 {
@@ -109,22 +114,25 @@ typedef struct image
 
 struct s_vars
 {
-	t_mlx	*mlx;
-	t_map	*map;
-	t_image	*image;
+	t_mlx		*mlx;
+	t_map		*map;
+	t_image		*image;
+	t_camera	*camera;
 };
 
 int		ft_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
 void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
-int		ft_init_matrix(t_vector ***p_matrix, int rows, int columns);
+int		ft_init_int_matrix(int ***p_matrix, int rows, int columns);
+int		ft_init_vector_matrix(t_vector ***p_matrix, int rows, int columns);
 t_bvector	ft_calculate_colors(t_vars *vars, int z1, int z2);
 
 int		ft_init_map(char *filename, t_map **p_map);
+int		ft_init_camera(t_vars *vars);
 int		ft_init_mlx(t_mlx **p_mlx);
 int		ft_init_image(t_mlx *mlx, t_image **p_image);
 
-int		ft_set_map(t_vars *vars, int (*ft_draw)(t_vars *vars), char *name);
+int		ft_set_camera(t_vars *vars, int (*ft_draw)(t_vars *vars), char *name);
 int		ft_draw_map_as_isometric_projection(t_vars *vars);
 int		ft_draw_map_as_orthogonal_projection(t_vars *vars);
 int		ft_test_draw(t_vars *vars);
@@ -137,16 +145,18 @@ size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
 t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 t_vector	ft_new_vector_color_decorator(int color);
 
-void	ft_for_each_point(t_map *map, t_matrix transform);
-void	ft_translate(t_map *map, t_vector vector);
-void	ft_zoom(t_map *map, int on);
-void	ft_to_center(t_map *map);
+void	ft_translate(t_vars *vars, t_vector vector);
+void	ft_zoom_on(t_vars *vars, int value);
+void	ft_zoom_off(t_vars *vars, int value);
+void	ft_to_center(t_vars *vars);
 
 t_vector	ft_add_vector(t_vector a, t_vector b);
 t_vector	ft_opposite(t_vector a);
 t_vector	ft_sub_vector(t_vector a, t_vector b);
 t_vector	ft_mul_scalar(t_vector a, float k);
 t_vector	ft_div_scalar(t_vector a, float k);
+t_vector	ft_mul_scalarXY(t_vector a, int k);
+t_vector	ft_div_scalarXY(t_vector a, int k);
 t_vector	ft_mul_row_col(t_matrix matrix, t_vector vector);
 t_vector	ft_rot(t_quaternion matrix, t_vector vector);
 

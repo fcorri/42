@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/20 12:02:13 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/24 18:33:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,29 @@ t_vector	ft_mul_scalar(t_vector a, float k)
 t_vector	ft_div_scalar(t_vector a, float k)
 {
 	return (ft_new_vector(a.x / k, a.y / k, a.z / k));
+}
+
+t_vector	ft_mul_scalarXY(t_vector a, int k)
+{
+	return (ft_new_vector(a.x * k, a.y * k, a.z));
+}
+
+t_vector	ft_div_scalarXY(t_vector a, int k)
+{
+	int	x;
+	int	y;
+
+	if (a.x % k == 0 && a.y % k == 0)
+	{
+		x = a.x / k;
+		y = a.y / k;
+	}
+	else
+	{
+		x = a.x;
+		y = a.y;
+	}
+	return (ft_new_vector(x, y, a.z));
 }
 
 static int	ft_dot_product(t_vector a, t_vector b)
