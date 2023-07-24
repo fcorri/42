@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/18 19:50:38 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/20 11:13:05 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,11 @@ SRCS			=	$(SRCS_DIR)/decorators.c \
 					$(SRCS_DIR)/init.c \
 					$(SRCS_DIR)/line.c \
 					$(SRCS_DIR)/main.c \
-					$(SRCS_DIR)/rotate.c \
 					$(SRCS_DIR)/utils.c \
+					$(SRCS_DIR)/transformations.c \
+					$(SRCS_DIR)/rotate_ccw.c \
+					$(SRCS_DIR)/rotate_cw.c \
 					$(SRCS_DIR)/vectors.c \
-					$(SRCS_DIR)/zoom.c \
 
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)

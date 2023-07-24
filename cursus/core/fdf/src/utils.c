@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/04 16:50:46 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:06:15 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ void	ft_put_pixel(t_image *img, t_bvector p, t_vector vcolor)
 		*(unsigned int *)(img->addr + (y * img->ll + x * (img->bpp / 8))) = color;
 }
 
-int	ft_init_matrix(int ***p_matrix, int rows, int columns)
+int	ft_init_matrix(t_vector ***p_matrix, int rows, int columns)
 {
-	int	**matrix;
-	int	i;
+	t_vector	**matrix;
+	int			i;
 
-	matrix = ft_malloc_soul(sizeof(int *) * rows);
+	matrix = ft_malloc_soul(sizeof(t_vector *) * rows);
 	if (!matrix)
 		return (ft_error("MATRIX MALLOC", strerror(errno)));
 	i = 0;
 	while (i < rows)
 	{
-		matrix[i] = ft_malloc_soul(sizeof(int) * columns);
+		matrix[i] = ft_malloc_soul(sizeof(t_vector) * columns);
 		if (!matrix[i])
 			return (ft_error("MATRIX[i] MALLOC", strerror(errno)));
 		i++;

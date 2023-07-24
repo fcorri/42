@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/18 19:57:32 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/20 14:13:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_free_map_and_matrices(t_map *map)
 {
 	int	index;
-	int	**matrix;
+	t_vector **matrix;
 
 	index = map->dim.x;
 	matrix = map->matrix;
@@ -64,18 +64,23 @@ static int	ft_render(t_vars *vars)
 
 static int	ft_key_down(int keycode, t_vars *vars)
 {
+	t_map	*map;
+
+	map = vars->map;
 	if (keycode == XK_Left)
-		vars->map->tr.x -= DEF_TR;
+		ft_translate(map, LEFT);
 	else if (keycode == XK_Up)
-		vars->map->tr.y -= DEF_TR;
+		ft_translate(map, UP);
 	else if (keycode == XK_Right)
-		vars->map->tr.x += DEF_TR;
+		ft_translate(map, RIGHT);
 	else if (keycode == XK_Down)
-		vars->map->tr.y += DEF_TR;
-	else if (keycode == XK_KP_Add)
-		ft_zoom_on(vars, DEF_ZOOM);
-	else if (keycode == XK_KP_Subtract)
-		ft_zoom_off(vars, DEF_ZOOM);
+		ft_translate(map, DOWN);
+	else if (keycode == XK_KP_Add || keycode == 43)
+		ft_zoom(map, 1);
+	else if (keycode == XK_KP_Subtract || keycode == 45)
+		ft_zoom(map, 0);
+	else if (keycode == XK_c || keycode == XK_C)
+		ft_to_center(map);
 	else if (keycode == XK_x)
 		ft_rot_x_cw(vars);
 	else if (keycode == XK_y)

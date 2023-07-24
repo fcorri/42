@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/19 12:42:03 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:39:10 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 
 static int	ft_continue_initing_map(t_map **p_map, t_map *map)
 {
-	int	rows;
-	int	columns;
+	int			rows;
+	int			cols;
 
 	rows = map->dim.x;
-	columns = map->dim.y;
-	if(!(ft_init_matrix(&map->matrix, rows, columns)/* && ft_init_matrix(&map->print, rows, columns)*/))
+	cols = map->dim.y;
+	if(!(ft_init_matrix(&map->matrix, rows, cols)))
 		return (0);
-	map->tr = (t_vector){WIDTH/2, HEIGHT/2, 0};
-	map->zoom = (t_vector){10, 10, 0};
-	map->rot = (t_quaternion){1, 0, 0, 0};
-	map->name = "ISOMETRIC PROJECTION";
-	map->colors = (t_bvector){RED, 0xFFFF00};
+	map->name = "TEST PROJECTION";
+	map->colors = (t_bvector){RED, GREEN};
 	map->draw = 1;
-	map->ft_draw = ft_draw_map_as_orthogonal_projection;
+	map->ft_draw = ft_test_draw;
 	*p_map = map;
 	return (1);
 }
@@ -51,6 +48,7 @@ static int	ft_init_points(char *filename, int old_fd, t_map *map, size_t line_le
 	map->min_max = min_max;
 	free(line);
 	close(new_fd);
+	ft_zoom(map, 1);
 	return (1);
 }
 
@@ -68,6 +66,7 @@ int	ft_init_map(char *filename, t_map **p_map)
 	map = ft_calloc(1, sizeof(t_map));
 	if (!map)
 		return(ft_error("MAP CALLOC", strerror(errno)));
+	// why fd needs to be closed and opened?
 	line_len = ft_split_decorator_to_init_line_len(&fd, map, filename);
 	if (!line_len || fd < 0)
 		return (ft_error("SPLIT_DECORATOR_TO_INIT_LINE_LEN", strerror(errno)));
@@ -79,6 +78,7 @@ int	ft_init_map(char *filename, t_map **p_map)
 		rows++;
 	free(line);
 	map->dim.x = rows;
+	// continue_initing_map can call init_points : *p_map = map necessary
 	return (ft_continue_initing_map(p_map, map) && ft_init_points(filename, fd, map, line_len));
 }
 
