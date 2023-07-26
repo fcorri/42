@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 20:19:48 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 11:42:18 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define DOWN		(t_vector){0, DEF_TR, 0}
 # define DEF_ZOOM	2
 # define ZOOM		(t_vector){DEF_ZOOM, DEF_ZOOM, 0}
-# define DEF_ROT	5 * (M_PI / 180)
+# define DEF_ANG	30 * (M_PI / 180)
 
 typedef struct s_vars		t_vars;
 
@@ -145,6 +145,10 @@ size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
 t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 t_vector	ft_new_vector_color_decorator(int color);
 
+void	ft_VVV_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, t_vector b), t_vector v);
+void	ft_VVS_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, int k), int k);
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector p, t_quaternion q), t_quaternion q);
+
 void	ft_translate(t_vars *vars, t_vector vector);
 void	ft_zoom_on(t_vars *vars, int value);
 void	ft_zoom_off(t_vars *vars, int value);
@@ -158,7 +162,8 @@ t_vector	ft_div_scalar(t_vector a, float k);
 t_vector	ft_mul_scalarXY(t_vector a, int k);
 t_vector	ft_div_scalarXY(t_vector a, int k);
 t_vector	ft_mul_row_col(t_matrix matrix, t_vector vector);
-t_vector	ft_rot(t_quaternion matrix, t_vector vector);
+t_vector	ft_mul_quaternion(t_vector v, t_quaternion q);
+t_quaternion	ft_mul_quat(t_quaternion q1, t_quaternion q2);
 
 void	ft_rot_x_cw(t_vars *vars);
 void	ft_rot_y_cw(t_vars *vars);

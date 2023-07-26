@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 20:12:31 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:59:54 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ int	ft_init_camera(t_vars *vars)
 	{
 		dim.y = vars->map->dim.y;
 		while (dim.y-- > 0)
-			camera->matrix[dim.x][dim.y] = (t_vector){dim.x, dim.y, vars->map->matrix[dim.x][dim.y]};
+			camera->matrix[dim.x][dim.y] = (t_vector){dim.y, dim.x, vars->map->matrix[dim.x][dim.y]};
 	}
 	camera->name = "TEST";
 	camera->draw = 1;
 	camera->ft_draw = ft_test_draw;
 	vars->camera = camera;
+	ft_zoom_on(vars, 20);
 	ft_to_center(vars);
-	ft_zoom_on(vars, DEF_ZOOM);
 	return (1);
 }
 

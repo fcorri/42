@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:31:42 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 20:27:08 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/25 17:29:43 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,14 @@ static void	ft_to_origin(t_vars *vars)
 	ft_translate(vars, ft_opposite(vars->camera->matrix[0][0]));
 }
 
-static void	ft_VVV_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, t_vector b), t_vector v)
-{
-	int			row;
-	int			col;
-	t_vector	**matrix;
-
-	row = vars->map->dim.x;
-	matrix = vars->camera->matrix;
-	while (--row >= 0)
-	{
-		col = vars->map->dim.y;
-		while (--col >= 0)
-			matrix[row][col] = op(matrix[row][col], v);
-	}
-}
-
-static void	ft_VVS_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, int k), int k)
-{
-	int			row;
-	int			col;
-	t_vector	**matrix;
-
-	row = vars->map->dim.x;
-	matrix = vars->camera->matrix;
-	while (--row >= 0)
-	{
-		col = vars->map->dim.y;
-		while (--col >= 0)
-			matrix[row][col] = op(matrix[row][col], k);
-	}
-}
-
 void	ft_translate(t_vars *vars, t_vector vector)
 {
 	ft_VVV_for_each_point_of(vars, ft_add_vector, vector);
 }
 
 void ft_zoom_on(t_vars *vars, int value)
-{	t_vector	v;
+{
+	t_vector	v;
 
 	v = vars->camera->matrix[0][0];
 	ft_to_origin(vars);

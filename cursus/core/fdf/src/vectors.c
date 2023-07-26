@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 18:33:26 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 11:42:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,42 @@ t_vector	ft_mul_row_col(t_matrix matrix, t_vector vector)
 {
 	return (ft_new_vector(ft_dot_product(matrix.x, vector), ft_dot_product(matrix.y, vector), ft_dot_product(matrix.z, vector)));
 }
-
 /*
-t_vector	*ft_cross_product(t_vector a, t_vector b)
+static t_vector	ft_cross_product(t_vector a, t_vector b)
 {
 	return (ft_new_vector(
 			a.y * b.z - a.z * b.y,
 			a.z * b.x - a.x * b.z,
 			a.x * b.y - a.y * b.x
 		));
-}*/
+}
+*/
+t_vector	ft_mul_quaternion(t_vector v, t_quaternion q)
+{
+	t_quaternion	tmp;
+
+	tmp = ft_mul_quat(ft_mul_quat((t_quaternion){0, v.x, v.y, v.z}, q), (t_quaternion){q.a, q.b * -1, q.c * -1, q.d * -1});
+	return ((t_vector){tmp.b, tmp.c, tmp.d});
+}
+
+t_quaternion	ft_mul_quat(t_quaternion q1, t_quaternion q2)
+{
+	return (
+		(t_quaternion) {
+			q1.a*q2.a - q1.b*q2.b - q1.c*q2.c - q1.d*q2.d,
+			q1.a*q2.b + q1.b*q2.a - q1.c*q2.d - q1.d*q2.c,
+			q1.a*q2.c - q1.b*q2.d + q1.c*q2.a + q1.d*q2.b,
+			q1.a*q2.d + q1.b*q2.c - q1.c*q2.b + q1.d*q2.a
+		});
+/*
+	t_vector	qv;
+	t_vector	tmp;
+	t_vector	output;
+
+	qv = (t_vector){q.b, q.c, q.d};
+	tmp = ft_mul_scalar(ft_cross_product(qv, v), 2);
+	output = ft_cross_product(qv, tmp);
+	output = ft_add_vector(ft_mul_scalar(tmp, q.a), output);
+	return (ft_add_vector(v, output));
+*/
+}

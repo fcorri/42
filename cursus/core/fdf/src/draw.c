@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:11:07 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 20:17:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:59:05 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	ft_draw_legend(t_vars *vars)
 	y = 20;
 	mlx_string_put(vars->mlx->this, vars->mlx->win, WIDTH/2 - 60, y, WHITE, vars->camera->name);
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y, WHITE,       "ARROW KEYS    -> MOVE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE,  "+ / -         -> ZOOM IN / OUT");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE,  "c / C         -> CENTER");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE,  "x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE,  "y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE,  "z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "+ / -         -> ZOOM IN / OUT");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "c             -> CENTER");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "i / I         -> ISOMETRIC PROJECTION");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "o / O         -> ORTHOGONAL PROJECTION");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "ENTER         -> ANIMATE");

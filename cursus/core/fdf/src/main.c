@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 20:29:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 11:41:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	ft_key_down(int keycode, t_vars *vars)
 		ft_zoom_on(vars, DEF_ZOOM);
 	else if (keycode == XK_KP_Subtract || keycode == 45)
 		ft_zoom_off(vars, DEF_ZOOM);
-	else if (keycode == XK_c || keycode == XK_C)
+	else if (keycode == XK_c)
 		ft_to_center(vars);
 	else if (keycode == XK_x)
 		ft_rot_x_cw(vars);
@@ -113,7 +113,6 @@ static int	ft_key_down(int keycode, t_vars *vars)
 	vars->camera->draw = 1;
 	return (ft_render(vars));
 }
-
 int main(int argc, char **argv)
 {
 	t_vars	vars;
