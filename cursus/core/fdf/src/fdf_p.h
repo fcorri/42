@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 11:42:18 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 16:29:44 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # include "libft/libft.h"
 
-# define WIDTH			1000
-# define HEIGHT			500
+# define WIDTH			1500
+# define HEIGHT			1000
 # define TITLE			"fil de fer"
 
 # define WHITE			0x00FFFFFF
@@ -41,18 +41,25 @@
 # define UP			(t_vector){0, -DEF_TR, 0}
 # define RIGHT		(t_vector){DEF_TR, 0, 0}
 # define DOWN		(t_vector){0, DEF_TR, 0}
-# define DEF_ZOOM	2
+# define DEF_ZOOM	1
 # define ZOOM		(t_vector){DEF_ZOOM, DEF_ZOOM, 0}
-# define DEF_ANG	30 * (M_PI / 180)
+# define DEF_ANG	30
 
 typedef struct s_vars		t_vars;
 
 typedef struct vector
 {
+	double	x;
+	double	y;
+	double	z;
+}	t_vector;
+
+typedef struct color
+{
 	int	x;
 	int	y;
 	int	z;
-}	t_vector;
+}	t_color;
 
 typedef struct dvector
 {
@@ -122,7 +129,7 @@ struct s_vars
 
 int		ft_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
-void	ft_put_pixel(t_image *img, t_bvector v0, t_vector color);
+void	ft_put_pixel(t_image *img, t_bvector v0, t_color color);
 int		ft_init_int_matrix(int ***p_matrix, int rows, int columns);
 int		ft_init_vector_matrix(t_vector ***p_matrix, int rows, int columns);
 t_bvector	ft_calculate_colors(t_vars *vars, int z1, int z2);
@@ -143,11 +150,11 @@ void	ft_put_line(t_image *image, t_vector v0, t_vector v1, t_bvector colors);
 void	ft_bvector_swap_decorator(t_bvector value, t_bvector *to_be_checked);
 size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
 t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
-t_vector	ft_new_vector_color_decorator(int color);
+t_color ft_new_vector_color_decorator(int color);
 
 void	ft_VVV_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, t_vector b), t_vector v);
 void	ft_VVS_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, int k), int k);
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector p, t_quaternion q), t_quaternion q);
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector point, t_vector axis, double deg), t_vector axis, double deg);
 
 void	ft_translate(t_vars *vars, t_vector vector);
 void	ft_zoom_on(t_vars *vars, int value);
@@ -162,7 +169,10 @@ t_vector	ft_div_scalar(t_vector a, float k);
 t_vector	ft_mul_scalarXY(t_vector a, int k);
 t_vector	ft_div_scalarXY(t_vector a, int k);
 t_vector	ft_mul_row_col(t_matrix matrix, t_vector vector);
-t_vector	ft_mul_quaternion(t_vector v, t_quaternion q);
+
+t_quaternion	ft_coniugate(t_quaternion q);
+double			ft_magnitude(t_vector a);
+t_vector		ft_mul_quaternion(t_vector point, t_vector axis, double deg);
 t_quaternion	ft_mul_quat(t_quaternion q1, t_quaternion q2);
 
 void	ft_rot_x_cw(t_vars *vars);

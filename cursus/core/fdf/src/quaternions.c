@@ -1,46 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   quaternions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 16:48:17 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 15:28:17 by fcorri           ###   ########.fr       */
+/*   Created: 2023/07/26 15:29:59 by fcorri            #+#    #+#             */
+/*   Updated: 2023/07/26 16:21:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <math.h>
-
-typedef struct vector
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vector;
-
-typedef struct quaternion
-{
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-}	t_quaternion;
-
-t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2);
+#include "fdf_p.h"
 
 t_quaternion	ft_coniugate(t_quaternion q)
 {
 	return (
 		(t_quaternion){q.a, q.b * -1, q.c * -1, q.d * -1}
-	);
-}
-
-t_vector	ft_div_scalar(t_vector a, double s)
-{
-	return (
-		(t_vector){a.x / s, a.y / s, a.z / s}
 	);
 }
 
@@ -69,7 +44,7 @@ t_vector	ft_mul_quaternion(t_vector point, t_vector axis, double deg)
 		ft_coniugate(q)
 	);
 
-	return ((t_vector){output.b, output.c, output.d});
+	return ((t_vector){output.b, output.c, point.z});
 }
 
 t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
@@ -81,15 +56,16 @@ t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
 			q1.a*q2.c - q1.b*q2.d + q1.c*q2.a + q1.d*q2.b,
 			q1.a*q2.d + q1.b*q2.c - q1.c*q2.b + q1.d*q2.a
 		});
-}
+/*
+	t_vector	qv;
+	t_vector	tmp;
+	t_vector	output;
 
-int main(void)
-{
-	t_vector	result = ft_mul_quaternion(
-		(t_vector){2, 3, 5},
-		(t_vector){1, 0, 0},
-		60
-	);
-	printf("\n{2,3,5} rotated by 60 degress around {1,0,0} axis:\t[%f, %f, %f]\n", result.x, result.y, result.z);
-	return (0);
+	qv = (t_vector){q.b, q.c, q.d};
+	tmp = ft_mul_scalar(ft_cross_product(qv, v), 2);
+	output = ft_cross_product(qv, tmp);
+	output = ft_add_vector(ft_mul_scalar(tmp, q.a), output);
+	return (ft_add_vector(v, output));
+*/
+
 }

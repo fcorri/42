@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/04 00:44:07 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:50:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ static int	ft_init_di(int *d, int *i)
 	return (0);
 }
 
+static t_vector ft_cv(t_color color)
+{
+	return (
+		(t_vector){color.x, color.y, color.z}
+	);
+}
+
+static t_color ft_vc(t_vector v)
+{
+	return (
+		(t_color){v.x, v.y, v.z}
+	);
+}
+
 static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 {
 	int	change_start;
@@ -53,15 +67,15 @@ static int	ft_init(struct s_line_vars *vars, int *stop, int y1)
 static void	ft_put_basic_line(t_image *img, t_vector start, t_dvector d, t_bvector colors)
 {
 	int	incremento;
-	t_vector	color;
-	t_vector	dcolor;
+	t_color	color;
+	t_color	dcolor;
 
 	color = ft_new_vector_color_decorator(colors.x);
 	if (!d.mod)
 		ft_put_pixel(img, (t_bvector){start.x, start.y}, color);
 	else
 	{
-		dcolor = ft_mul_scalar(ft_add_vector(ft_new_vector_color_decorator(colors.y),ft_mul_scalar(color,-1)),1.0/(d.mod));
+		dcolor = ft_vc(ft_mul_scalar(ft_add_vector(ft_cv(ft_new_vector_color_decorator(colors.y)),ft_mul_scalar(ft_cv(color),-1)),1.0/(d.mod)));
 		d.dir %= 180;
 		ft_init_di(&d.mod, &incremento);
 		while (d.mod--)
@@ -71,7 +85,7 @@ static void	ft_put_basic_line(t_image *img, t_vector start, t_dvector d, t_bvect
 				start.y += incremento;
 			else
 				start.x += incremento;
-			color = ft_add_vector(color, dcolor);
+			color = ft_vc(ft_add_vector(ft_cv(color), ft_cv(dcolor)));
 		}
 	}
 }
@@ -88,8 +102,8 @@ void	ft_put_line(t_image *img, t_vector v0, t_vector v1, t_bvector colors)
 	int	start;
 	int	stop;
 	int	tmp;
-	t_vector	color;
-	t_vector	dcolor;
+	t_color	color;
+	t_color	dcolor;
 
 	start = v0.x;
 	stop = v1.x;
@@ -108,7 +122,7 @@ void	ft_put_line(t_image *img, t_vector v0, t_vector v1, t_bvector colors)
 	}
 	vars.d = (2 * vars.dcross) - vars.dmain;
 	color = ft_new_vector_color_decorator(colors.x);
-	dcolor = ft_mul_scalar(ft_add_vector(ft_new_vector_color_decorator(colors.y),ft_mul_scalar(color,-1)),1.0/(stop - start));
+	dcolor = ft_vc(ft_mul_scalar(ft_add_vector(ft_cv(ft_new_vector_color_decorator(colors.y)),ft_mul_scalar(ft_cv(color),-1)),1.0/(stop - start)));
 	while (start != stop)
 	{
 		if (vars.d > 0)
@@ -119,6 +133,6 @@ void	ft_put_line(t_image *img, t_vector v0, t_vector v1, t_bvector colors)
 		vars.d += 2 * vars.dcross;
 		ft_put_pixel(img, (t_bvector){start, tmp}, color);
 		start += vars.imain;
-		color = ft_add_vector(color, dcolor);
+		color = ft_vc(ft_add_vector(ft_cv(color), ft_cv(dcolor)));
 	}
 }

@@ -6,14 +6,14 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/03 16:48:25 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/22 19:00:02 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/26 14:48:31 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/test
 
 CFLAGS			=	-g #-O3
-REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
+REQUIRED_CFLAGS	=	$(CFLAGS)
 CPPFLAGS		=	$(addprefix -I, $(LIBFT_DIR)/$(INC_DIR) /usr/include $(MLX_DIR))
 LDFLAGS			=	$(addprefix -L, $(LIBFT_DIR)/$(BUILD_DIR) $(MLX_DIR) /usr/lib)
 LDLIBS			=	$(addprefix -l, ft mlx_Linux Xext X11 m z)

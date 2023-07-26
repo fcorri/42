@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 19:08:42 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:44:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	return (vars.min_max);
 }
 
-t_vector	ft_new_vector_color_decorator(int color)
+t_color ft_new_vector_color_decorator(int color)
 {
-	return ((t_vector)
+	return ((t_color)
 		{
 			color & RED,
 			color & GREEN,

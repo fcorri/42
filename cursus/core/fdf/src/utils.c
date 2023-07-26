@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/24 19:59:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:56:43 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_swap(int *first, int *second)
 	*second = tmp;
 }
 
-void	ft_put_pixel(t_image *img, t_bvector p, t_vector vcolor)
+void	ft_put_pixel(t_image *img, t_bvector p, t_color vcolor)
 {
 	int	x;
 	int	y;
@@ -80,23 +80,36 @@ int	ft_init_vector_matrix(t_vector ***p_matrix, int rows, int columns)
 	return (1);
 }
 
+static t_vector ft_cv(t_color color)
+{
+	return (
+		(t_vector){color.x, color.y, color.z}
+	);
+}
+
+static t_color ft_vc(t_vector v)
+{
+	return (
+		(t_color){v.x, v.y, v.z}
+	);
+}
 
 t_bvector	ft_calculate_colors(t_vars *vars, int z1, int z2)
 {
 	int			n;
-	t_vector	start;
-	t_vector	step;
-	t_vector	color;
+	t_color	start;
+	t_color	step;
+	t_color	color;
 	t_bvector	output;
 
 	n = vars->map->min_max.y - vars->map->min_max.x;
 	if (!n)
 		return ((t_bvector){vars->map->colors.x, vars->map->colors.x});
 	start = ft_new_vector_color_decorator(vars->map->colors.x);
-	step = ft_div_scalar(ft_sub_vector(ft_new_vector_color_decorator(vars->map->colors.y), start), n);
-	color = ft_add_vector(start, ft_mul_scalar(step, z1));
+	step = ft_vc(ft_div_scalar(ft_sub_vector(ft_cv(ft_new_vector_color_decorator(vars->map->colors.y)), ft_cv(start)), n));
+	color = ft_vc(ft_add_vector(ft_cv(start), ft_mul_scalar(ft_cv(step), z1)));
 	output.x = (color.x & RED) | (color.y & GREEN) | (color.z & BLUE);
-	color = ft_add_vector(start, ft_mul_scalar(step, z2));
+	color = ft_vc(ft_add_vector(ft_cv(start), ft_mul_scalar(ft_cv(step), z2)));
 	output.y = (color.x & RED) | (color.y & GREEN) | (color.z & BLUE);
 	return (output);
 }

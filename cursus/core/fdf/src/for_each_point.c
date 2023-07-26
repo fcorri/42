@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 16:15:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/25 18:36:28 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:36:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_VVS_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, int k), i
 	}
 }
 
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector p, t_quaternion q), t_quaternion q)
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector point, t_vector axis, double deg), t_vector axis, double deg)
 {
 	int			row;
 	int			col;
@@ -56,10 +56,6 @@ void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector p, t_quatern
 	{
 		col = vars->map->dim.y;
 		while (--col >= 0)
-		{
-			ft_printf("before:\t[%d, %d, %d]\n", row, col, matrix[row][col].z);
-			matrix[row][col] = op(matrix[row][col], q);
-			ft_printf("after:\t[%d, %d, %d]\n\n", row, col, matrix[row][col].z);
-		}
+			matrix[row][col] = op(matrix[row][col], axis, deg);
 	}
 }

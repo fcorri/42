@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:31:42 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/25 17:29:43 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 16:28:50 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,16 @@ void	ft_translate(t_vars *vars, t_vector vector)
 
 void ft_zoom_on(t_vars *vars, int value)
 {
-	t_vector	v;
-
-	v = vars->camera->matrix[0][0];
 	ft_to_origin(vars);
 	ft_VVS_for_each_point_of(vars, ft_mul_scalarXY, value);
-	ft_translate(vars, v);
+	ft_to_center(vars);
 }
 
 void ft_zoom_off(t_vars *vars, int value)
 {
-	t_vector	v;
-
-	v = vars->camera->matrix[0][0];
 	ft_to_origin(vars);
 	ft_VVS_for_each_point_of(vars, ft_div_scalarXY, value);
-	ft_translate(vars, v);
+	ft_to_center(vars);
 }
 
 void	ft_to_center(t_vars *vars)
