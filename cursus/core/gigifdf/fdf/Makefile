@@ -6,7 +6,7 @@
 #    By: larmogid <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 11:21:15 by larmogid          #+#    #+#              #
-#    Updated: 2023/06/28 17:02:20 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/27 12:35:28 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ MLX 		= libmlx_Linux.a
 LIBFT 		= libft.a
 
 LFT_PATH 	= ./libft/
-MLX_PATH 	= ../mlx_linux/
+MLX_PATH 	= ../../minilibx-linux/
 INCLUDES 	= ./include
 SRCDIR 		= ./srcs/
 

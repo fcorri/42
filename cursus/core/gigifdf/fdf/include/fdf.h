@@ -6,7 +6,7 @@
 /*   By: larmogid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 11:22:08 by larmogid          #+#    #+#             */
-/*   Updated: 2023/05/06 18:18:46 by larmogid         ###   ########.fr       */
+/*   Updated: 2023/07/27 12:35:11 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
-# include "../../mlx_linux/mlx.h"
+# include "../../../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 # include "keys.h"
 # include "colors.h"
