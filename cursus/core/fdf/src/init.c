@@ -6,37 +6,25 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 19:56:02 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/27 15:08:32 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static int	ft_continue_initing_map(t_map **p_map, t_map *map)
-{
-	int			rows;
-	int			cols;
-
-	rows = map->dim.x;
-	cols = map->dim.y;
-	if(!(ft_init_int_matrix(&map->matrix, rows, cols)))
-		return (0);
-	map->colors = (t_vector2){START_COLOR, END_COLOR};
-	*p_map = map;
-	return (1);
-}
-
-static int	ft_init_points(char *filename, int old_fd, t_map *map, size_t line_len)
+static int	ft_init_map_matrix(char *filename, int old_fd, t_map *map, size_t line_len)
 {
 	int			new_fd;
 	char		*line;
 	t_vector2	min_max;
 
+	if(!(ft_alloc_map_matrix(&map->matrix, map->dim)))
+		return (0);
 	new_fd = open(filename, O_RDONLY);
 	if (new_fd < 0)
 		return (ft_error("OPEN", strerror(errno)));
 	close(old_fd);
-	line = ft_calloc(sizeof(char), (line_len + 1));
+	line = ft_malloc_soul(sizeof(char) * (line_len + 1));
 	if (!line)
 		return (ft_error("LINE MALLOC in INIT_POINTS", strerror(errno)));
 	min_max = (t_vector2){INT_MAX, INT_MIN};
@@ -48,38 +36,38 @@ static int	ft_init_points(char *filename, int old_fd, t_map *map, size_t line_le
 	return (1);
 }
 
-int	ft_init_map(char *filename, t_map **p_map)
+static int	ft_init_map(char *filename, t_map **p_map)
 {
-	int		fd;
-	t_map	*map;
-	size_t	line_len;
-	int		rows;
-	char	*line;
+	t_vector2	fd_rows;
+	t_map		*map;
+	size_t		line_len;
+	char		*line;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
+	fd_rows.x = open(filename, O_RDONLY);
+	if (fd_rows.x < 0)
 		return (ft_error("OPEN", strerror(errno)));
-	map = ft_calloc(1, sizeof(t_map));
+	map = ft_malloc_soul(sizeof(t_map));
 	if (!map)
 		return(ft_error("MAP CALLOC", strerror(errno)));
-	// why fd needs to be closed and opened?
-	line_len = ft_split_decorator_to_init_line_len(&fd, map, filename);
-	if (!line_len || fd < 0)
+	line_len = ft_split_decorator_to_init_line_len(&fd_rows.x, map, filename);
+	if (!line_len || fd_rows.x < 0)
 		return (ft_error("SPLIT_DECORATOR_TO_INIT_LINE_LEN", strerror(errno)));
-	rows = 0;
+	fd_rows.y = 0;
 	line = ft_malloc_soul(sizeof(char) * line_len);
 	if (!line)
 		return (ft_error("LINE MALLOC in INIT MAP", strerror(errno)));
-	while (read(fd, line, line_len))
-		rows++;
+	while (read(fd_rows.x, line, line_len))
+		fd_rows.y++;
 	free(line);
-	map->dim.x = rows;
-	// continue_initing_map can call init_points : *p_map = map necessary
-	return (ft_continue_initing_map(p_map, map) && ft_init_points(filename, fd, map, line_len));
+	map->dim.x = fd_rows.x;
+	map->colors = (t_vector2){START_COLOR, END_COLOR};
+	*p_map = map;
+	return (ft_init_map_matrix(filename, fd_rows.x, map, line_len));
 }
 
-int	ft_init_camera(t_vars *vars)
+static int	ft_init_camera(t_vars *vars)
 {
+	int			z;
 	t_camera	*camera;
 	t_vector2	dim;
 
@@ -87,24 +75,26 @@ int	ft_init_camera(t_vars *vars)
 	if (!camera)
 		return (ft_error("CAMERA MALLOC", strerror(errno)));
 	dim = vars->map->dim;
-	if (!ft_init_point_matrix(&camera->matrix, dim.x, dim.y))
+	if (!ft_alloc_camera_matrix(&camera->matrix, dim))
 		return (0);
 	while (dim.x-- > 0)
 	{
 		dim.y = vars->map->dim.y;
 		while (dim.y-- > 0)
-			camera->matrix[dim.x][dim.y] = (t_point){(t_vector3){dim.y, dim.x, vars->map->matrix[dim.x][dim.y]}, ft_get_color(vars, START_COLOR, END_COLOR, vars->map->matrix[dim.x][dim.y])};
+		{
+			z = vars->map->matrix[dim.x][dim.y];
+			camera->matrix[dim.x][dim.y] = (t_point){(t_vector3){dim.y, dim.x, z}, ft_calculate_color(vars, z)};
+		}
 	}
 	camera->name = "TEST";
-	camera->draw = 1;
-	camera->ft_draw = ft_test_draw;
+	camera->render = 1;
+	camera->ft_render = ft_render_test;
 	vars->camera = camera;
 	ft_zoom_on(vars, 20);
-	ft_to_center(vars);
 	return (1);
 }
 
-int	ft_init_mlx(t_mlx **p_mlx)
+static int	ft_init_mlx(t_mlx **p_mlx)
 {
 	t_mlx	*mlx;
 	void	*this;
@@ -125,7 +115,7 @@ int	ft_init_mlx(t_mlx **p_mlx)
 	return (1);
 }
 
-int	ft_init_image(t_mlx *mlx, t_image **p_image)
+static int	ft_init_image(t_mlx *mlx, t_image **p_image)
 {
 	t_image	*image;
 	
@@ -140,4 +130,14 @@ int	ft_init_image(t_mlx *mlx, t_image **p_image)
 		return (ft_error("MLX_GET_DATA_ADDR", strerror(errno)));
 	*p_image = image;
 	return (1);
+}
+
+int	ft_init_fdf(t_vars *vars, char *filename)
+{
+	if (!(ft_init_map(filename, &vars->map)
+		&& ft_init_camera(vars)
+		&& ft_init_mlx(&vars->mlx)
+		&& ft_init_image(vars->mlx, &vars->image)))
+		return (1);
+	return (0);
 }

@@ -6,12 +6,14 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:48:17 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 18:15:22 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/27 13:44:13 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <math.h>
+#include <float.h>
+#include <limits.h>
 
 typedef struct vector
 {
@@ -91,6 +93,6 @@ int main(void)
 		60
 	);
 	printf("{2,3,5} rotated by 60 degress around {1,0,0} axis:\t[%f, %f, %f]\n", result.x, result.y, result.z);
-	printf("%f\n", 5.5 / 5);
+	printf("\nMIN:\t%f\nMAX:\t%f\nINT_MIN:\t%d\nINT_MAX:\t%d\n", -FLT_MAX, FLT_MAX, INT_MIN, INT_MAX);
 	return (0);
 }

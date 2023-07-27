@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 20:11:07 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/27 13:39:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ struct s_map_vars
 	t_vector2	min_max;
 };
 
-void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked)
-{
-	if (value.x < to_be_checked->x)
-		ft_swap(&value.x, &to_be_checked->x);
-	else if (value.y > to_be_checked->y)
-		ft_swap(&value.y, &to_be_checked->y);
-}
-
 static void	ft_int_swap_decorator(int value, t_vector2 *to_be_checked)
 {
 	if (value < to_be_checked->x)
 		ft_swap(&value, &to_be_checked->x);
 	else if (value > to_be_checked->y)
 		ft_swap(&value, &to_be_checked->y);
+}
+
+void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked)
+{
+	if (value.x < to_be_checked->x)
+		ft_swap(&value.x, &to_be_checked->x);
+	else if (value.y > to_be_checked->y)
+		ft_swap(&value.y, &to_be_checked->y);
 }
 
 size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename)

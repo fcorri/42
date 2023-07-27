@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 20:11:14 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/27 15:07:04 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ typedef struct vector3
 	float	z;
 }	t_vector3;
 
+typedef struct quaternion
+{
+	t_vector3	axis;
+	float		deg;
+}	t_quaternion;
+
 typedef struct color
 {
 	uint8_t	t;
@@ -71,31 +77,9 @@ typedef struct color
 typedef struct point
 {
 	t_vector3	v;
-	t_color		color;
+	int			color;
 }	t_point;
 
-/*
-typedef struct dvector
-{
-	int	mod;
-	int	dir;
-}	t_dvector;
-*/
-
-typedef struct matrix
-{
-	t_vector3	x;
-	t_vector3	y;
-	t_vector3	z;
-}	t_matrix;
-
-typedef struct quaternion
-{
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-}	t_quaternion;
 
 typedef struct mlx
 {
@@ -115,8 +99,8 @@ typedef struct camera
 {
 	t_point	**matrix;
 	char	*name;
-	int		draw;
-	int		(*ft_draw)(t_vars *vars);
+	int		render;
+	int		(*ft_render)(t_vars *vars);
 }	t_camera;
 
 typedef struct image
@@ -138,22 +122,24 @@ struct s_vars
 
 int		ft_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
-int		ft_init_int_matrix(int ***p_matrix, int rows, int columns);
-int		ft_init_point_matrix(t_point ***p_matrix, int rows, int columns);
 
+// this functions should initialize the matrix, not only allocate memory for it
+int		ft_alloc_map_matrix(int ***p_matrix, t_vector2 dim);
+int		ft_alloc_camera_matrix(t_point ***p_matrix, t_vector2 dim);
+
+// we need functions for colors
 t_color	ft_get_color(t_vars *vars, int s, int e, int step);
 t_color	ft_add_color(t_color a, t_color b);
 
-int		ft_init_map(char *filename, t_map **p_map);
-int		ft_init_camera(t_vars *vars);
-int		ft_init_mlx(t_mlx **p_mlx);
-int		ft_init_image(t_mlx *mlx, t_image **p_image);
+int		ft_init_fdf(t_vars *vars, char *filename);
 
-int		ft_set_camera(t_vars *vars, int (*ft_draw)(t_vars *vars), char *name);
-int		ft_draw_map_as_isometric_projection(t_vars *vars);
-int		ft_draw_map_as_orthogonal_projection(t_vars *vars);
-int		ft_test_draw(t_vars *vars);
-void	ft_draw_legend(t_vars *vars);
+int		ft_free_and_return(t_vars *vars, int value);
+
+int		ft_render(t_vars *vars);
+int		ft_set_render(t_vars *vars, int (*ft_render)(t_vars *vars), char *name);
+int		ft_render_isometric(t_vars *vars);
+int		ft_render_orthogonal(t_vars *vars);
+int		ft_render_test(t_vars *vars);
 
 void	ft_put_line(t_image *image, t_point p0, t_point p1);
 
@@ -163,26 +149,22 @@ t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 
 void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vector3 b), t_vector3 v);
 void	ft_VVS_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, int k), int k);
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 point, t_vector3 axis, double deg), t_vector3 axis, double deg);
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 p, t_quaternion q), t_quaternion q);
 
 void	ft_translate(t_vars *vars, t_vector3 vector);
+void	ft_to_center(t_vars *vars);
+void	ft_to_origin(t_vars *vars);
+
 void	ft_zoom_on(t_vars *vars, int value);
 void	ft_zoom_off(t_vars *vars, int value);
-void	ft_to_center(t_vars *vars);
 
+t_vector3	ft_new_vector(double x, double y, double z);
 t_vector3	ft_add_vector(t_vector3 a, t_vector3 b);
 t_vector3	ft_opposite(t_vector3 a);
-t_vector3	ft_sub_vector(t_vector3 a, t_vector3 b);
 t_vector3	ft_mul_scalar(t_vector3 a, float k);
 t_vector3	ft_div_scalar(t_vector3 a, float k);
-t_vector3	ft_mul_scalarXY(t_vector3 a, int k);
-t_vector3	ft_div_scalarXY(t_vector3 a, int k);
-t_vector3	ft_mul_row_col(t_matrix matrix, t_vector3 vector);
 
-t_quaternion	ft_coniugate(t_quaternion q);
-double			ft_magnitude(t_vector3 a);
-t_vector3		ft_mul_quaternion(t_vector3 point, t_vector3 axis, double deg);
-t_quaternion	ft_mul_quat(t_quaternion q1, t_quaternion q2);
+t_vector3	ft_rot(t_vector3 p, t_quaternion q);
 
 void	ft_rot_x_cw(t_vars *vars);
 void	ft_rot_y_cw(t_vars *vars);
