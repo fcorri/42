@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 16:21:29 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 20:29:24 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_free_map_and_matrices(t_vars *vars)
 		if (matrix)
 		{
 			while (index)
-				free(((t_vector **)matrix)[--index]);
+				free(((t_vector3 **)matrix)[--index]);
 			free(matrix);
 		}
 		free(vars->camera);
@@ -76,6 +76,7 @@ static int	ft_render(t_vars *vars)
 
 static int	ft_key_down(int keycode, t_vars *vars)
 {
+	ft_printf("keycode: %d\n", keycode);
 	if (keycode == XK_Left)
 		ft_translate(vars, LEFT);
 	else if (keycode == XK_Up)
@@ -84,9 +85,9 @@ static int	ft_key_down(int keycode, t_vars *vars)
 		ft_translate(vars, RIGHT);
 	else if (keycode == XK_Down)
 		ft_translate(vars, DOWN);
-	else if (keycode == XK_KP_Add || keycode == 43)
+	else if (keycode == XK_KP_Add)
 		ft_zoom_on(vars, DEF_ZOOM);
-	else if (keycode == XK_KP_Subtract || keycode == 45)
+	else if (keycode == XK_KP_Subtract)
 		ft_zoom_off(vars, DEF_ZOOM);
 	else if (keycode == XK_c)
 		ft_to_center(vars);
@@ -113,6 +114,7 @@ static int	ft_key_down(int keycode, t_vars *vars)
 	vars->camera->draw = 1;
 	return (ft_render(vars));
 }
+
 int main(int argc, char **argv)
 {
 	t_vars	vars;

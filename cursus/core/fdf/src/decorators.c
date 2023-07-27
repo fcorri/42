@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 15:44:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 20:11:07 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ struct s_map_vars
 {
 	int			y;
 	int			z;
-	t_bvector	min_max;
+	t_vector2	min_max;
 };
 
-void	ft_bvector_swap_decorator(t_bvector value, t_bvector *to_be_checked)
+void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked)
 {
 	if (value.x < to_be_checked->x)
 		ft_swap(&value.x, &to_be_checked->x);
@@ -27,7 +27,7 @@ void	ft_bvector_swap_decorator(t_bvector value, t_bvector *to_be_checked)
 		ft_swap(&value.y, &to_be_checked->y);
 }
 
-static void	ft_int_swap_decorator(int value, t_bvector *to_be_checked)
+static void	ft_int_swap_decorator(int value, t_vector2 *to_be_checked)
 {
 	if (value < to_be_checked->x)
 		ft_swap(&value, &to_be_checked->x);
@@ -60,7 +60,7 @@ size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename)
 	return (tmp);
 }
 
-t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
+t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char				**tmp;
 	int					**matrix;
@@ -72,7 +72,7 @@ t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	tmp = ft_split(line, ' ');
 	number = tmp[vars.y];
 	matrix = map->matrix;
-	vars.min_max = (t_bvector){INT_MAX, INT_MIN};
+	vars.min_max = (t_vector2){INT_MAX, INT_MIN};
 	while (number)
 	{
 		if (*number == '0')
@@ -87,14 +87,4 @@ t_bvector	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	free(tmp);
 	x++;
 	return (vars.min_max);
-}
-
-t_color ft_new_vector_color_decorator(int color)
-{
-	return ((t_color)
-		{
-			color & RED,
-			color & GREEN,
-			color & BLUE
-		});
 }

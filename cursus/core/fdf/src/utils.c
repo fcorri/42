@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 15:56:43 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 19:53:03 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ void	ft_swap(int *first, int *second)
 	tmp = *first;
 	*first = *second;
 	*second = tmp;
-}
-
-void	ft_put_pixel(t_image *img, t_bvector p, t_color vcolor)
-{
-	int	x;
-	int	y;
-	int	color;
-
-	x = p.x;
-	y = p.y;
-	color = (vcolor.x & RED) | (vcolor.y & GREEN) | (vcolor.z & BLUE);
-	if ((0 <= x && x < WIDTH) && (0 <= y && y < HEIGHT))
-		*(unsigned int *)(img->addr + (y * img->ll + x * (img->bpp / 8))) = color;
 }
 
 int	ft_init_int_matrix(int ***p_matrix, int rows, int columns)
@@ -60,18 +47,18 @@ int	ft_init_int_matrix(int ***p_matrix, int rows, int columns)
 	return (1);
 }
 
-int	ft_init_vector_matrix(t_vector ***p_matrix, int rows, int columns)
+int	ft_init_point_matrix(t_point ***p_matrix, int rows, int columns)
 {
-	t_vector	**matrix;
-	int			i;
+	t_point	**matrix;
+	int		i;
 
-	matrix = ft_malloc_soul(sizeof(t_vector *) * rows);
+	matrix = ft_malloc_soul(sizeof(t_vector3 *) * rows);
 	if (!matrix)
 		return (ft_error("MATRIX MALLOC", strerror(errno)));
 	i = 0;
 	while (i < rows)
 	{
-		matrix[i] = ft_malloc_soul(sizeof(t_vector) * columns);
+		matrix[i] = ft_malloc_soul(sizeof(t_vector3) * columns);
 		if (!matrix[i])
 			return (ft_error("MATRIX[i] MALLOC", strerror(errno)));
 		i++;
@@ -80,31 +67,31 @@ int	ft_init_vector_matrix(t_vector ***p_matrix, int rows, int columns)
 	return (1);
 }
 
-static t_vector ft_cv(t_color color)
+static t_vector3 ft_cv(t_color color)
 {
 	return (
-		(t_vector){color.x, color.y, color.z}
+		(t_vector3){color.x, color.y, color.z}
 	);
 }
 
-static t_color ft_vc(t_vector v)
+static t_color ft_vc(t_vector3 v)
 {
 	return (
 		(t_color){v.x, v.y, v.z}
 	);
 }
 
-t_bvector	ft_calculate_colors(t_vars *vars, int z1, int z2)
+t_vector2	ft_calculate_colors(t_vars *vars, int z1, int z2)
 {
 	int			n;
 	t_color	start;
 	t_color	step;
 	t_color	color;
-	t_bvector	output;
+	t_vector2	output;
 
 	n = vars->map->min_max.y - vars->map->min_max.x;
 	if (!n)
-		return ((t_bvector){vars->map->colors.x, vars->map->colors.x});
+		return ((t_vector2){vars->map->colors.x, vars->map->colors.x});
 	start = ft_new_vector_color_decorator(vars->map->colors.x);
 	step = ft_vc(ft_div_scalar(ft_sub_vector(ft_cv(ft_new_vector_color_decorator(vars->map->colors.y)), ft_cv(start)), n));
 	color = ft_vc(ft_add_vector(ft_cv(start), ft_mul_scalar(ft_cv(step), z1)));

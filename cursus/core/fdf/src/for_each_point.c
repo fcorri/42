@@ -6,17 +6,17 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 16:15:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 15:36:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 19:59:20 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-void	ft_VVV_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, t_vector b), t_vector v)
+void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vector3 b), t_vector3 v)
 {
 	int			row;
 	int			col;
-	t_vector	**matrix;
+	t_point	**matrix;
 
 	row = vars->map->dim.x;
 	matrix = vars->camera->matrix;
@@ -24,15 +24,15 @@ void	ft_VVV_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, t_vector 
 	{
 		col = vars->map->dim.y;
 		while (--col >= 0)
-			matrix[row][col] = op(matrix[row][col], v);
+			matrix[row][col].v = op(matrix[row][col].v, v);
 	}
 }
 
-void	ft_VVS_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, int k), int k)
+void	ft_VVS_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, int k), int k)
 {
 	int			row;
 	int			col;
-	t_vector	**matrix;
+	t_point		**matrix;
 
 	row = vars->map->dim.x;
 	matrix = vars->camera->matrix;
@@ -40,15 +40,15 @@ void	ft_VVS_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector a, int k), i
 	{
 		col = vars->map->dim.y;
 		while (--col >= 0)
-			matrix[row][col] = op(matrix[row][col], k);
+			matrix[row][col].v = op(matrix[row][col].v, k);
 	}
 }
 
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector point, t_vector axis, double deg), t_vector axis, double deg)
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 point, t_vector3 axis, double deg), t_vector3 axis, double deg)
 {
 	int			row;
 	int			col;
-	t_vector	**matrix;
+	t_point		**matrix;
 
 	row = vars->map->dim.x;
 	matrix = vars->camera->matrix;
@@ -56,6 +56,6 @@ void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector (*op)(t_vector point, t_vec
 	{
 		col = vars->map->dim.y;
 		while (--col >= 0)
-			matrix[row][col] = op(matrix[row][col], axis, deg);
+			matrix[row][col].v = op(matrix[row][col].v, axis, deg);
 	}
 }

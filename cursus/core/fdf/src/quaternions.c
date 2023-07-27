@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:29:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 16:21:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 17:18:15 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ t_quaternion	ft_coniugate(t_quaternion q)
 	);
 }
 
-double	ft_magnitude(t_vector a)
+double	ft_magnitude(t_vector3 a)
 {
 	return (
 		sqrt(a.x * a.x + a.y * a.y + a.z * a.z)
 	);
 }
 
-t_vector	ft_mul_quaternion(t_vector point, t_vector axis, double deg)
+t_vector3	ft_mul_quaternion(t_vector3 point, t_vector3 axis, double deg)
 {
 	t_quaternion q, p, output;
 	double	rad;
@@ -44,7 +44,7 @@ t_vector	ft_mul_quaternion(t_vector point, t_vector axis, double deg)
 		ft_coniugate(q)
 	);
 
-	return ((t_vector){output.b, output.c, point.z});
+	return ((t_vector3){output.b, output.c, output.d});
 }
 
 t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
@@ -57,11 +57,11 @@ t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
 			q1.a*q2.d + q1.b*q2.c - q1.c*q2.b + q1.d*q2.a
 		});
 /*
-	t_vector	qv;
-	t_vector	tmp;
-	t_vector	output;
+	t_vector3	qv;
+	t_vector3	tmp;
+	t_vector3	output;
 
-	qv = (t_vector){q.b, q.c, q.d};
+	qv = (t_vector3){q.b, q.c, q.d};
 	tmp = ft_mul_scalar(ft_cross_product(qv, v), 2);
 	output = ft_cross_product(qv, tmp);
 	output = ft_add_vector(ft_mul_scalar(tmp, q.a), output);

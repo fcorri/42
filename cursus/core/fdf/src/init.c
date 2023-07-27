@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/25 15:59:54 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 19:56:02 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_continue_initing_map(t_map **p_map, t_map *map)
 	cols = map->dim.y;
 	if(!(ft_init_int_matrix(&map->matrix, rows, cols)))
 		return (0);
-	map->colors = (t_bvector){RED, GREEN};
+	map->colors = (t_vector2){START_COLOR, END_COLOR};
 	*p_map = map;
 	return (1);
 }
@@ -30,7 +30,7 @@ static int	ft_init_points(char *filename, int old_fd, t_map *map, size_t line_le
 {
 	int			new_fd;
 	char		*line;
-	t_bvector	min_max;
+	t_vector2	min_max;
 
 	new_fd = open(filename, O_RDONLY);
 	if (new_fd < 0)
@@ -39,9 +39,9 @@ static int	ft_init_points(char *filename, int old_fd, t_map *map, size_t line_le
 	line = ft_calloc(sizeof(char), (line_len + 1));
 	if (!line)
 		return (ft_error("LINE MALLOC in INIT_POINTS", strerror(errno)));
-	min_max = (t_bvector){INT_MAX, INT_MIN};
+	min_max = (t_vector2){INT_MAX, INT_MIN};
 	while (read(new_fd, line, line_len))
-		ft_bvector_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, map), &min_max);
+		ft_vector2_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, map), &min_max);
 	map->min_max = min_max;
 	free(line);
 	close(new_fd);
@@ -81,19 +81,19 @@ int	ft_init_map(char *filename, t_map **p_map)
 int	ft_init_camera(t_vars *vars)
 {
 	t_camera	*camera;
-	t_bvector	dim;
+	t_vector2	dim;
 
 	camera = ft_malloc_soul(sizeof(t_camera));
 	if (!camera)
 		return (ft_error("CAMERA MALLOC", strerror(errno)));
 	dim = vars->map->dim;
-	if (!ft_init_vector_matrix(&camera->matrix, dim.x, dim.y))
+	if (!ft_init_point_matrix(&camera->matrix, dim.x, dim.y))
 		return (0);
 	while (dim.x-- > 0)
 	{
 		dim.y = vars->map->dim.y;
 		while (dim.y-- > 0)
-			camera->matrix[dim.x][dim.y] = (t_vector){dim.y, dim.x, vars->map->matrix[dim.x][dim.y]};
+			camera->matrix[dim.x][dim.y] = (t_point){(t_vector3){dim.y, dim.x, vars->map->matrix[dim.x][dim.y]}, ft_get_color(vars, START_COLOR, END_COLOR, vars->map->matrix[dim.x][dim.y])};
 	}
 	camera->name = "TEST";
 	camera->draw = 1;

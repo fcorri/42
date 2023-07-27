@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/03 16:48:25 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/26 14:48:31 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/26 18:14:56 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,3 +53,11 @@ fclean: clean
 
 re: fclean all
 
+run: all
+	clear; $(NAME) $(ARGS)
+
+mem: all
+	clear ; valgrind $(NAME) $(ARGS)
+
+debug: all
+	clear ; vi .gdbinit && gdb --args $(NAME) $(ARGS)

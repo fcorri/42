@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:11:07 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/25 15:59:05 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 19:35:43 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int	ft_draw_map_as_orthogonal_projection(t_vars *vars)
 
 int	ft_test_draw(t_vars *vars)
 {
-	t_bvector		row_col;
-	t_bvector		dim;
-	t_vector		**matrix;
-	t_vector		p1;
-	t_vector		p2;
+	t_vector2	row_col;
+	t_vector2	dim;
+	t_point		**matrix;
+	t_point		p1;
+	t_point		p2;
 
-	row_col = (t_bvector){0, 0};
+	row_col = (t_vector2){0, 0};
 	dim = vars->map->dim;
 	matrix = vars->camera->matrix;
 	while (row_col.x != dim.x - 1)
@@ -49,26 +49,26 @@ int	ft_test_draw(t_vars *vars)
 		while (row_col.y != dim.y - 1)
 		{
 			p2 = matrix[row_col.x + 1][row_col.y];
-			ft_put_line(vars->image, p1, p2, ft_calculate_colors(vars, p1.z, p2.z));
+			ft_put_line(vars->image, p1, p2);
 			p2 = matrix[row_col.x][row_col.y + 1];
-			ft_put_line(vars->image, p1, p2, ft_calculate_colors(vars, p1.z, p2.z));
+			ft_put_line(vars->image, p1, p2);
 			p1 = p2;
 			row_col.y += 1;
 		}
 		p2 = matrix[row_col.x + 1][row_col.y];
-		ft_put_line(vars->image, p1, p2, ft_calculate_colors(vars, p1.z, p2.z));
-		row_col = (t_bvector){row_col.x + 1, 0};
+		ft_put_line(vars->image, p1, p2);
+		row_col = (t_vector2){row_col.x + 1, 0};
 	}
 	p1 = matrix[row_col.x][row_col.y];
 	while (row_col.y != dim.y - 1)
 	{
 		p2 = matrix[row_col.x][row_col.y + 1];
-		ft_put_line(vars->image, p1, p2, ft_calculate_colors(vars, p1.z, p2.z));
+		ft_put_line(vars->image, p1, p2);
 		p1 = p2;
 		row_col.y += 1;
 	}
 	p1 = matrix[row_col.x][row_col.y];
-		ft_put_line(vars->image, p1, p1, ft_calculate_colors(vars, p1.z, p1.z));
+		ft_put_line(vars->image, p1, p1);
 	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/26 15:33:35 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/26 20:29:31 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS			=	$(SRCS_DIR)/decorators.c \
 					$(SRCS_DIR)/rotate_cw.c \
 					$(SRCS_DIR)/for_each_point.c \
 					$(SRCS_DIR)/vectors.c \
+					$(SRCS_DIR)/colors.c \
 					$(SRCS_DIR)/quaternions.c \
 
 

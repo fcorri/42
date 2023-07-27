@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:48:17 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 15:28:17 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/26 18:15:22 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int main(void)
 		(t_vector){1, 0, 0},
 		60
 	);
-	printf("\n{2,3,5} rotated by 60 degress around {1,0,0} axis:\t[%f, %f, %f]\n", result.x, result.y, result.z);
+	printf("{2,3,5} rotated by 60 degress around {1,0,0} axis:\t[%f, %f, %f]\n", result.x, result.y, result.z);
+	printf("%f\n", 5.5 / 5);
 	return (0);
 }
