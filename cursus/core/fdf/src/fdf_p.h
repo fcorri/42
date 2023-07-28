@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/27 15:07:04 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/28 13:32:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 # include <string.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <float.h>
 
 # include "libft/libft.h"
 
-# define WIDTH			1500
-# define HEIGHT			1000
+# define WIDTH			800
+# define HEIGHT			600
 # define TITLE			"fil de fer"
 
 # define WHITE			0x00FFFFFF
@@ -41,9 +42,9 @@
 # define UP			(t_vector3){0, -DEF_TR, 0}
 # define RIGHT		(t_vector3){DEF_TR, 0, 0}
 # define DOWN		(t_vector3){0, DEF_TR, 0}
-# define DEF_ZOOM	1
+# define DEF_ZOOM	2
 # define ZOOM		(t_vector3){DEF_ZOOM, DEF_ZOOM, 0}
-# define DEF_ANG	30
+# define DEF_ANG	10
 
 typedef struct s_vars		t_vars;
 
@@ -62,17 +63,11 @@ typedef struct vector3
 
 typedef struct quaternion
 {
-	t_vector3	axis;
-	float		deg;
+	float	a;
+	float	b;
+	float	c;
+	float	d;
 }	t_quaternion;
-
-typedef struct color
-{
-	uint8_t	t;
-	uint8_t	r;
-	uint8_t	g;
-	uint8_t	b;
-}	t_color;
 
 typedef struct point
 {
@@ -122,14 +117,11 @@ struct s_vars
 
 int		ft_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
+void	ft_print_matrix(t_vars *vars);
 
 // this functions should initialize the matrix, not only allocate memory for it
 int		ft_alloc_map_matrix(int ***p_matrix, t_vector2 dim);
 int		ft_alloc_camera_matrix(t_point ***p_matrix, t_vector2 dim);
-
-// we need functions for colors
-t_color	ft_get_color(t_vars *vars, int s, int e, int step);
-t_color	ft_add_color(t_color a, t_color b);
 
 int		ft_init_fdf(t_vars *vars, char *filename);
 
@@ -142,6 +134,7 @@ int		ft_render_orthogonal(t_vars *vars);
 int		ft_render_test(t_vars *vars);
 
 void	ft_put_line(t_image *image, t_point p0, t_point p1);
+int		ft_interpolate_colors(int s, int e, float i, float n);
 
 void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked);
 size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
@@ -149,7 +142,7 @@ t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 
 void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vector3 b), t_vector3 v);
 void	ft_VVS_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, int k), int k);
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 p, t_quaternion q), t_quaternion q);
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 p, t_vector3 axis, float deg), t_vector3 axis, float deg);
 
 void	ft_translate(t_vars *vars, t_vector3 vector);
 void	ft_to_center(t_vars *vars);
@@ -164,7 +157,7 @@ t_vector3	ft_opposite(t_vector3 a);
 t_vector3	ft_mul_scalar(t_vector3 a, float k);
 t_vector3	ft_div_scalar(t_vector3 a, float k);
 
-t_vector3	ft_rot(t_vector3 p, t_quaternion q);
+t_vector3	ft_mul_quaternion(t_vector3 point, t_vector3 axis, float deg);
 
 void	ft_rot_x_cw(t_vars *vars);
 void	ft_rot_y_cw(t_vars *vars);

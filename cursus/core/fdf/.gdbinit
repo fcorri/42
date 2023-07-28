@@ -1,2 +1,2 @@
-b ft_init_camera
-
+b ft_rot_x_cw
+r

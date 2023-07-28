@@ -6,20 +6,16 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/27 13:27:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/28 11:57:50 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static t_vector3	ft_new_vector(double x, double y, double z)
+t_vector3	ft_new_vector(double x, double y, double z)
 {
-	if (FLT_MIN<x||x>FLT_MAX||FLT_MIN<y||y>FLT_MAX||FLT_MIN<z||z>FLT_MAX)
-	{
+	if (x<-FLT_MAX||x>FLT_MAX||y<-FLT_MAX||y>FLT_MAX||z<-FLT_MAX||z>FLT_MAX)
 		ft_error("NEW_VECTOR", strerror(EDOM));
-		//should terminate: maybe someone has to read errno
-		return ((t_vector3){0,0,0});
-	}
 	return ((t_vector3){x, y, z});
 }
 

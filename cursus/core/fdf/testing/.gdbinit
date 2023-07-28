@@ -1,2 +1,2 @@
-b ft_mul_quaternion
+b ft_put_line
 r

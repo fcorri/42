@@ -6,93 +6,148 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 16:48:17 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/27 13:44:13 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:55:21 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <math.h>
-#include <float.h>
-#include <limits.h>
+#include "mlx.h"
+#include <stdint.h>
+#include <X11/X.h>
+#include <X11/keysym.h>
+#include <stdlib.h>
 
-typedef struct vector
+#define WIDTH 1000
+#define HEIGHT 750
+
+typedef struct vector2
 {
-	double	x;
-	double	y;
-	double	z;
-}	t_vector;
+	int	x;
+	int	y;
+}	t_vector2;
 
-typedef struct quaternion
+typedef struct vector3
 {
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-}	t_quaternion;
+	float	x;
+	float	y;
+	float	z;
+}	t_vector3;
 
-t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2);
-
-t_quaternion	ft_coniugate(t_quaternion q)
+typedef struct point
 {
-	return (
-		(t_quaternion){q.a, q.b * -1, q.c * -1, q.d * -1}
-	);
+	t_vector3	v;
+	int			color;
+}	t_point;
+
+
+typedef struct mlx
+{
+	void	*this;
+	void	*win;
+}	t_mlx;
+
+typedef struct image
+{
+	void	*this;
+	char	*addr;
+	int		bpp;
+	int		ll;
+	int		end;
+}	t_image;
+
+typedef struct s_vars
+{
+	t_mlx		*mlx;
+	t_image		*image;
+}	t_vars;
+
+static int	ft_key_down(int k, t_vars *vars)
+{
+	if (k == XK_Escape)
+		mlx_loop_end(vars->mlx->this);
+	return (0);
 }
 
-t_vector	ft_div_scalar(t_vector a, double s)
+static int	max_abs_and_norm(int *p_a, int *p_b)
 {
-	return (
-		(t_vector){a.x / s, a.y / s, a.z / s}
-	);
+	int	a;
+	int	b;
+
+	a = *p_a;
+	b = *p_b;
+	if (a < 0)
+		a *= -1;
+	if (b < 0)
+		b *= -1;
+	if (a)
+		*p_a /= a;
+	if (b)
+		*p_b /= b;
+	if (a >= b)
+		return (a);
+	return (b);
 }
 
-double	ft_magnitude(t_vector a)
+static void	ft_put_pixel(t_image *img, t_vector3 p, int color)
 {
-	return (
-		sqrt(a.x * a.x + a.y * a.y + a.z * a.z)
-	);
+	if ((0 <= p.x && p.x < WIDTH) && (0 <= p.y && p.y < HEIGHT))
+		*(unsigned int *)(img->addr + (int) (p.y * img->ll + p.x * (img->bpp / 8))) = color;
 }
 
-t_vector	ft_mul_quaternion(t_vector point, t_vector axis, double deg)
+static int	ft_interpolate_colors(int s, int e, float i, float n)
 {
-	t_quaternion q, p, output;
-	double	rad;
+	uint8_t	tmps;
+	uint8_t	tmpe;
+	int		output;
 
-	rad = deg / 180 * M_PI;
-	axis = ft_div_scalar(axis, ft_magnitude(axis));
-	q = (t_quaternion){cos(rad / 2), sin(rad / 2) * axis.x, sin(rad/2) * axis.y, sin(rad / 2) * axis.z};
-	p = (t_quaternion){0, point.x, point.y, point.z};
-
-	output = ft_mul_quat(
-		ft_mul_quat(
-			q,
-			p
-		),
-		ft_coniugate(q)
-	);
-
-	return ((t_vector){output.b, output.c, output.d});
+	tmps = (s >> 16) & 0xFF;
+	tmpe = (e >> 16) & 0xFF;
+	output = (int) ((tmpe - tmps) * (i / n) + tmps) << 16;
+	tmps = (s >> 8) & 0xFF;
+	tmpe = (e >> 8) & 0xFF;
+	output |= (int) ((tmpe - tmps) * (i / n) + tmps) << 8;
+	tmps = s & 0xFF;
+	tmpe = e & 0xFF;
+	output |= (int) ((tmpe - tmps) * (i / n) + tmps);
+	return (output);
 }
 
-t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
+static void    ft_put_line(t_image *image, t_point p0, t_point p1)
 {
-	return (
-		(t_quaternion) {
-			q1.a*q2.a - q1.b*q2.b - q1.c*q2.c - q1.d*q2.d,
-			q1.a*q2.b + q1.b*q2.a + q1.c*q2.d - q1.d*q2.c,
-			q1.a*q2.c - q1.b*q2.d + q1.c*q2.a + q1.d*q2.b,
-			q1.a*q2.d + q1.b*q2.c - q1.c*q2.b + q1.d*q2.a
-		});
-}
+	t_vector2	delta;
+	int			steps;
+	int			i;
 
+	delta.x = p1.v.x - p0.v.x;
+	delta.y = p1.v.y - p0.v.y;
+	steps = max_abs_and_norm(&delta.x, &delta.y);
+	i = -1;
+	while (i++ < steps)
+	{
+		ft_put_pixel(image, p0.v, ft_interpolate_colors(p0.color, p1.color, i, steps));
+		p0.v.x += delta.x;
+		p0.v.y += delta.y;
+	}
+}
+//[240.000000, 239.000000, 7.000000] [260.000000, 238.000000, 17.000000]
 int main(void)
 {
-	t_vector	result = ft_mul_quaternion(
-		(t_vector){2, 3, 5},
-		(t_vector){1, 0, 0},
-		60
-	);
-	printf("{2,3,5} rotated by 60 degress around {1,0,0} axis:\t[%f, %f, %f]\n", result.x, result.y, result.z);
-	printf("\nMIN:\t%f\nMAX:\t%f\nINT_MIN:\t%d\nINT_MAX:\t%d\n", -FLT_MAX, FLT_MAX, INT_MIN, INT_MAX);
+	t_vars	vars;
+	t_point	p0, p1;
+
+	
+	vars.mlx = malloc(sizeof(t_mlx));
+	vars.image = malloc(sizeof(t_image));
+	vars.mlx->this = mlx_init();
+	vars.mlx->win = mlx_new_window(vars.mlx->this, WIDTH, HEIGHT, "HELLO, WORLD!");
+	vars.image->this = mlx_new_image(vars.mlx->this, WIDTH, HEIGHT);
+	vars.image->addr = mlx_get_data_addr(vars.image->this, &vars.image->bpp, &vars.image->ll, &vars.image->end);
+	mlx_hook(vars.mlx->win, 2, 1L<<0, ft_key_down, &vars);
+	p0 = (t_point){240, 239, 7, 0xff0000};
+	p1 = (t_point){260, 238, 17, 0xff00};
+	ft_put_line(vars.image, p0, p1);
+	mlx_put_image_to_window(vars.mlx->this, vars.mlx->win, vars.image->this, 0, 0);
+	mlx_loop(vars.mlx->this);
 	return (0);
 }

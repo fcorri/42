@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 16:15:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/26 19:59:20 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/28 11:32:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_VVS_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, int k),
 	}
 }
 
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 point, t_vector3 axis, double deg), t_vector3 axis, double deg)
+void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 point, t_vector3 axis, float deg), t_vector3 axis, float deg)
 {
 	int			row;
 	int			col;

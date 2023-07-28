@@ -6,13 +6,13 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/03 16:48:25 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/26 18:14:56 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/28 15:44:17 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/test
 
-CFLAGS			=	-g #-O3
+CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS)
 CPPFLAGS		=	$(addprefix -I, $(LIBFT_DIR)/$(INC_DIR) /usr/include $(MLX_DIR))
 LDFLAGS			=	$(addprefix -L, $(LIBFT_DIR)/$(BUILD_DIR) $(MLX_DIR) /usr/lib)
@@ -53,11 +53,14 @@ fclean: clean
 
 re: fclean all
 
-run: all
+clear:
+	clear
+
+run: clear all
 	clear; $(NAME) $(ARGS)
 
-mem: all
+mem: clear all
 	clear ; valgrind $(NAME) $(ARGS)
 
-debug: all
+debug: clear all
 	clear ; vi .gdbinit && gdb --args $(NAME) $(ARGS)

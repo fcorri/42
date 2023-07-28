@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:29:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/27 13:22:44 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/28 12:58:44 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ static t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
 			q1.a*q2.c - q1.b*q2.d + q1.c*q2.a + q1.d*q2.b,
 			q1.a*q2.d + q1.b*q2.c - q1.c*q2.b + q1.d*q2.a
 		});
+}
+
 /*
+static t_vector3	ft_mul_quat_best(t_vector3 p, t_quaternion
 	t_vector3	qv;
 	t_vector3	tmp;
 	t_vector3	output;
@@ -45,26 +48,18 @@ static t_quaternion ft_mul_quat(t_quaternion q1, t_quaternion q2)
 	output = ft_cross_product(qv, tmp);
 	output = ft_add_vector(ft_mul_scalar(tmp, q.a), output);
 	return (ft_add_vector(v, output));
-*/
 }
+*/
 
-t_vector3	ft_mul_quaternion(t_vector3 point, t_vector3 axis, double deg)
+t_vector3	ft_mul_quaternion(t_vector3 point, t_vector3 axis, float deg)
 {
-	t_quaternion q, p, output;
-	double	rad;
+	t_quaternion	q, p, output;
+	double			rad;
 
 	rad = deg / 180 * M_PI;
 	axis = ft_div_scalar(axis, ft_magnitude(axis));
 	q = (t_quaternion){cos(rad / 2), sin(rad / 2) * axis.x, sin(rad/2) * axis.y, sin(rad / 2) * axis.z};
 	p = (t_quaternion){0, point.x, point.y, point.z};
-
-	output = ft_mul_quat(
-		ft_mul_quat(
-			q,
-			p
-		),
-		ft_coniugate(q)
-	);
-
-	return ((t_vector3){output.b, output.c, output.d});
+	output = ft_mul_quat(ft_mul_quat(q, p),	ft_coniugate(q));
+	return ((t_vector3){round(output.b), round(output.c), round(output.d)});
 }

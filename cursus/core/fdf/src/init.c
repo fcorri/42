@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/27 15:08:32 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/28 11:59:47 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	ft_init_map(char *filename, t_map **p_map)
 	while (read(fd_rows.x, line, line_len))
 		fd_rows.y++;
 	free(line);
-	map->dim.x = fd_rows.x;
+	map->dim.x = fd_rows.y;
 	map->colors = (t_vector2){START_COLOR, END_COLOR};
 	*p_map = map;
 	return (ft_init_map_matrix(filename, fd_rows.x, map, line_len));
@@ -67,23 +67,24 @@ static int	ft_init_map(char *filename, t_map **p_map)
 
 static int	ft_init_camera(t_vars *vars)
 {
-	int			z;
+	t_vector2	z_n;
 	t_camera	*camera;
 	t_vector2	dim;
 
+	z_n.y = vars->map->min_max.y - vars->map->min_max.x;
 	camera = ft_malloc_soul(sizeof(t_camera));
 	if (!camera)
 		return (ft_error("CAMERA MALLOC", strerror(errno)));
 	dim = vars->map->dim;
 	if (!ft_alloc_camera_matrix(&camera->matrix, dim))
 		return (0);
-	while (dim.x-- > 0)
+	while (dim.x--)
 	{
 		dim.y = vars->map->dim.y;
-		while (dim.y-- > 0)
+		while (dim.y--)
 		{
-			z = vars->map->matrix[dim.x][dim.y];
-			camera->matrix[dim.x][dim.y] = (t_point){(t_vector3){dim.y, dim.x, z}, ft_calculate_color(vars, z)};
+			z_n.x = vars->map->matrix[dim.x][dim.y];
+			camera->matrix[dim.x][dim.y] = (t_point){(t_vector3){dim.y, dim.x, z_n.x}, ft_interpolate_colors(START_COLOR, END_COLOR, z_n.x, z_n.y)};
 		}
 	}
 	camera->name = "TEST";
@@ -138,6 +139,6 @@ int	ft_init_fdf(t_vars *vars, char *filename)
 		&& ft_init_camera(vars)
 		&& ft_init_mlx(&vars->mlx)
 		&& ft_init_image(vars->mlx, &vars->image)))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }

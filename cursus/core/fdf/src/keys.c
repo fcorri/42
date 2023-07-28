@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/28 12:12:14 by fcorri           ###   ########.fr       */
+/*   Created: 2023/07/28 12:01:52 by fcorri            #+#    #+#             */
+/*   Updated: 2023/07/28 12:02:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	ft_key_down(int keycode, t_vars *vars)
 {
+	ft_printf("keycode: %d\n", keycode);
 	if (keycode == XK_Left)
 		ft_translate(vars, LEFT);
 	else if (keycode == XK_Up)
@@ -22,9 +23,9 @@ static int	ft_key_down(int keycode, t_vars *vars)
 		ft_translate(vars, RIGHT);
 	else if (keycode == XK_Down)
 		ft_translate(vars, DOWN);
-	else if (keycode == XK_KP_Add || keycode == 43)
+	else if (keycode == XK_KP_Add)
 		ft_zoom_on(vars, DEF_ZOOM);
-	else if (keycode == XK_KP_Subtract || keycode == 45)
+	else if (keycode == XK_KP_Subtract)
 		ft_zoom_off(vars, DEF_ZOOM);
 	else if (keycode == XK_c)
 		ft_to_center(vars);
@@ -50,21 +51,4 @@ static int	ft_key_down(int keycode, t_vars *vars)
 		return (1);
 	vars->camera->render = 1;
 	return (ft_render(vars));
-}
-
-int main(int argc, char **argv)
-{
-	t_vars	vars;
-
-	ft_bzero(&vars, sizeof(vars));
-	if (argc == 1)
-		return (ft_error("ARGS", strerror(22)));
-	if (argc != 2)
-		return (ft_error("ARGS", strerror(7)));
-	if (!ft_init_fdf(&vars, argv[1]))
-		return (ft_free_and_return(&vars, 1));
-	mlx_hook(vars.mlx->win, 2, 1L<<0, ft_key_down, &vars);
-	ft_render(&vars);
-	mlx_loop(vars.mlx->this);
-	return (ft_free_and_return(&vars, 0));
 }
