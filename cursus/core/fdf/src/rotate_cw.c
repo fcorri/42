@@ -6,13 +6,13 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:49:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/28 13:06:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/30 12:57:45 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static	void	ft_rot(t_vars *vars, t_vector3 axis)
+void	ft_rot(t_vars *vars, t_vector3 axis)
 {
 	t_vector3	v;
 
@@ -24,9 +24,7 @@ static	void	ft_rot(t_vars *vars, t_vector3 axis)
 
 void	ft_rot_x_cw(t_vars *vars)
 {
-	ft_print_matrix(vars);
 	ft_rot(vars, (t_vector3){1, 0, 0});
-	ft_print_matrix(vars);
 }
 
 void	ft_rot_y_cw(t_vars *vars)

@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/28 13:16:08 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/30 18:55:51 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,56 @@ void	ft_swap(int *first, int *second)
 	*second = tmp;
 }
 
-void	ft_print_matrix(t_vars *vars)
+int	ft_abs(int number)
 {
-	t_point		**matrix;
-	t_vector3	p;
-	t_vector2	x_y;
-	t_vector2	dim;
-	
-	matrix = vars->camera->matrix;
-	x_y = (t_vector2){0, 0};
-	dim = vars->map->dim;
-	while (x_y.x != dim.x)
+	if (number < 0)
+		return (-number);
+	return (number);
+}
+
+int	ft_max(int first, int second)
+{
+	if (first > second)
+		return (first);
+	return (second);
+}
+
+void	ft_print_map_matrix(t_vars *vars)
+{
+	int	row = 0;
+	int	col = 0;
+
+	while (col < vars->map->dim.y)
+		ft_printf("\t%d", col++);
+	ft_printf("\n");
+	while (row < vars->map->dim.x)
 	{
-		x_y.y = 0;
-		while (x_y.y != dim.y)
-		{
-			p = matrix[x_y.x][x_y.y].v;
-			printf("[%f, %f, %f] ", p.x, p.y, p.z);
-			x_y.y++;
-		}
-		printf("\n");
-		x_y.x++;
+		col = 0;
+		ft_printf("%d", row);
+		while (col++ < vars->map->dim.y)
+			ft_printf("\t%d", (int)vars->map->matrix[row][col]);
+		ft_printf("\n");
+		row++;
 	}
-	printf("\n");
+	ft_printf("\n\n");
+}
+
+void	ft_print_camera_matrix(t_vars *vars)
+{
+	int	row = 0;
+	int	col = 0;
+
+	while (col < vars->map->dim.y)
+		ft_printf("\t%d", col++);
+	ft_printf("\n");
+	while (row < vars->map->dim.x)
+	{
+		col = 0;
+		ft_printf("%d", row);
+		while (col++ < vars->map->dim.y)
+			ft_printf("\t%d", (int)vars->camera->matrix[row][col].v.z);
+		ft_printf("\n");
+		row++;
+	}
+	ft_printf("\n\n");
 }

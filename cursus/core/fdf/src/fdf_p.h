@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/28 13:32:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/30 19:17:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 # include "libft/libft.h"
 
-# define WIDTH			800
-# define HEIGHT			600
+# define WIDTH			1200
+# define HEIGHT			800
 # define TITLE			"fil de fer"
 
 # define WHITE			0x00FFFFFF
@@ -75,6 +75,12 @@ typedef struct point
 	int			color;
 }	t_point;
 
+typedef struct colors
+{
+	t_vector3	start;
+	t_vector3	step;
+}	t_colors;
+
 
 typedef struct mlx
 {
@@ -94,7 +100,6 @@ typedef struct camera
 {
 	t_point	**matrix;
 	char	*name;
-	int		render;
 	int		(*ft_render)(t_vars *vars);
 }	t_camera;
 
@@ -117,13 +122,26 @@ struct s_vars
 
 int		ft_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
-void	ft_print_matrix(t_vars *vars);
+int		ft_abs(int number);
+int		ft_max(int first, int second);
+void	ft_print_map_matrix(t_vars *vars);
+void	ft_print_camera_matrix(t_vars *vars);
 
 // this functions should initialize the matrix, not only allocate memory for it
 int		ft_alloc_map_matrix(int ***p_matrix, t_vector2 dim);
 int		ft_alloc_camera_matrix(t_point ***p_matrix, t_vector2 dim);
 
 int		ft_init_fdf(t_vars *vars, char *filename);
+
+int			ft_to_int(t_vector3 color);
+t_vector3	ft_to_vector(int color);
+void		ft_add_colors(t_colors *colors);
+t_colors	ft_init_line_colors_with(int s, int e, float n);
+int			ft_interpolate_colors(int s, int e, float i, float n);
+
+int		ft_key_down(int keycode, t_vars *vars);
+
+void	ft_animate(t_vars *vars);
 
 int		ft_free_and_return(t_vars *vars, int value);
 
@@ -134,10 +152,9 @@ int		ft_render_orthogonal(t_vars *vars);
 int		ft_render_test(t_vars *vars);
 
 void	ft_put_line(t_image *image, t_point p0, t_point p1);
-int		ft_interpolate_colors(int s, int e, float i, float n);
 
 void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked);
-size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
+size_t	ft_split_decorator_to_init_map_matrix_cols(int *fd, t_map *map, char *filename);
 t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 
 void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vector3 b), t_vector3 v);
@@ -159,6 +176,7 @@ t_vector3	ft_div_scalar(t_vector3 a, float k);
 
 t_vector3	ft_mul_quaternion(t_vector3 point, t_vector3 axis, float deg);
 
+void	ft_rot(t_vars *vars, t_vector3 axis);
 void	ft_rot_x_cw(t_vars *vars);
 void	ft_rot_y_cw(t_vars *vars);
 void	ft_rot_z_cw(t_vars *vars);

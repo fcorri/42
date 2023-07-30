@@ -1,42 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/28 12:08:42 by fcorri           ###   ########.fr       */
+/*   Created: 2023/07/28 16:26:19 by fcorri            #+#    #+#             */
+/*   Updated: 2023/07/30 18:06:02 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static int	max_abs_and_norm(int *p_a, int *p_b)
+int	ft_to_int(t_vector3 color)
 {
-	int	a;
-	int	b;
-
-	a = *p_a;
-	b = *p_b;
-	if (a < 0)
-		a *= -1;
-	if (b < 0)
-		b *= -1;
-	if (a)
-		*p_a /= a;
-	if (b)
-		*p_b /= b;
-	if (a >= b)
-		return (a);
-	return (b);
+	return (((int) color.x & RED) | ((int) color.y & GREEN) | ((int) color.z & BLUE));
 }
 
-static void	ft_put_pixel(t_image *img, t_vector3 p, int color)
+t_vector3	ft_to_vector(int color)
 {
-	if ((0 <= p.x && p.x < WIDTH) && (0 <= p.y && p.y < HEIGHT))
-		*(unsigned int *)(img->addr + (int) (p.y * img->ll + p.x * (img->bpp / 8))) = color;
+	return ((t_vector3){color & RED, color & GREEN, color & BLUE});
 }
+
+void	ft_add_colors(t_colors *colors)
+{
+	colors->start.x += colors->step.x;
+	colors->start.y += colors->step.y;
+	colors->start.z += colors->step.z;
+}
+
+t_colors	ft_init_line_colors_with(int s, int e, float n)
+{
+	t_vector3	output;
+
+	if (!n || s == e)
+		return ((t_colors){ft_to_vector(s), (t_vector3){0, 0, 0}});
+	output.x = ((e & RED) - (s & RED)) / n;
+	output.y = ((e & GREEN) - (s & GREEN)) / n;
+	output.z = ((e & BLUE) - (s & BLUE)) / n;
+		return ((t_colors){ft_to_vector(s), output});
+}
+
 
 int	ft_interpolate_colors(int s, int e, float i, float n)
 {
@@ -54,22 +58,4 @@ int	ft_interpolate_colors(int s, int e, float i, float n)
 	tmpe = e & 0xFF;
 	output |= (int) ((tmpe - tmps) * (i / n) + tmps);
 	return (output);
-}
-
-void    ft_put_line(t_image *image, t_point p0, t_point p1)
-{
-	t_vector2	delta;
-	int			steps;
-	int			i;
-
-	delta.x = p1.v.x - p0.v.x;
-	delta.y = p1.v.y - p0.v.y;
-	steps = max_abs_and_norm(&delta.x, &delta.y);
-	i = -1;
-	while (i++ < steps)
-	{
-		ft_put_pixel(image, p0.v, ft_interpolate_colors(p0.color, p1.color, i, steps));
-		p0.v.x += delta.x;
-		p0.v.y += delta.y;
-	}
 }

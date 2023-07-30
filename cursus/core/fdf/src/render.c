@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/27 14:53:22 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/30 13:15:47 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	ft_render_legend(t_vars *vars)
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "i / I         -> ISOMETRIC PROJECTION");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "o / O         -> ORTHOGONAL PROJECTION");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "i             -> ISOMETRIC PROJECTION");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "o             -> ORTHOGONAL PROJECTION");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "ENTER         -> ANIMATE");
 }
 
@@ -33,7 +33,6 @@ int	ft_set_render(t_vars *vars, int (*ft_render)(t_vars *vars), char *name)
 {
 	vars->camera->ft_render = ft_render;
 	vars->camera->name = name;
-	vars->camera->render = 1;
 	return (1);
 }
 
@@ -86,7 +85,6 @@ int	ft_render_test(t_vars *vars)
 	}
 	p1 = matrix[row_col.x][row_col.y];
 		ft_put_line(vars->image, p1, p1);
-	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	return (1);
 }
 
@@ -94,12 +92,9 @@ int	ft_render(t_vars *vars)
 {
 	int	output;
 
-	if (!vars->camera->render)
-		return (1);
 	ft_bzero(vars->image->addr, WIDTH * HEIGHT * 4);
-	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	output = vars->camera->ft_render(vars);
+	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	ft_render_legend(vars);
-	vars->camera->render = 0;
 	return (output);
 }

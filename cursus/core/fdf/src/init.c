@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/28 11:59:47 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/30 19:21:10 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static int	ft_init_camera(t_vars *vars)
 		}
 	}
 	camera->name = "TEST";
-	camera->render = 1;
 	camera->ft_render = ft_render_test;
 	vars->camera = camera;
 	ft_zoom_on(vars, 20);

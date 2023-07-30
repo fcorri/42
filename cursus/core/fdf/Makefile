@@ -6,12 +6,12 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/28 11:56:09 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/30 18:22:50 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/fdf
-ARGS			=	../maps/42.fdf
+ARGS			=	../maps/10-2.fdf
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -27,7 +27,9 @@ SRCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
 SRCS			=	$(SRCS_DIR)/decorators.c \
-					$(SRCS_DIR)/draw.c \
+					$(SRCS_DIR)/colors.c \
+					$(SRCS_DIR)/line.c \
+					$(SRCS_DIR)/keys.c \
 					$(SRCS_DIR)/for_each_point.c \
 					$(SRCS_DIR)/free.c \
 					$(SRCS_DIR)/init.c \
