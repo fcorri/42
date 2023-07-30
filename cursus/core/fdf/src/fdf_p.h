@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/30 19:17:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/30 19:24:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int		ft_render_test(t_vars *vars);
 void	ft_put_line(t_image *image, t_point p0, t_point p1);
 
 void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked);
-size_t	ft_split_decorator_to_init_map_matrix_cols(int *fd, t_map *map, char *filename);
+size_t	ft_split_decorator_to_init_line_len(int *fd, t_map *map, char *filename);
 t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 
 void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vector3 b), t_vector3 v);
