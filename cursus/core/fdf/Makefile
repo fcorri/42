@@ -6,12 +6,12 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/30 18:22:50 by fcorri           ###   ########.fr        #
+#    Updated: 2023/07/31 10:17:39 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/fdf
-ARGS			=	../maps/10-2.fdf
+ARGS			=	../maps/42.fdf
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror

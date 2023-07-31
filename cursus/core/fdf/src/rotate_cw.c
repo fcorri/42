@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:49:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/30 12:57:45 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/31 10:23:24 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 void	ft_rot(t_vars *vars, t_vector3 axis)
 {
-	t_vector3	v;
-
-	v = vars->camera->matrix[0][0].v;
-	ft_to_origin(vars);
+	static t_vector3	v;
+	static t_vector3	opposite_v;
+	static int			first;
+	
+	if (!first)
+	{
+		v = vars->camera->matrix[vars->map->dim.x / 2][vars->map->dim.y / 2].v;
+		opposite_v = ft_opposite(v);
+		first = 1;
+	}
+	ft_translate(vars, opposite_v);
 	ft_VVQ_for_each_point_of(vars, ft_mul_quaternion, axis, DEF_ANG);
 	ft_translate(vars, v);
 }
