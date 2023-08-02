@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 18:07:10 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/03 16:12:52 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/31 11:45:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ static char	*ft_strjoin_gnl(char **s1, char *s2, size_t br)
 	return (output);
 }
 
-static char	*ft_free_and_return(char *line, char *buffer, char *output)
+static char	*ft_free_and_return(char **line, char *buffer, char *output)
 {
-	free(line);
+	free(*line);
+	*line = NULL;
 	free(buffer);
 	return (output);
 }
@@ -71,14 +72,14 @@ static char	*ft_return(char **line, char *newline, char *buffer)
 	char	*tmp;
 
 	if (!**line)
-		return (ft_free_and_return(*line, buffer, NULL));
+		return (ft_free_and_return(line, buffer, NULL));
 	if (newline)
 	{
 		output = ft_strndup_gnl(*line, newline - *line + 1);
 		tmp = *line;
 		*line = ft_strndup_gnl(newline + 1,
 				ft_strchr_gnl(newline + 1, '\0') - (newline + 1));
-		return (ft_free_and_return(tmp, buffer, output));
+		return (ft_free_and_return(&tmp, buffer, output));
 	}
 	tmp = *line;
 	*line = NULL;
@@ -95,15 +96,13 @@ char	*get_next_line(int fd)
 
 	size = sizeof(unsigned long);
 	buffer = ft_calloc_gnl(size, BUFFER_SIZE / size + 1);
-	if (!buffer)
-		return (ft_free_and_return(line, buffer, NULL));
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (ft_free_and_return(line, buffer, NULL));
+	if (fd < 0 || !buffer || BUFFER_SIZE <= 0)
+		return (ft_free_and_return(&line, buffer, NULL));
 	br = read(fd, buffer, BUFFER_SIZE);
 	while (br > 0)
 	{
 		if (!ft_strjoin_gnl(&line, buffer, br))
-			return (ft_free_and_return(line, buffer, NULL));
+			return (ft_free_and_return(&line, buffer, NULL));
 		newline = ft_strchr_gnl(line, '\n');
 		if (newline)
 			return (ft_return(&line, newline, buffer));
@@ -111,5 +110,5 @@ char	*get_next_line(int fd)
 	}
 	if (line)
 		return (ft_return(&line, ft_strchr_gnl(line, '\n'), buffer));
-	return (ft_free_and_return(line, buffer, NULL));
+	return (ft_free_and_return(&line, buffer, NULL));
 }

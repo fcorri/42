@@ -1,2 +1,2 @@
-b init.c:86
+b ft_render_camera 
 r

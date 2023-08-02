@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/30 18:55:51 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:29:35 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	ft_error(char *callee, char *with_message)
 {
 	ft_printf("ERROR %s: %s\n", callee, with_message);
 	return (0);
+}
+
+void	*ft_null_error(char *callee, char *with_message)
+{
+	ft_printf("ERROR %s: %s\n", callee, with_message);
+	return (NULL);
 }
 
 void	ft_swap(int *first, int *second)
@@ -42,42 +48,19 @@ int	ft_max(int first, int second)
 	return (second);
 }
 
-void	ft_print_map_matrix(t_vars *vars)
+int	ft_alloc_map_matrix(int ***p_matrix, t_vector2 dim)
 {
-	int	row = 0;
-	int	col = 0;
+	int	**matrix;
 
-	while (col < vars->map->dim.y)
-		ft_printf("\t%d", col++);
-	ft_printf("\n");
-	while (row < vars->map->dim.x)
+	matrix = ft_malloc_soul(sizeof(int *) * dim.x);
+	if (!matrix)
+		return (ft_error("MAP MATRIX MALLOC", strerror(errno)));
+	while (dim.x--)
 	{
-		col = 0;
-		ft_printf("%d", row);
-		while (col++ < vars->map->dim.y)
-			ft_printf("\t%d", (int)vars->map->matrix[row][col]);
-		ft_printf("\n");
-		row++;
+		matrix[dim.x] = ft_malloc_soul(sizeof(int) * dim.y);
+		if (!matrix[dim.x])
+			return (ft_error("MAP MATRIX[i] MALLOC", strerror(errno)));
 	}
-	ft_printf("\n\n");
-}
-
-void	ft_print_camera_matrix(t_vars *vars)
-{
-	int	row = 0;
-	int	col = 0;
-
-	while (col < vars->map->dim.y)
-		ft_printf("\t%d", col++);
-	ft_printf("\n");
-	while (row < vars->map->dim.x)
-	{
-		col = 0;
-		ft_printf("%d", row);
-		while (col++ < vars->map->dim.y)
-			ft_printf("\t%d", (int)vars->camera->matrix[row][col].v.z);
-		ft_printf("\n");
-		row++;
-	}
-	ft_printf("\n\n");
+	*p_matrix = matrix;
+	return (1);
 }

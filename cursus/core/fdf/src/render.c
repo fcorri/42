@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/30 13:15:47 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/31 20:15:14 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,15 @@ static void	ft_render_legend(t_vars *vars)
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y, WHITE,       "ARROW KEYS    -> MOVE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "+ / -         -> ZOOM IN / OUT");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "c             -> CENTER");
+	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "r             -> RESTORE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "i             -> ISOMETRIC PROJECTION");
 	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "o             -> ORTHOGONAL PROJECTION");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "ENTER         -> ANIMATE");
 }
 
-int	ft_set_render(t_vars *vars, int (*ft_render)(t_vars *vars), char *name)
-{
-	vars->camera->ft_render = ft_render;
-	vars->camera->name = name;
-	return (1);
-}
-
-int	ft_render_isometric(t_vars *vars)
-{
-	(void) vars;
-	return (1);
-}
-
-int	ft_render_orthogonal(t_vars *vars)
-{
-	(void) vars;
-	return (1);
-}
-
-int	ft_render_test(t_vars *vars)
+static int	ft_render_camera(t_vars *vars)
 {
 	t_vector2	row_col;
 	t_vector2	dim;
@@ -90,11 +71,9 @@ int	ft_render_test(t_vars *vars)
 
 int	ft_render(t_vars *vars)
 {
-	int	output;
-
 	ft_bzero(vars->image->addr, WIDTH * HEIGHT * 4);
-	output = vars->camera->ft_render(vars);
+	ft_render_camera(vars);
 	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
 	ft_render_legend(vars);
-	return (output);
+	return (1);
 }

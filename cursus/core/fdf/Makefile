@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/07/31 10:17:39 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/01 11:45:08 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,19 +27,20 @@ SRCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
 SRCS			=	$(SRCS_DIR)/decorators.c \
+					$(SRCS_DIR)/camera.c \
+					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/colors.c \
 					$(SRCS_DIR)/line.c \
-					$(SRCS_DIR)/keys.c \
 					$(SRCS_DIR)/for_each_point.c \
 					$(SRCS_DIR)/free.c \
 					$(SRCS_DIR)/init.c \
 					$(SRCS_DIR)/main.c \
-					$(SRCS_DIR)/matrix.c \
+					$(SRCS_DIR)/projection.c \
 					$(SRCS_DIR)/quaternions.c \
 					$(SRCS_DIR)/render.c \
 					$(SRCS_DIR)/rotate_ccw.c \
 					$(SRCS_DIR)/rotate_cw.c \
-					$(SRCS_DIR)/traslations.c \
+					$(SRCS_DIR)/transformations.c \
 					$(SRCS_DIR)/utils.c \
 					$(SRCS_DIR)/vectors.c \
 					$(SRCS_DIR)/zoom.c

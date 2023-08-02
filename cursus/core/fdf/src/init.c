@@ -6,42 +6,42 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 02:06:43 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/07/31 12:36:38 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static int	ft_init_map_matrix(char *filename, int old_fd, t_map *map, size_t line_len)
+static int	ft_init_map_matrix(char *filename, t_map **p_map, t_map *map)
 {
-	int			new_fd;
+	int			fd;
 	char		*line;
 	t_vector2	min_max;
 
 	if(!(ft_alloc_map_matrix(&map->matrix, map->dim)))
 		return (0);
-	new_fd = open(filename, O_RDONLY);
-	if (new_fd < 0)
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
 		return (ft_error("OPEN", strerror(errno)));
-	close(old_fd);
-	line = ft_malloc_soul(sizeof(char) * (line_len + 1));
-	if (!line)
-		return (ft_error("LINE MALLOC in INIT_POINTS", strerror(errno)));
 	min_max = (t_vector2){INT_MAX, INT_MIN};
-	while (read(new_fd, line, line_len))
+	line = get_next_line(fd);
+	while (line)
+	{
 		ft_vector2_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, map), &min_max);
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
 	map->min_max = min_max;
-	free(line);
-	close(new_fd);
+	*p_map = map;
 	return (1);
 }
 
 static int	ft_init_map(char *filename, t_map **p_map)
 {
 	t_vector2	fd_rows;
-	t_map		*map;
-	size_t		line_len;
 	char		*line;
+	t_map		*map;
 
 	fd_rows.x = open(filename, O_RDONLY);
 	if (fd_rows.x < 0)
@@ -49,49 +49,21 @@ static int	ft_init_map(char *filename, t_map **p_map)
 	map = ft_malloc_soul(sizeof(t_map));
 	if (!map)
 		return(ft_error("MAP CALLOC", strerror(errno)));
-	line_len = ft_split_decorator_to_init_line_len(&fd_rows.x, map, filename);
-	if (!line_len || fd_rows.x < 0)
+	fd_rows.x = ft_split_decorator_to_init_map_cols(fd_rows.x, map, filename);
+	if (fd_rows.x < 0)
 		return (ft_error("SPLIT_DECORATOR_TO_INIT_LINE_LEN", strerror(errno)));
 	fd_rows.y = 0;
-	line = ft_malloc_soul(sizeof(char) * line_len);
-	if (!line)
-		return (ft_error("LINE MALLOC in INIT MAP", strerror(errno)));
-	while (read(fd_rows.x, line, line_len))
+	line = get_next_line(fd_rows.x);
+	while (line)
+	{
 		fd_rows.y++;
-	free(line);
+		free(line);
+		line = get_next_line(fd_rows.x);
+	}
+	close(fd_rows.x);
 	map->dim.x = fd_rows.y;
 	map->colors = (t_vector2){START_COLOR, END_COLOR};
-	*p_map = map;
-	return (ft_init_map_matrix(filename, fd_rows.x, map, line_len));
-}
-
-static int	ft_init_camera(t_vars *vars)
-{
-	t_vector2	z_n;
-	t_camera	*camera;
-	t_vector2	dim;
-
-	z_n.y = vars->map->min_max.y - vars->map->min_max.x;
-	camera = ft_malloc_soul(sizeof(t_camera));
-	if (!camera)
-		return (ft_error("CAMERA MALLOC", strerror(errno)));
-	dim = vars->map->dim;
-	if (!ft_alloc_camera_matrix(&camera->matrix, dim))
-		return (0);
-	while (dim.x--)
-	{
-		dim.y = vars->map->dim.y;
-		while (dim.y--)
-		{
-			z_n.x = vars->map->matrix[dim.x][dim.y];
-			camera->matrix[dim.x][dim.y] = (t_point){(t_vector3){dim.y, dim.x, z_n.x}, ft_interpolate_colors(START_COLOR, END_COLOR, z_n.x, z_n.y)};
-		}
-	}
-	camera->name = "TEST";
-	camera->ft_render = ft_render_test;
-	vars->camera = camera;
-	ft_zoom_on(vars, 20);
-	return (1);
+	return (ft_init_map_matrix(filename, p_map, map));
 }
 
 static int	ft_init_mlx(t_mlx **p_mlx)
