@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 20:15:14 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:02:51 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,67 @@
 
 static void	ft_render_legend(t_vars *vars)
 {
-	int	y;
+	int		y;
+	void	*this;
+	void	*win;
 
 	y = 20;
-	mlx_string_put(vars->mlx->this, vars->mlx->win, WIDTH/2 - 60, y, WHITE, vars->camera->name);
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y, WHITE,       "ARROW KEYS    -> MOVE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "+ / -         -> ZOOM IN / OUT");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "c             -> CENTER");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "r             -> RESTORE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 30, WHITE, "i             -> ISOMETRIC PROJECTION");
-	mlx_string_put(vars->mlx->this, vars->mlx->win, 10, y += 15, WHITE, "o             -> ORTHOGONAL PROJECTION");
+	this = vars->mlx->this;
+	win = vars->mlx->win;
+	mlx_string_put(this, win, (WIDTH >> 1) - 60, y, W, vars->camera->name);
+	mlx_string_put(this, win, 10, y, W, "ARROW KEYS    -> MOVE");
+	mlx_string_put(this, win, 10, y += 30, W, "+ / -         -> ZOOM IN / OUT");
+	mlx_string_put(this, win, 10, y += 30, W, "c             -> CENTER");
+	mlx_string_put(this, win, 10, y += 30, W, "r             -> RESTORE");
+	mlx_string_put(this, win, 10, y += 30, W, \
+		"x / X         -> ROTATE X-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(this, win, 10, y += 15, W, \
+		"y / Y         -> ROTATE Y-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(this, win, 10, y += 15, W, \
+		"z / Z         -> ROTATE Z-AXIS CLOCKWISE / ANTI-CLOCKWISE");
+	mlx_string_put(this, win, 10, y += 30, W, \
+		"i             -> ISOMETRIC PROJECTION");
+	mlx_string_put(this, win, 10, y += 15, W, \
+		"o             -> ORTHOGONAL PROJECTION");
 }
 
 static int	ft_render_camera(t_vars *vars)
 {
-	t_vector2	row_col;
-	t_vector2	dim;
-	t_point		**matrix;
-	t_point		p1;
-	t_point		p2;
+	t_v2	rc;
+	t_v2	dim;
+	t_p		**matrix;
+	t_p		p1;
+	t_image	*image;
 
-	row_col = (t_vector2){0, 0};
+	rc = (t_v2){0, -1};
 	dim = vars->map->dim;
 	matrix = vars->camera->matrix;
-	while (row_col.x != dim.x - 1)
+	image = vars->image;
+	while (rc.x != dim.x - 1)
 	{
-		p1 = matrix[row_col.x][row_col.y];
-		while (row_col.y != dim.y - 1)
+		while (++rc.y != dim.y - 1)
 		{
-			p2 = matrix[row_col.x + 1][row_col.y];
-			ft_put_line(vars->image, p1, p2);
-			p2 = matrix[row_col.x][row_col.y + 1];
-			ft_put_line(vars->image, p1, p2);
-			p1 = p2;
-			row_col.y += 1;
+			p1 = matrix[rc.x][rc.y];
+			ft_put_line(image, p1, matrix[rc.x + 1][rc.y]);
+			ft_put_line(image, p1, matrix[rc.x][rc.y + 1]);
 		}
-		p2 = matrix[row_col.x + 1][row_col.y];
-		ft_put_line(vars->image, p1, p2);
-		row_col = (t_vector2){row_col.x + 1, 0};
+		ft_put_line(image, matrix[rc.x][rc.y], matrix[rc.x + 1][rc.y]);
+		rc = (t_v2){rc.x + 1, -1};
 	}
-	p1 = matrix[row_col.x][row_col.y];
-	while (row_col.y != dim.y - 1)
-	{
-		p2 = matrix[row_col.x][row_col.y + 1];
-		ft_put_line(vars->image, p1, p2);
-		p1 = p2;
-		row_col.y += 1;
-	}
-	p1 = matrix[row_col.x][row_col.y];
-		ft_put_line(vars->image, p1, p1);
-	return (1);
+	while (++rc.y != dim.y - 1)
+		ft_put_line(image, matrix[rc.x][rc.y], matrix[rc.x][rc.y + 1]);
+	p1 = matrix[rc.x][rc.y];
+	return (ft_put_pixel(image, p1.v, p1.color));
 }
 
 int	ft_render(t_vars *vars)
 {
+	t_mlx	*mlx;
+
+	mlx = vars->mlx;
 	ft_bzero(vars->image->addr, WIDTH * HEIGHT * 4);
 	ft_render_camera(vars);
-	mlx_put_image_to_window(vars->mlx->this, vars->mlx->win, vars->image->this, 0, 0);
+	mlx_put_image_to_window(mlx->this, mlx->win, vars->image->this, 0, 0);
 	ft_render_legend(vars);
 	return (1);
 }

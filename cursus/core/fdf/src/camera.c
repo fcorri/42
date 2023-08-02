@@ -6,26 +6,26 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 11:48:18 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 15:05:25 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:02:21 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static t_camera *ft_alloc_camera_matrix(t_point ***p_matrix, t_vector2 dim)
+static t_camera	*ft_alloc_camera_matrix(t_p ***p_matrix, t_v2 dim)
 {
 	t_camera	*camera;
-	t_point		**matrix;
+	t_p			**matrix;
 
 	camera = ft_malloc_soul(sizeof(t_camera));
 	if (!camera)
 		return (ft_null_error("CAMERA MALLOC", strerror(errno)));
-	matrix = ft_malloc_soul(sizeof(t_point *) * dim.x);
+	matrix = ft_malloc_soul(sizeof(t_p *) * dim.x);
 	if (!matrix)
 		return (ft_null_error("CAMERA MATRIX MALLOC", strerror(errno)));
 	while (dim.x--)
 	{
-		matrix[dim.x] = ft_malloc_soul(sizeof(t_point) * dim.y);
+		matrix[dim.x] = ft_malloc_soul(sizeof(t_p) * dim.y);
 		if (!matrix[dim.x])
 			return (ft_null_error("CAMERA MATRIX[i] MALLOC", strerror(errno)));
 	}
@@ -36,11 +36,11 @@ static t_camera *ft_alloc_camera_matrix(t_point ***p_matrix, t_vector2 dim)
 
 int	ft_init_camera(t_vars *vars)
 {
-	t_map		*map;
-	t_vector2	dim;
-	t_vector2	z_n;
-	int			**m_matrix;
-	t_point		**c_matrix;
+	t_map	*map;
+	t_v2	dim;
+	t_v2	z_n;
+	int		**m_matrix;
+	t_p		**c_matrix;
 
 	map = vars->map;
 	dim = map->dim;
@@ -53,10 +53,11 @@ int	ft_init_camera(t_vars *vars)
 		while (dim.y--)
 		{
 			z_n.x = m_matrix[dim.x][dim.y];
-			c_matrix[dim.x][dim.y].color = ft_interpolate_colors(START_COLOR, END_COLOR, z_n.x, z_n.y);
+			c_matrix[dim.x][dim.y].color = \
+				ft_interpolate_colors(S, E, z_n.x, z_n.y);
 		}
 	}
-	vars->camera->zoom = (t_vector2){14, 14};
+	vars->camera->zoom = (t_v2){14, 14};
 	vars->camera->name = "ISOMETRIC PROJECTION";
 	vars->camera->ft_view = ft_isometric;
 	return (1);
@@ -64,11 +65,11 @@ int	ft_init_camera(t_vars *vars)
 
 int	ft_restore_camera(t_vars *vars)
 {
-	int			z;
-	t_map		*map;
-	t_vector2	dim;
-	int			**m_matrix;
-	t_point		**c_matrix;
+	int		z;
+	t_map	*map;
+	t_v2	dim;
+	int		**m_matrix;
+	t_p		**c_matrix;
 
 	map = vars->map;
 	dim = map->dim;
@@ -80,7 +81,7 @@ int	ft_restore_camera(t_vars *vars)
 		while (dim.y--)
 		{
 			z = m_matrix[dim.x][dim.y];
-			c_matrix[dim.x][dim.y].v = (t_vector3){dim.y, dim.x, z};
+			c_matrix[dim.x][dim.y].v = (t_v3){dim.y, dim.x, z};
 		}
 	}
 	ft_zoom_on(vars, 20);

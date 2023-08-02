@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 11:25:52 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:07:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 struct s_map_vars
 {
-	int			y;
-	int			z;
-	t_vector2	min_max;
+	int		y;
+	int		z;
+	t_v2	min_max;
 };
 
-static void	ft_int_swap_decorator(int value, t_vector2 *to_be_checked)
+static void	ft_int_swap_decorator(int value, t_v2 *to_be_checked)
 {
 	if (value < to_be_checked->x)
 		ft_swap(&value, &to_be_checked->x);
@@ -27,7 +27,7 @@ static void	ft_int_swap_decorator(int value, t_vector2 *to_be_checked)
 		ft_swap(&value, &to_be_checked->y);
 }
 
-void	ft_vector2_swap_decorator(t_vector2 value, t_vector2 *to_be_checked)
+void	ft_v2_swap_decorator(t_v2 value, t_v2 *to_be_checked)
 {
 	if (value.x < to_be_checked->x)
 		ft_swap(&value.x, &to_be_checked->x);
@@ -58,7 +58,7 @@ int	ft_split_decorator_to_init_map_cols(int fd, t_map *map, char *filename)
 	return (open(filename, O_RDONLY));
 }
 
-t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
+t_v2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char				**tmp;
 	int					**matrix;
@@ -66,11 +66,11 @@ t_vector2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 	static int			x;
 	char				*number;
 
-	vars.y  = 0;
+	vars.y = 0;
 	tmp = ft_split(line, ' ');
 	number = tmp[vars.y];
 	matrix = map->matrix;
-	vars.min_max = (t_vector2){INT_MAX, INT_MIN};
+	vars.min_max = (t_v2){INT_MAX, INT_MIN};
 	while (number)
 	{
 		if (*number == '0')

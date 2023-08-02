@@ -6,23 +6,23 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:49:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 14:49:50 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:25:37 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-void	ft_rot_x_ccw(t_vars *vars)
+int	ft_rot_x_ccw(t_vars *vars)
 {
-	ft_rot(vars, (t_vector3){-1, 0, 0}, DEF_ANG);
+	return (ft_rot(vars, (t_v3){-1, 0, 0}, DEF_ANG));
 }
 
-void	ft_rot_y_ccw(t_vars *vars)
+int	ft_rot_y_ccw(t_vars *vars)
 {
-	ft_rot(vars, (t_vector3){0, -1, 0}, DEF_ANG);
+	return (ft_rot(vars, (t_v3){0, -1, 0}, DEF_ANG));
 }
 
-void	ft_rot_z_ccw(t_vars *vars)
+int	ft_rot_z_ccw(t_vars *vars)
 {
-	ft_rot(vars, (t_vector3){0, 0, -1}, DEF_ANG);
+	return (ft_rot(vars, (t_v3){0, 0, -1}, DEF_ANG));
 }

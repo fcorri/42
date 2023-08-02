@@ -6,17 +6,18 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 16:15:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/30 19:07:12 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:01:46 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vector3 b), t_vector3 v)
+void	ft_vvv_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 a, t_v3 b), \
+	t_v3 v)
 {
-	int			row;
-	int			col;
-	t_point	**matrix;
+	int	row;
+	int	col;
+	t_p	**matrix;
 
 	row = vars->map->dim.x;
 	matrix = vars->camera->matrix;
@@ -28,11 +29,11 @@ void	ft_VVV_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, t_vecto
 	}
 }
 
-void	ft_VVS_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, int k), int k)
+void	ft_vvs_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 a, int k), int k)
 {
-	int			row;
-	int			col;
-	t_point		**matrix;
+	int	row;
+	int	col;
+	t_p	**matrix;
 
 	row = vars->map->dim.x;
 	matrix = vars->camera->matrix;
@@ -44,11 +45,12 @@ void	ft_VVS_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 a, int k),
 	}
 }
 
-void	ft_VVQ_for_each_point_of(t_vars *vars, t_vector3 (*op)(t_vector3 point, t_vector3 axis, float deg), t_vector3 axis, float deg)
+void	ft_vvq_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 point, \
+	t_v3 axis, float deg), t_v3 axis, float deg)
 {
-	int			row;
-	int			col;
-	t_point		**matrix;
+	int	row;
+	int	col;
+	t_p	**matrix;
 
 	row = vars->map->dim.x;
 	matrix = vars->camera->matrix;

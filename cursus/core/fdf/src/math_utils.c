@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   projection.c                                       :+:      :+:    :+:   */
+/*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 20:18:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 20:23:38 by fcorri           ###   ########.fr       */
+/*   Created: 2023/08/02 17:04:32 by fcorri            #+#    #+#             */
+/*   Updated: 2023/08/02 17:04:48 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-void	ft_isometric(t_vars *vars)
+int	ft_abs(int number)
 {
-	ft_restore_camera(vars);
-	ft_rot(vars, (t_v3){0, 0, 1}, 45);
-	ft_rot(vars, (t_v3){1, 0, 0}, 35.264);
+	if (number < 0)
+		return (-number);
+	return (number);
 }
 
-void	ft_orthogonal(t_vars *vars)
+int	ft_max(int first, int second)
 {
-	ft_restore_camera(vars);
-}
-
-void	ft_perspective(t_vars *vars)
-{
-	ft_restore_camera(vars);
+	if (first > second)
+		return (first);
+	return (second);
 }

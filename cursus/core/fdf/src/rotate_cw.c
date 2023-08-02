@@ -6,38 +6,39 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:49:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 20:14:09 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:23:18 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-void	ft_rot(t_vars *vars, t_vector3 axis, float rad)
+int	ft_rot(t_vars *vars, t_v3 axis, float rad)
 {
-	static t_vector2	dim;
-	t_vector3			v;
-	t_vector3			opposite_v;
-	
+	static t_v2	dim;
+	t_v3		v;
+	t_v3		opposite_v;
+
 	if (dim.x == 0)
-		dim = (t_vector2){vars->map->dim.x >> 1, vars->map->dim.y >> 1};
+		dim = (t_v2){vars->map->dim.x >> 1, vars->map->dim.y >> 1};
 	v = vars->camera->matrix[dim.x][dim.y].v;
 	opposite_v = ft_opposite(v);
 	ft_translate(vars, opposite_v);
-	ft_VVQ_for_each_point_of(vars, ft_mul_quaternion, axis, rad);
+	ft_vvq_for_each_point_of(vars, ft_mul_quaternion, axis, rad);
 	ft_translate(vars, v);
+	return (1);
 }
 
-void	ft_rot_x_cw(t_vars *vars)
+int	ft_rot_x_cw(t_vars *vars)
 {
-	ft_rot(vars, (t_vector3){1, 0, 0}, DEF_ANG);
+	return (ft_rot(vars, (t_v3){1, 0, 0}, DEF_ANG));
 }
 
-void	ft_rot_y_cw(t_vars *vars)
+int	ft_rot_y_cw(t_vars *vars)
 {
-	ft_rot(vars, (t_vector3){0, 1, 0}, DEF_ANG);
+	return (ft_rot(vars, (t_v3){0, 1, 0}, DEF_ANG));
 }
 
-void	ft_rot_z_cw(t_vars *vars)
+int	ft_rot_z_cw(t_vars *vars)
 {
-	ft_rot(vars, (t_vector3){0, 0, 1}, DEF_ANG);
+	return (ft_rot(vars, (t_v3){0, 0, 1}, DEF_ANG));
 }

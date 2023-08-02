@@ -32,7 +32,7 @@ static void	ft_free_map_and_matrices(t_vars *vars)
 		if (matrix)
 		{
 			while (index)
-				free(((t_vector3 **)matrix)[--index]);
+				free(((t_v3 **)matrix)[--index]);
 			free(matrix);
 		}
 		free(vars->camera);

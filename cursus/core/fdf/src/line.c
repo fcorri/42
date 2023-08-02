@@ -6,22 +6,16 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:28:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/30 17:54:25 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:03:39 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-static void	ft_put_pixel(t_image *img, t_vector3 p, int color)
+static int	ft_init_delta_incr_err_with(t_p p0, t_p p1, t_v2 *delta, t_v2 *incr)
 {
-	if ((0 <= p.x && p.x < WIDTH) && (0 <= p.y && p.y < HEIGHT))
-		*(unsigned int *)(img->addr + (int) (((int)p.y) * img->ll + ((int)p.x) * (img->bpp / 8))) = color;
-}
-
-static int	ft_init_delta_incr_err_with(t_point p0, t_point p1, t_vector2 *delta, t_vector2 *incr)
-{
-	*delta = (t_vector2){ft_abs(p1.v.x - p0.v.x), -ft_abs(p1.v.y - p0.v.y)};
-	*incr = (t_vector2){1, 1};
+	*delta = (t_v2){ft_abs(p1.v.x - p0.v.x), -ft_abs(p1.v.y - p0.v.y)};
+	*incr = (t_v2){1, 1};
 	if (p0.v.x >= p1.v.x)
 		incr->x = -1;
 	if (p0.v.y >= p1.v.y)
@@ -29,13 +23,21 @@ static int	ft_init_delta_incr_err_with(t_point p0, t_point p1, t_vector2 *delta,
 	return (delta->x + delta->y);
 }
 
-void    ft_put_line(t_image *image, t_point p0, t_point p1)
+int	ft_put_pixel(t_image *img, t_v3 p, int color)
 {
-	int			steps;
-	t_colors	colors;
-	t_vector2	delta;
-	t_vector2	incr;
-	t_vector2	err;
+	if ((0 <= p.x && p.x < WIDTH) && (0 <= p.y && p.y < HEIGHT))
+		*(unsigned int *)(img->addr + (int)(((int)p.y) * img->ll + \
+			((int)p.x) * (img->bpp / 8))) = color;
+	return (1);
+}
+
+void	ft_put_line(t_image *image, t_p p0, t_p p1)
+{
+	int		steps;
+	t_lc	colors;
+	t_v2	delta;
+	t_v2	incr;
+	t_v2	err;
 
 	steps = ft_max(ft_abs(p1.v.x - p0.v.x), ft_abs(p1.v.y - p0.v.y));
 	colors = ft_init_line_colors_with(p0.color, p1.color, steps);

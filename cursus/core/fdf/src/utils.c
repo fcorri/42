@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 13:29:35 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:04:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,7 @@ void	ft_swap(int *first, int *second)
 	*second = tmp;
 }
 
-int	ft_abs(int number)
-{
-	if (number < 0)
-		return (-number);
-	return (number);
-}
-
-int	ft_max(int first, int second)
-{
-	if (first > second)
-		return (first);
-	return (second);
-}
-
-int	ft_alloc_map_matrix(int ***p_matrix, t_vector2 dim)
+int	ft_alloc_map_matrix(int ***p_matrix, t_v2 dim)
 {
 	int	**matrix;
 

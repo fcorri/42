@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/07/31 12:36:38 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/02 15:58:42 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ static int	ft_init_map_matrix(char *filename, t_map **p_map, t_map *map)
 {
 	int			fd;
 	char		*line;
-	t_vector2	min_max;
+	t_v2	min_max;
 
 	if(!(ft_alloc_map_matrix(&map->matrix, map->dim)))
 		return (0);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (ft_error("OPEN", strerror(errno)));
-	min_max = (t_vector2){INT_MAX, INT_MIN};
+	min_max = (t_v2){INT_MAX, INT_MIN};
 	line = get_next_line(fd);
 	while (line)
 	{
-		ft_vector2_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, map), &min_max);
+		ft_v2_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, map), &min_max);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -39,7 +39,7 @@ static int	ft_init_map_matrix(char *filename, t_map **p_map, t_map *map)
 
 static int	ft_init_map(char *filename, t_map **p_map)
 {
-	t_vector2	fd_rows;
+	t_v2	fd_rows;
 	char		*line;
 	t_map		*map;
 
@@ -62,7 +62,7 @@ static int	ft_init_map(char *filename, t_map **p_map)
 	}
 	close(fd_rows.x);
 	map->dim.x = fd_rows.y;
-	map->colors = (t_vector2){START_COLOR, END_COLOR};
+	map->colors = (t_v2){S, E};
 	return (ft_init_map_matrix(filename, p_map, map));
 }
 
