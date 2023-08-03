@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 11:48:18 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 17:02:21 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/03 13:15:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_init_camera(t_vars *vars)
 				ft_interpolate_colors(S, E, z_n.x, z_n.y);
 		}
 	}
-	vars->camera->zoom = (t_v2){14, 14};
+	vars->camera->zoom = (t_v2){5, 5};
 	vars->camera->name = "ISOMETRIC PROJECTION";
 	vars->camera->ft_view = ft_isometric;
 	return (1);
@@ -84,7 +84,8 @@ int	ft_restore_camera(t_vars *vars)
 			c_matrix[dim.x][dim.y].v = (t_v3){dim.y, dim.x, z};
 		}
 	}
-	ft_zoom_on(vars, 20);
+	ft_zoom_on_xy(vars, 20);
+	vars->camera->zoom = (t_v2){5, 5};
 	return (1);
 }
 

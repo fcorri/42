@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/03 11:02:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/03 13:24:01 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ void	*ft_null_error(char *callee, char *with_message);
 void	ft_swap(int *first, int *second);
 int		ft_abs(int number);
 int		ft_max(int first, int second);
-void	ft_print_map_matrix(t_vars *vars);
-void	ft_print_camera_matrix(t_vars *vars);
 
 int		ft_key_down(int keycode, t_vars *vars);
 int		ft_alloc_map_matrix(int ***p_matrix, t_v2 dim);
@@ -154,8 +152,8 @@ t_v2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map);
 
 void	ft_vvv_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 a, t_v3 b), \
 	t_v3 v);
-void	ft_vvs_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 a, int k), \
-	int k);
+void	ft_vvs_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 a, float k), \
+	float k);
 void	ft_vvq_for_each_point_of(t_vars *vars, t_v3 (*op)(t_v3 p, t_v3 axis, \
 	float deg), t_v3 axis, float deg);
 
@@ -163,8 +161,9 @@ void	ft_translate(t_vars *vars, t_v3 vector);
 void	ft_to_center(t_vars *vars);
 void	ft_to_origin(t_vars *vars);
 
-void	ft_zoom_on(t_vars *vars, int value);
-void	ft_zoom_off(t_vars *vars, int value);
+void	ft_zoom_on_xy(t_vars *vars, float value);
+void	ft_zoom_on(t_vars *vars, float value);
+void	ft_zoom_off(t_vars *vars, float value);
 
 t_v3	ft_new_vector(double x, double y, double z);
 t_v3	ft_add_vector(t_v3 a, t_v3 b);
