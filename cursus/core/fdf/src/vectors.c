@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 17:07:17 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:03:20 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 t_v3	ft_new_vector(double x, double y, double z)
 {
-	if (x < -FLT_MAX || x > FLT_MAX \
-		|| y < -FLT_MAX || y > FLT_MAX \
-		|| z < -FLT_MAX || z > FLT_MAX)
-		ft_error("NEW_VECTOR", strerror(EDOM));
 	return ((t_v3){x, y, z});
 }
 

@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 17:24:42 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:02:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 # include <string.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <float.h>
 
 # include "libft/libft.h"
 
-# define WIDTH			1920
-# define HEIGHT			1080
-# define TITLE			"fil de fer"
+# define WIDTH	1440	
+# define HEIGHT	900
+# define TITLE	"fil de fer"
 
 # define W	0x00FFFFFF
 # define R	0x00FF0000
@@ -175,12 +174,12 @@ t_v3	ft_div_scalar(t_v3 a, float k);
 
 t_v3	ft_mul_quaternion(t_v3 point, t_v3 axis, float deg);
 
-int	ft_rot(t_vars *vars, t_v3 axis, float rad);
-int	ft_rot_x_cw(t_vars *vars);
-int	ft_rot_y_cw(t_vars *vars);
-int	ft_rot_z_cw(t_vars *vars);
-int	ft_rot_x_ccw(t_vars *vars);
-int	ft_rot_y_ccw(t_vars *vars);
-int	ft_rot_z_ccw(t_vars *vars);
+void	ft_rot(t_vars *vars, t_v3 axis, float rad);
+void	ft_rot_x_cw(t_vars *vars);
+void	ft_rot_y_cw(t_vars *vars);
+void	ft_rot_z_cw(t_vars *vars);
+void	ft_rot_x_ccw(t_vars *vars);
+void	ft_rot_y_ccw(t_vars *vars);
+void	ft_rot_z_ccw(t_vars *vars);
 
 #endif

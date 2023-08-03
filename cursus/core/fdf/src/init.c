@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:39:55 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 15:58:42 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:07:43 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int	ft_init_map_matrix(char *filename, t_map **p_map, t_map *map)
 {
-	int			fd;
-	char		*line;
+	int		fd;
+	char	*line;
 	t_v2	min_max;
 
-	if(!(ft_alloc_map_matrix(&map->matrix, map->dim)))
+	if (!(ft_alloc_map_matrix(&map->matrix, map->dim)))
 		return (0);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -27,7 +27,8 @@ static int	ft_init_map_matrix(char *filename, t_map **p_map, t_map *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		ft_v2_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, map), &min_max);
+		ft_v2_swap_decorator(ft_split_decorator_to_init_map_matrix_with(line, \
+			map), &min_max);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -40,15 +41,15 @@ static int	ft_init_map_matrix(char *filename, t_map **p_map, t_map *map)
 static int	ft_init_map(char *filename, t_map **p_map)
 {
 	t_v2	fd_rows;
-	char		*line;
-	t_map		*map;
+	char	*line;
+	t_map	*map;
 
 	fd_rows.x = open(filename, O_RDONLY);
 	if (fd_rows.x < 0)
 		return (ft_error("OPEN", strerror(errno)));
 	map = ft_malloc_soul(sizeof(t_map));
 	if (!map)
-		return(ft_error("MAP CALLOC", strerror(errno)));
+		return (ft_error("MAP CALLOC", strerror(errno)));
 	fd_rows.x = ft_split_decorator_to_init_map_cols(fd_rows.x, map, filename);
 	if (fd_rows.x < 0)
 		return (ft_error("SPLIT_DECORATOR_TO_INIT_LINE_LEN", strerror(errno)));
@@ -90,14 +91,15 @@ static int	ft_init_mlx(t_mlx **p_mlx)
 static int	ft_init_image(t_mlx *mlx, t_image **p_image)
 {
 	t_image	*image;
-	
+
 	image = ft_malloc_soul(sizeof(t_image));
 	if (!image)
 		return (ft_error("IMAGE MALLOC", strerror(errno)));
 	image->this = mlx_new_image(mlx->this, WIDTH, HEIGHT);
 	if (!image->this)
 		return (ft_error("MLX_NEW_IMAGE", strerror(errno)));
-	image->addr = mlx_get_data_addr(image->this, &(image->bpp), &(image->ll), &(image->end));
+	image->addr = mlx_get_data_addr(image->this, &(image->bpp), &(image->ll), \
+		&(image->end));
 	if (!image->addr)
 		return (ft_error("MLX_GET_DATA_ADDR", strerror(errno)));
 	*p_image = image;
@@ -107,9 +109,9 @@ static int	ft_init_image(t_mlx *mlx, t_image **p_image)
 int	ft_init_fdf(t_vars *vars, char *filename)
 {
 	if (!(ft_init_map(filename, &vars->map)
-		&& ft_init_camera(vars)
-		&& ft_init_mlx(&vars->mlx)
-		&& ft_init_image(vars->mlx, &vars->image)))
+			&& ft_init_camera(vars)
+			&& ft_init_mlx(&vars->mlx)
+			&& ft_init_image(vars->mlx, &vars->image)))
 		return (0);
 	return (1);
 }

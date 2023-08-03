@@ -6,13 +6,13 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:49:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 17:23:18 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:00:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-int	ft_rot(t_vars *vars, t_v3 axis, float rad)
+void	ft_rot(t_vars *vars, t_v3 axis, float rad)
 {
 	static t_v2	dim;
 	t_v3		v;
@@ -25,20 +25,19 @@ int	ft_rot(t_vars *vars, t_v3 axis, float rad)
 	ft_translate(vars, opposite_v);
 	ft_vvq_for_each_point_of(vars, ft_mul_quaternion, axis, rad);
 	ft_translate(vars, v);
-	return (1);
 }
 
-int	ft_rot_x_cw(t_vars *vars)
+void	ft_rot_x_cw(t_vars *vars)
 {
-	return (ft_rot(vars, (t_v3){1, 0, 0}, DEF_ANG));
+	ft_rot(vars, (t_v3){1, 0, 0}, DEF_ANG);
 }
 
-int	ft_rot_y_cw(t_vars *vars)
+void	ft_rot_y_cw(t_vars *vars)
 {
-	return (ft_rot(vars, (t_v3){0, 1, 0}, DEF_ANG));
+	ft_rot(vars, (t_v3){0, 1, 0}, DEF_ANG);
 }
 
-int	ft_rot_z_cw(t_vars *vars)
+void	ft_rot_z_cw(t_vars *vars)
 {
-	return (ft_rot(vars, (t_v3){0, 0, 1}, DEF_ANG));
+	ft_rot(vars, (t_v3){0, 0, 1}, DEF_ANG);
 }
