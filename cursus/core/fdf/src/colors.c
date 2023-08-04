@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 16:26:19 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 15:58:27 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 16:12:24 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	ft_interpolate_colors(int s, int e, float i, float n)
 	uint8_t	tmpe;
 	int		output;
 
+	if (!n)
+		return (s);
 	tmps = (s >> 16) & 0xFF;
 	tmpe = (e >> 16) & 0xFF;
 	output = (int)((tmpe - tmps) * (i / n) + tmps) << 16;

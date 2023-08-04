@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 11:48:18 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/03 13:15:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 18:56:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,25 @@ static t_camera	*ft_alloc_camera_matrix(t_p ***p_matrix, t_v2 dim)
 	return (camera);
 }
 
+static int	ft_init_camera_continue(t_camera *camera)
+{
+	camera->zoom = (t_v2){5, 5};
+	camera->name = "ISOMETRIC PROJECTION";
+	camera->ft_view = ft_isometric;
+	return (1);
+}
+
 int	ft_init_camera(t_vars *vars)
 {
 	t_map	*map;
 	t_v2	dim;
-	t_v2	z_n;
-	int		**m_matrix;
+	int		n;
+	t_v2	**m_matrix;
 	t_p		**c_matrix;
 
 	map = vars->map;
 	dim = map->dim;
-	z_n.y = map->min_max.y - map->min_max.x;
+	n = map->min_max.y - map->min_max.x;
 	m_matrix = map->matrix;
 	vars->camera = ft_alloc_camera_matrix(&c_matrix, dim);
 	while (dim.x--)
@@ -52,15 +60,14 @@ int	ft_init_camera(t_vars *vars)
 		dim.y = map->dim.y;
 		while (dim.y--)
 		{
-			z_n.x = m_matrix[dim.x][dim.y];
-			c_matrix[dim.x][dim.y].color = \
-				ft_interpolate_colors(S, E, z_n.x, z_n.y);
+			if (!m_matrix[dim.x][dim.y].y)
+				c_matrix[dim.x][dim.y].color = \
+					ft_interpolate_colors(S, E, m_matrix[dim.x][dim.y].x, n);
+			else
+				c_matrix[dim.x][dim.y].color = m_matrix[dim.x][dim.y].y;
 		}
 	}
-	vars->camera->zoom = (t_v2){5, 5};
-	vars->camera->name = "ISOMETRIC PROJECTION";
-	vars->camera->ft_view = ft_isometric;
-	return (1);
+	return (ft_init_camera_continue(vars->camera));
 }
 
 int	ft_restore_camera(t_vars *vars)
@@ -68,7 +75,7 @@ int	ft_restore_camera(t_vars *vars)
 	int		z;
 	t_map	*map;
 	t_v2	dim;
-	int		**m_matrix;
+	t_v2	**m_matrix;
 	t_p		**c_matrix;
 
 	map = vars->map;
@@ -80,7 +87,7 @@ int	ft_restore_camera(t_vars *vars)
 		dim.y = map->dim.y;
 		while (dim.y--)
 		{
-			z = m_matrix[dim.x][dim.y];
+			z = m_matrix[dim.x][dim.y].x;
 			c_matrix[dim.x][dim.y].v = (t_v3){dim.y, dim.x, z};
 		}
 	}

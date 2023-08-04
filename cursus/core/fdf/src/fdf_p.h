@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/04 12:31:09 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 18:11:52 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct mlx
 typedef struct map
 {
 	t_v2	dim;
-	int		**matrix;
+	t_v2	**matrix;
 	t_v2	min_max;
 	t_v2	colors;
 }	t_map;
@@ -121,7 +121,7 @@ int		ft_abs(int number);
 int		ft_max(int first, int second);
 
 int		ft_key_down(int keycode, t_vars *vars);
-int		ft_alloc_map_matrix(int ***p_matrix, t_v2 dim);
+int		ft_alloc_map_matrix(t_v2 ***p_matrix, t_v2 dim);
 
 int		ft_init_fdf(t_vars *vars, char *filename);
 

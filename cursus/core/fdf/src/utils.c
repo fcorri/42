@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:32:16 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 17:04:26 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 18:12:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ void	ft_swap(int *first, int *second)
 	*second = tmp;
 }
 
-int	ft_alloc_map_matrix(int ***p_matrix, t_v2 dim)
+int	ft_alloc_map_matrix(t_v2 ***p_matrix, t_v2 dim)
 {
-	int	**matrix;
+	t_v2	**matrix;
 
-	matrix = ft_malloc_soul(sizeof(int *) * dim.x);
+	matrix = ft_malloc_soul(sizeof(*matrix) * dim.x);
 	if (!matrix)
 		return (ft_error("MAP MATRIX MALLOC", strerror(errno)));
 	while (dim.x--)
 	{
-		matrix[dim.x] = ft_malloc_soul(sizeof(int) * dim.y);
+		matrix[dim.x] = ft_malloc_soul(sizeof(**matrix) * dim.y);
 		if (!matrix[dim.x])
 			return (ft_error("MAP MATRIX[i] MALLOC", strerror(errno)));
 	}

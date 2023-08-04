@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/02 17:07:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 18:27:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,31 @@ struct s_map_vars
 	int		z;
 	t_v2	min_max;
 };
+
+static int	ft_init_color(char *input)
+{
+	char	*comma;
+	int		color;
+	int		digit;
+
+	comma = ft_strchr(input, ',');
+	if (!comma)
+		return (0);
+	comma += 3;
+	color = 0;
+	digit = *comma++;
+	while (digit)
+	{
+		if (ft_isdigit(digit))
+			color = (color << 4) + (digit - '0');
+		else if ('a' <= digit && digit <= 'f')
+			color = (color << 4) + (digit - 'a' + 10);
+		else
+			color = (color << 4) + (digit - 'A' + 10);
+		digit = *comma++;
+	}
+	return (color);
+}
 
 static void	ft_int_swap_decorator(int value, t_v2 *to_be_checked)
 {
@@ -61,7 +86,7 @@ int	ft_split_decorator_to_init_map_cols(int fd, t_map *map, char *filename)
 t_v2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 {
 	char				**tmp;
-	int					**matrix;
+	t_v2				**matrix;
 	struct s_map_vars	vars;
 	static int			x;
 	char				*number;
@@ -78,7 +103,7 @@ t_v2	ft_split_decorator_to_init_map_matrix_with(char *line, t_map *map)
 		else
 			vars.z = ft_atoi(number);
 		ft_int_swap_decorator(vars.z, &vars.min_max);
-		matrix[x][vars.y] = vars.z;
+		matrix[x][vars.y] = (t_v2){vars.z, ft_init_color(number)};
 		free(number);
 		number = tmp[++vars.y];
 	}
