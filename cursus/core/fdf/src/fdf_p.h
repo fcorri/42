@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:46:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/03 13:24:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 12:31:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	ft_zoom_on_xy(t_vars *vars, float value);
 void	ft_zoom_on(t_vars *vars, float value);
 void	ft_zoom_off(t_vars *vars, float value);
 
-t_v3	ft_new_vector(double x, double y, double z);
+t_v3	ft_new_vector(float x, float y, float z);
 t_v3	ft_add_vector(t_v3 a, t_v3 b);
 t_v3	ft_opposite(t_v3 a);
 t_v3	ft_mul_scalar(t_v3 a, float k);

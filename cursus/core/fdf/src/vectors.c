@@ -6,13 +6,13 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 10:56:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/03 11:03:20 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/04 12:30:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
 
-t_v3	ft_new_vector(double x, double y, double z)
+t_v3	ft_new_vector(float x, float y, float z)
 {
 	return ((t_v3){x, y, z});
 }
