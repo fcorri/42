@@ -6,12 +6,12 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/04 19:11:14 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/05 17:20:46 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/fdf
-ARGS			=	../maps/julia.fdf
+ARGS			=	../maps/plat.fdf
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -23,7 +23,7 @@ BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
 OBJS_DIR		=	$(BUILD_DIR)/obj
 LIBFT_DIR		=	../../../libft
-SRCS_DIR		=	src
+RCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
 SRCS			=	camera.c \
@@ -36,7 +36,6 @@ SRCS			=	camera.c \
 					line.c \
 					main.c \
 					math_utils.c \
-					print.c \
 					projection.c \
 					quaternions.c \
 					render.c \
