@@ -6,12 +6,12 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/07 17:54:19 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/07 18:21:16 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/fdf
-ARGS			=	../maps/julia.fdf
+ARGS			=	../maps/42.fdf
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -70,14 +70,11 @@ fclean: clean
 
 re: fclean all
 
-clear:
-	clear
-
-run: clear all
+run: all
 	clear; $(NAME) $(ARGS)
 
-mem: clear all
+mem: all
 	clear ; valgrind $(NAME) $(ARGS)
 
-debug: clear all
+debug: all
 	clear ; vi .gdbinit && gdb --args $(NAME) $(ARGS)
