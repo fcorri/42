@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 00:37:18 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/07 18:21:16 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/15 15:03:32 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
 OBJS_DIR		=	$(BUILD_DIR)/obj
 LIBFT_DIR		=	../../../libft
-RCS_DIR		=	src
+SRCS_DIR		=	src
 MLX_DIR			=	../minilibx-linux
 
 SRCS			=	camera.c \
