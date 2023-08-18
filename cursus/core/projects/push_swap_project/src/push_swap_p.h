@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/15 15:56:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/18 15:43:50 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct vars
 
 void	ft_error(void);
 int		ft_free_and_return(t_vars *vars, int output);
+int		*ft_prev(t_stack *stack);
+int		*ft_next(t_stack *stack);
 
 void	ft_init(int argc, char **argv, t_vars *vars);
-
-int		ft_atoi_decorator_stack(t_vars *vars, char *input);
 
 void	ft_order_stack(t_vars *vars);
 

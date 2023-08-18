@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 19:57:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/15 16:26:31 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/18 16:19:28 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static void	ft_swap(t_stack *stack)
 {
-	int	*first;
+	int	*head;
 	int	tmp;
-	int	*next;
+	int	*prev;
 
 	if (stack->n < 2)
 		return ;
-	first = stack->this;
-	tmp = *first;
-	next = first + 1;
-	*first = *next;
-	*next = tmp;
+	head = stack->head;
+	tmp = *head;
+	prev = ft_prev(stack);
+	*head = *prev;
+	*prev = tmp;
 }
 
 void	ft_sa(t_vars *vars)

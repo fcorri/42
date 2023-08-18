@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   decorators.c                                       :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 20:28:00 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/15 16:12:45 by fcorri           ###   ########.fr       */
+/*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
+/*   Updated: 2023/08/17 12:28:14 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-int	ft_atoi_decorator_stack(t_vars *vars, char *input)
+static void	ft_rotate(t_stack *stack)
 {
-	int			output;
-	int			*first;
-	int			arg;
-	static int	args = 0;
+	if (stack->n < 2)
+		return ;
+	stack->head = ft_prev(stack);
+}
 
-	output = ft_atoi(input);
-	if (*input == '-' && !output)
-		ft_free_and_return(vars, 1);
-	else if (output == -1)
-		ft_free_and_return(vars, 1);
-	first = vars->a->this;
-	arg = 0;
-	while (arg < args)
-		if (first[arg++] == output)
-			ft_free_and_return(vars, 1);
-	args++;
-	return (output);
+void	ft_ra(t_vars *vars)
+{
+	ft_rotate(vars->a);
+}
+
+void	ft_rb(t_vars *vars)
+{
+	ft_rotate(vars->b);
+}
+
+void	ft_rr(t_vars *vars)
+{
+	ft_rotate(vars->a);
+	ft_rotate(vars->b);
 }

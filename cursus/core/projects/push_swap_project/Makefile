@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/15 16:28:35 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/18 16:21:48 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ MIN				=	-1000
 MAX				=	1000
 MANY			=	15
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
+ARGS			=	772 -967 777 733 -229 -583 696 -65 -793 -608 -380 934 590 -651 -147
 
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -32,9 +33,13 @@ P_HEADER		=	$(SRCS_DIR)/push_swap_p.h
 
 SRCS			=	$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/init.c \
-					$(SRCS_DIR)/decorators.c \
 					$(SRCS_DIR)/swap.c \
+					$(SRCS_DIR)/stack.c \
 					$(SRCS_DIR)/tests.c \
+					$(SRCS_DIR)/push.c \
+					$(SRCS_DIR)/rotate.c \
+					$(SRCS_DIR)/reverse.c \
+					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/utils.c
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)

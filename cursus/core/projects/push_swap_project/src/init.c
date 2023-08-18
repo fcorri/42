@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/15 15:58:47 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/18 16:01:17 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,32 @@ static t_stack	*ft_alloc_stack(int argc, t_stack **p_stack, int n)
 	stack->this = malloc(sizeof(int) * --argc);
 	if (!stack->this)
 		return (NULL);
-	stack->head = stack->this;
+	stack->head = stack->this - 1;
 	stack->n = n;
 	stack->max = argc;
 	*p_stack = stack;
 	return (stack);
+}
+
+int	ft_atoi_decorator_stack_push(t_vars *vars, char *input)
+{
+	int			output;
+	int			*this;
+	int			arg;
+	static int	args = 0;
+
+	output = ft_atoi(input);
+	if (*input == '-' && !output)
+		ft_free_and_return(vars, 1);
+	else if (output == -1)
+		ft_free_and_return(vars, 1);
+	this = vars->a->this;
+	arg = 0;
+	while (arg < args)
+		if (this[arg++] == output)
+			ft_free_and_return(vars, 1);
+	args++;
+	return (output);
 }
 
 void	ft_init(int argc, char **argv, t_vars *vars)
@@ -42,7 +63,7 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 		ft_free_and_return(vars, 1);
 	while (--argc > 0)
 	{
-		param = *++argv;
+		param = argv[argc];
 		index = 0;
 		if (param[index] == '-' || param[index] == '+')
 			index++;
@@ -50,6 +71,6 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 			index++;
 		if (param[index] != '\0')
 			ft_free_and_return(vars, 1);
-		*a->head++ = ft_atoi_decorator_stack(vars, param);
+		*++a->head = ft_atoi_decorator_stack_push(vars, param);
 	}
 }
