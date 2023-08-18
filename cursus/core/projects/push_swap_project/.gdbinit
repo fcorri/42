@@ -1,2 +1,1 @@
-b ft_init
-r
+b ft_reverse

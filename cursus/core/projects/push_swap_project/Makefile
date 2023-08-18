@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/18 16:21:48 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/18 19:27:08 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ NAME			=	$(BUILD_DIR)/push_swap
 
 MIN				=	-1000
 MAX				=	1000
-MANY			=	15
-ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
-ARGS			=	772 -967 777 733 -229 -583 696 -65 -793 -608 -380 934 590 -651 -147
+MANY			=	6
+#ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
+#ARGS			=	772 -967 777 733 -229 -583 696 -65 -793 -608 -380 934 590 -651 -147
+ARGS			=	6 5 12 10 9 1
 
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
