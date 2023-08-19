@@ -6,11 +6,13 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/03 11:01:54 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/19 16:47:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
+
+// manca la chiusura con click sulla croce
 
 int	main(int argc, char **argv)
 {
