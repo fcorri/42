@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 19:19:52 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/21 17:15:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/21 19:01:47 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_lstdelone(t_list **lst, void (*del)(void *))
 {
 	t_list	*tmp;
-	t_list	node;
+	t_list	*node;
 
 	if (!lst || !del)
 		return ;
