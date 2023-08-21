@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:05:46 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/21 16:52:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/21 17:30:11 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,32 +103,13 @@ typedef struct s_list
 
 t_list					*ft_lstnew(void *content);
 void					ft_lstadd_front(t_list **lst, t_list *new);
-int						ft_lstsize(t_list *lst);
+size_t					ft_lstsize(t_list *lst);
 t_list					*ft_lstlast(t_list *lst);
 void					ft_lstadd_back(t_list **lst, t_list *new);
-void					ft_lstdelone(t_list *lst, void (*del)(void *));
+void					ft_lstdelone(t_list **lst, void (*del)(void *));
 void					ft_lstclear(t_list **lst, void (*del)(void *));
 void					ft_lstiter(t_list *lst, void (*f)(void *));
 t_list					*ft_lstmap(t_list *lst, void *(*f)(void *),
 							void (*del)(void *));
-
-// INT_LISTS
-
-typedef struct s_int_list
-{
-	void				*content;
-	struct s_int_list	*next;
-}						t_int_list;
-
-t_int_list				*ft_int_lstnew(int content);
-void					ft_int_lstadd_front(t_int_list **lst, t_int_list *new);
-int						ft_int_lstsize(t_int_list *lst);
-t_int_list				*ft_int_lstlast(t_int_list *lst);
-void					ft_int_lstadd_back(t_int_list **lst, t_int_list *new);
-void					ft_int_lstdelone(t_int_list *lst, void (*del)(int));
-void					ft_int_lstclear(t_int_list **lst, void (*del)(int));
-void					ft_int_lstiter(t_int_list *lst, void (*f)(int));
-t_int_list				*ft_int_lstmap(t_int_list *lst, int (*f)(int),
-							void (*del)(int));
 
 #endif

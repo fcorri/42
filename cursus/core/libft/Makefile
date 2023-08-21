@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/21 16:52:49 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/21 17:30:20 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,16 +77,6 @@ BONUS_SRCS		=	$(BONUS_DIR)/ft_lstadd_back.c \
 					$(BONUS_DIR)/ft_lstmap.c \
 					$(BONUS_DIR)/ft_lstnew.c \
 					$(BONUS_DIR)/ft_lstsize.c \
-
-INT_LISTS_SRCS	=	$(BONUS_DIR)/int_lists/ft_int_lstadd_back.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstadd_front.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstclear.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstdelone.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstiter.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstlast.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstmap.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstnew.c \
-					$(BONUS_DIR)/int_lists/ft_int_lstsize.c \
 
 LIBS			=	$(BUILD_DIR)/libftprintf.a \
 
