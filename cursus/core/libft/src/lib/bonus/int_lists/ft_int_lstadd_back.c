@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsafe_listsadd_back.c                          :+:      :+:    :+:   */
+/*   ft_int_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 09:43:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/06 09:56:10 by fcorri           ###   ########.fr       */
+/*   Created: 2022/10/31 18:10:45 by fcorri            #+#    #+#             */
+/*   Updated: 2022/10/31 19:17:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_unsafe_lstadd_back(t_list *node, t_list *next)
+void	ft_int_lstadd_back(t_int_list **lst, t_int_list *new)
 {
-	node->next = next;
-	return (node->next);
+	t_int_list	*node;
+
+	if (lst != NULL)
+	{
+		if (*lst == NULL)
+			*lst = new;
+		else
+		{
+			node = *lst;
+			while (node->next != NULL)
+				node = node->next;
+			node->next = new;
+		}
+	}
 }

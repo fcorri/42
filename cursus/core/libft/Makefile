@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/06/09 01:28:30 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/21 16:52:49 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,24 +77,38 @@ BONUS_SRCS		=	$(BONUS_DIR)/ft_lstadd_back.c \
 					$(BONUS_DIR)/ft_lstmap.c \
 					$(BONUS_DIR)/ft_lstnew.c \
 					$(BONUS_DIR)/ft_lstsize.c \
-					$(BONUS_DIR)/ft_unsafe_lstadd_back.c \
+
+INT_LISTS_SRCS	=	$(BONUS_DIR)/int_lists/ft_int_lstadd_back.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstadd_front.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstclear.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstdelone.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstiter.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstlast.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstmap.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstnew.c \
+					$(BONUS_DIR)/int_lists/ft_int_lstsize.c \
 
 LIBS			=	$(BUILD_DIR)/libftprintf.a \
 
 LIBS_DIR		=	$(SRCS_DIR)/printf \
 
-OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
-BONUS_OBJS		=	$(BONUS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
+OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
+					$(BONUS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
+					$(CHAR_LISTS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
+					$(INT_LISTS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
+					$(CHAR_LISTS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
 
 AR				=	ar -crs
 RM				=	rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(BONUS_OBJS)
+$(NAME): $(OBJS)
+	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) -C $(LIB_DIR);)
 	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) -C $(LIB_DIR);)
 	$(foreach LIB, $(LIBS), ar -x $(LIB))
-	$(AR) $(NAME) $(OBJS) $(BONUS_OBJS) ./*.o
+	$(foreach LIB, $(LIBS), ar -x $(LIB))
+	$(AR) $(NAME) $(OBJS) ./*.o
 	$(RM) ./*.o
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
@@ -103,7 +117,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 
 clean:
 	$(foreach LIB_DIR, $(LIBS_DIR), $(MAKE) clean -C $(LIB_DIR);)
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
