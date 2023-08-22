@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:05:46 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/21 17:30:11 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/21 19:27:54 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void					ft_putnbr_fd(int n, int fd);
 // NON MANDATORY
 
 char					*ft_strndup(const char *s, size_t n);
+void					ft_error(char *caller, char *message);
 
 // MEMORY UTILS
 
@@ -93,7 +94,9 @@ unsigned long			ft_read_word(uintptr_t src);
 
 void					*ft_malloc_soul(size_t size);
 
-// BONUS
+// DATA STRUCTURES
+
+// LIST
 
 typedef struct s_list
 {
@@ -111,5 +114,24 @@ void					ft_lstclear(t_list **lst, void (*del)(void *));
 void					ft_lstiter(t_list *lst, void (*f)(void *));
 t_list					*ft_lstmap(t_list *lst, void *(*f)(void *),
 							void (*del)(void *));
+
+// DOUBLE CONNECTED LIST
+
+typedef struct s_int_dlist
+{
+	int					content;
+	struct s_int_dlist	*next;
+	struct s_int_dlist	*prev;
+}						t_int_dlist;
+
+t_int_dlist				*ft_int_dlst_new(int content);
+void					ft_int_dlst_add_front(t_int_dlist **lst, t_int_dlist *new);
+size_t					ft_int_dlst_size(t_int_dlist *lst);
+t_int_dlist				*ft_int_dlst_last(t_int_dlist *lst);
+void					ft_int_dlst_add_back(t_int_dlist **lst, t_int_dlist *new);
+void					ft_int_dlst_del_one(t_int_dlist **lst);
+void					ft_int_dlst_clear(t_int_dlist **lst);
+void					ft_int_dlst_iter(t_int_dlist *lst, void (*f)(int *));
+t_int_dlist				*ft_int_dlst_map(t_int_dlist *lst, int (*f)(int));
 
 #endif

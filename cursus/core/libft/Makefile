@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/21 17:30:20 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/21 19:24:08 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ GNL_DIR			=	$(SRCS_DIR)/gnl
 SRCS			=	$(LIB_DIR)/ft_atoi.c \
 					$(LIB_DIR)/ft_bzero.c \
 					$(LIB_DIR)/ft_calloc.c \
+					$(LIB_DIR)/ft_error.c \
 					$(LIB_DIR)/ft_isalnum.c \
 					$(LIB_DIR)/ft_isalpha.c \
 					$(LIB_DIR)/ft_isascii.c \
@@ -65,6 +66,9 @@ SRCS			=	$(LIB_DIR)/ft_atoi.c \
 					$(UTILS_DIR)/ft_memutils1.c \
 					$(UTILS_DIR)/ft_memutils2.c \
 					\
+					$(LIB_DIR)/dlist/ft_int_dlist1.c \
+					$(LIB_DIR)/dlist/ft_int_dlist2.c \
+					\
 					$(GNL_DIR)/get_next_line.c \
 					$(GNL_DIR)/get_next_line_utils.c
 
@@ -84,9 +88,6 @@ LIBS_DIR		=	$(SRCS_DIR)/printf \
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
 					$(BONUS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
-					$(CHAR_LISTS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
-					$(INT_LISTS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
-					$(CHAR_LISTS_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o) \
 
 AR				=	ar -crs
 RM				=	rm -f
