@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:17:08 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/15 18:45:58 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/22 20:45:07 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_print(t_vars *vars)
 {
-	t_stack	*a;
-	t_stack	*b;
-	int	*first;
-	int	*second;
+	STACK	*a;
+	STACK	*b;
+	NODE	*first;
+	NODE	*second;
 	int	n, n_a, n_b;
 
 	a = vars->a;
@@ -34,18 +34,16 @@ void	ft_print(t_vars *vars)
 	{
 		if (n_a)
 		{
-			ft_printf("%6d", *first--);
-			if (first == a->this - 1)
-				first += a->n;
+			ft_printf("%6d", first->content);
 			n_a--;
+			first = first->next;
 		}
 		ft_printf("\t");
 		if (n_b)
 		{
-			ft_printf("%6d", *second--);
-			if (second == b->this - 1)
-				second += b->n;
+			ft_printf("%6d", second->content);
 			n_b--;
+			second = second->next;
 		}
 		ft_printf("\n");
 	}

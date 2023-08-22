@@ -6,33 +6,30 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/18 16:01:17 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/22 20:54:32 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static t_stack	*ft_alloc_stack(int argc, t_stack **p_stack, int n)
+static int	ft_check_for_non_digits(char *param)
 {
-	t_stack	*stack;
+	char	sign;
 
-	stack = malloc(sizeof(t_stack));
-	if (!stack)
-		return (NULL);
-	stack->this = malloc(sizeof(int) * --argc);
-	if (!stack->this)
-		return (NULL);
-	stack->head = stack->this - 1;
-	stack->n = n;
-	stack->max = argc;
-	*p_stack = stack;
-	return (stack);
+	sign = *param;
+	if (sign == '-' || sign == '+')
+		param++;
+	while (ft_isdigit(*param))
+		param++;
+	if (*param != '\0')
+		return (1);
+	return (0);
 }
 
-int	ft_atoi_decorator_stack_push(t_vars *vars, char *input)
+static t_int_dlist	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
 {
 	int			output;
-	int			*this;
+	NODE		*head;
 	int			arg;
 	static int	args = 0;
 
@@ -41,36 +38,35 @@ int	ft_atoi_decorator_stack_push(t_vars *vars, char *input)
 		ft_free_and_return(vars, 1);
 	else if (output == -1)
 		ft_free_and_return(vars, 1);
-	this = vars->a->this;
+	head = a->head;
 	arg = 0;
-	while (arg < args)
-		if (this[arg++] == output)
+	while (arg++ < args)
+	{
+		if (head->content == output)
 			ft_free_and_return(vars, 1);
+		head = head->next;
+	}
 	args++;
-	return (output);
+	return (ft_int_dlst_new(output));
 }
 
 void	ft_init(int argc, char **argv, t_vars *vars)
 {
 	char	*param;
-	int		index;
-	t_stack	*a;
-	t_stack	*b;
+	STACK	*a;
+	STACK	*b;
 
-	a = ft_alloc_stack(argc, &vars->a, argc - 1);
-	b = ft_alloc_stack(argc, &vars->b, 0);
+	vars->a = ft_new_stack();
+	a = vars->a;
+	vars->b = ft_new_stack();
+	b = vars->b;
 	if (!a || !b)
 		ft_free_and_return(vars, 1);
-	while (--argc > 0)
+	while (--argc)
 	{
 		param = argv[argc];
-		index = 0;
-		if (param[index] == '-' || param[index] == '+')
-			index++;
-		while (ft_isdigit(param[index]))
-			index++;
-		if (param[index] != '\0')
+		if (ft_check_for_non_digits(param))
 			ft_free_and_return(vars, 1);
-		*++a->head = ft_atoi_decorator_stack_push(vars, param);
+		ft_push(a, ft_atoi_decorator(vars, a, param));
 	}
 }

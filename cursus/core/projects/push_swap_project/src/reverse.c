@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:54:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/17 12:28:55 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/19 00:23:27 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	ft_reverse(t_stack *stack)
 {
 	if (stack->n < 2)
 		return ;
-	stack->head = ft_next(stack);
+	stack->head = stack->head->prev;
 }
 
 void	ft_rra(t_vars *vars)

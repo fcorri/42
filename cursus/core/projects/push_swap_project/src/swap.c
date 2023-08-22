@@ -6,38 +6,38 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 19:57:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/18 16:19:28 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/22 20:55:46 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static void	ft_swap(t_stack *stack)
+static void	ft_swap(STACK *stack)
 {
-	int	*head;
-	int	tmp;
-	int	*prev;
+	NODE	*head;
+	NODE	*next;
+	int		tmp;
 
 	if (stack->n < 2)
 		return ;
 	head = stack->head;
-	tmp = *head;
-	prev = ft_prev(stack);
-	*head = *prev;
-	*prev = tmp;
+	next = head->next;
+	tmp = head->content;
+	head->content = next->content;
+	next->content = tmp;
 }
 
-void	ft_sa(t_vars *vars)
+void	ft_sa(VARS *vars)
 {
 	ft_swap(vars->a);
 }
 
-void	ft_sb(t_vars *vars)
+void	ft_sb(VARS *vars)
 {
 	ft_swap(vars->b);
 }
 
-void	ft_ss(t_vars *vars)
+void	ft_ss(VARS *vars)
 {
 	ft_sa(vars);
 	ft_sb(vars);
