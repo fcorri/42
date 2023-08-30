@@ -6,25 +6,38 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 15:48:01 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/22 21:00:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/30 13:58:59 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static void	ft_push_op(STACK *src, STACK *dest)
+static int	ft_push_op(STACK *src, STACK *dest, int *callables, int pos)
 {
 	if (!src->n)
-		return ;
+	{
+		if (pos == 3)
+			*callables &= ~(0b1 << 2);
+		else
+			*callables &= ~(0b1 << 3);
+		return (0);
+	}
 	ft_push(dest, ft_pop(src));
+	*callables &= ~(0b1 << pos);
+	*callables |= 0b11110011;
+	return (1);
 }
 
-void	ft_pa(t_vars *vars)
+char	*ft_pa(t_vars *vars)
 {
-	ft_push_op(vars->b, vars->a);
+	if (ft_push_op(vars->b, vars->a, &vars->callables, 3))
+		return ("pa");
+	return (NULL);
 }
 
-void	ft_pb(t_vars *vars)
+char	*ft_pb(t_vars *vars)
 {
-	ft_push_op(vars->a, vars->b);
+	if (ft_push_op(vars->a, vars->b, &vars->callables, 2))
+		return ("pb");
+	return (NULL);
 }

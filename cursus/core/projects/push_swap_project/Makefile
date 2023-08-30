@@ -6,18 +6,19 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/22 21:28:33 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/30 13:42:51 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/push_swap
 
-MIN				=	-1000
-MAX				=	1000
-MANY			=	15
+MIN				=	0
+MAX				=	20
+MANY			=	10
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
-#ARGS			=	772 -967 777 733 -229 -583 696 -65 -793 -608 -380 934 590 -651 -147
-ARGS			=	6 5 12 10 9 1
+ARGS			=	4 11 7 6 17 13 18 9 19 12
+#ARGS			=	6 5 12 10 9 1 17
+ARGS			=	1 3 2
 
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -37,13 +38,25 @@ SRCS			=	$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/utils.c \
 					$(SRCS_DIR)/stack.c \
+					$(SRCS_DIR)/order.c \
 					$(SRCS_DIR)/swap.c \
 					$(SRCS_DIR)/push.c \
 					$(SRCS_DIR)/rotate.c \
 					$(SRCS_DIR)/reverse.c \
 
+CHECK_SRCS		=	$(SRCS_DIR)/check.c \
+					$(SRCS_DIR)/init.c \
+					$(SRCS_DIR)/print.c \
+					$(SRCS_DIR)/utils.c \
+					$(SRCS_DIR)/stack.c \
+					$(SRCS_DIR)/order.c \
+					$(SRCS_DIR)/swap.c \
+					$(SRCS_DIR)/push.c \
+					$(SRCS_DIR)/rotate.c \
+					$(SRCS_DIR)/reverse.c \
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
+CHECK_OBJS		=	$(CHECK_SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
 RM				=	rm -fr
 
@@ -72,6 +85,10 @@ clear:
 
 run: clear all
 	$(NAME) $(ARGS)
+
+check: clear all $(OBJS_DIR)/check.o
+	$(CC) $(CHECK_OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o check
+	./check $(ARGS)
 
 mem: clear all
 	valgrind --track-origins=yes --leak-check=full $(NAME) $(ARGS)

@@ -6,31 +6,46 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/19 00:23:04 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/30 13:59:10 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static void	ft_rotate(STACK *stack)
+static int	ft_rotate(STACK *stack, int *callables, int pos, int restore)
 {
 	if (stack->n < 2)
-		return ;
+	{
+		if (pos == 6)
+			*callables &= ~(0b1 << 4);
+		else
+			*callables &= ~(0b1 << 5);
+		return (0);
+	}
 	stack->head = stack->head->next;
+	*callables &= ~(0b1 << pos);
+	*callables |= restore;
+	return (1);
 }
 
-void	ft_ra(VARS *vars)
+char	*ft_ra(VARS *vars)
 {
-	ft_rotate(vars->a);
+	if (ft_rotate(vars->a, &vars->callables, 6, 0b1101))
+		return ("ra");
+	return (NULL);
 }
 
-void	ft_rb(VARS *vars)
+char	*ft_rb(VARS *vars)
 {
-	ft_rotate(vars->b);
+	if (ft_rotate(vars->b, &vars->callables, 7, 0b1110))
+		return ("rb");
+	return (NULL);
 }
 
-void	ft_rr(VARS *vars)
+char	*ft_rr(VARS *vars)
 {
-	ft_rotate(vars->a);
-	ft_rotate(vars->b);
+	if (ft_ra(vars) && ft_rb(vars))
+		return ("rr");
+	// potrebbe essere stata fatta solo una delle due
+	return (NULL);
 }

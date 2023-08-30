@@ -6,31 +6,45 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:54:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/19 00:23:27 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/30 13:56:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static void	ft_reverse(t_stack *stack)
+static int	ft_reverse(t_stack *stack, int *callables, int pos, int restore)
 {
 	if (stack->n < 2)
-		return ;
+	{
+		if (pos == 4)
+			*callables &= ~(0b1 << 6);
+		else
+			*callables &= ~(0b1 << 7);
+		return (0);
+	}
 	stack->head = stack->head->prev;
+	*callables &= ~(0b1 << pos);
+	*callables |= restore;
+	return (1);
 }
 
-void	ft_rra(t_vars *vars)
+char	*ft_rra(t_vars *vars)
 {
-	ft_reverse(vars->a);
+	if (ft_reverse(vars->a, &vars->callables, 4, 0b1101))
+		return ("rra");
+	return (NULL);
 }
 
-void	ft_rrb(t_vars *vars)
+char	*ft_rrb(t_vars *vars)
 {
-	ft_reverse(vars->b);
+	if (ft_reverse(vars->b, &vars->callables, 5, 0b1110))
+		return ("rrb");
+	return (NULL);
 }
 
-void	ft_rrr(t_vars *vars)
+char	*ft_rrr(t_vars *vars)
 {
-	ft_reverse(vars->a);
-	ft_reverse(vars->b);
+	ft_rra(vars);
+	ft_rrb(vars);
+	return ("rrr");
 }

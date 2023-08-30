@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/22 20:47:46 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/30 13:32:53 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,43 @@
 
 typedef struct stack
 {
-	t_int_dlist	*head;
-	int			n;
+	NODE	*head;
+	int		n;
 }	t_stack;
 
 typedef struct vars
 {
-	t_stack	*a;
-	t_stack	*b;
+	STACK	*a;
+	STACK	*b;
+	int		callables;
+	char	*(*ops[8])(struct vars *vars);
 }	t_vars;
 
-t_stack	*ft_new_stack_with_head(t_int_dlist *head, int n);
-t_stack	*ft_new_stack(void);
-int		ft_is_empty(t_stack *stack);
-t_int_dlist	*ft_pop(t_stack *stack);
-void	ft_push(t_stack *stack, t_int_dlist *node);
-
 void	ft_exit(void);
-int		ft_free_and_return(t_vars *vars, int output);
+int		ft_free_and_return(VARS *vars, int output);
 
-void	ft_init(int argc, char **argv, t_vars *vars);
+void	ft_init(int argc, char **argv, VARS *vars);
+void	ft_order(VARS *vars);
 
-void	ft_sa(t_vars *vars);
-void	ft_sb(t_vars *vars);
-void	ft_ss(t_vars *vars);
-void	ft_pa(t_vars *vars);
-void	ft_pb(t_vars *vars);
-void	ft_ra(t_vars *vars);
-void	ft_rb(t_vars *vars);
-void	ft_rr(t_vars *vars);
-void	ft_rra(t_vars *vars);
-void	ft_rrb(t_vars *vars);
-void	ft_rrr(t_vars *vars);
+STACK	*ft_new_stack(void);
+int		ft_is_empty(STACK *stack);
+int		ft_is_ordered(STACK *stack);
+void	ft_push(STACK *stack, NODE *node);
+NODE	*ft_pop(STACK *stack);
 
-void	ft_print(t_vars *vars);
+char	*ft_sa(VARS *vars);
+char	*ft_sb(VARS *vars);
+char	*ft_pa(VARS *vars);
+char	*ft_pb(VARS *vars);
+char	*ft_ra(VARS *vars);
+char	*ft_rb(VARS *vars);
+char	*ft_rra(VARS *vars);
+char	*ft_rrb(VARS *vars);
+
+char	*ft_ss(VARS *vars);
+char	*ft_rr(VARS *vars);
+char	*ft_rrr(VARS *vars);
+
+void	ft_print(VARS *vars);
 
 #endif

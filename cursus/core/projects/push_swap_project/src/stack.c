@@ -6,36 +6,68 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 19:50:53 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/22 21:24:01 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/24 18:01:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-t_stack	*ft_new_stack_with_head(NODE *head, int n)
+STACK	*ft_new_stack(void)
 {
-	t_stack	*output;
+	STACK	*output;
 
-	output = malloc(sizeof(t_stack));
+	output = malloc(sizeof(STACK));
 	if (!output)
 		return (NULL);
-	output->head = head;
-	output->n = n;
+	output->head = NULL;
+	output->n = 0;
 	return (output);
 }
 
-t_stack	*ft_new_stack(void)
+int	ft_is_empty(STACK *stack)
 {
-	return (ft_new_stack_with_head(NULL, 0));
+	return (stack->n == 0);
 }
 
-
-int	ft_is_empty(t_stack *stack)
+int	ft_is_ordered(STACK *stack)
 {
-	return (stack->head == NULL);
+	NODE	*node;
+	NODE	*next;
+	int		n;
+
+	n = stack->n;
+	if (n == 1)
+		return (1);
+	node = stack->head;
+	next = node->next;
+	while (--n)
+	{
+		if (node->content > next->content)
+			return (0);
+		node = next;
+		next = node->next;
+	}
+	return (1);
 }
 
-NODE	*ft_pop(t_stack *stack)
+void	ft_push(STACK *stack, NODE *node)
+{
+	NODE	*head;
+
+	head = stack->head;
+	if (stack->n++ == 1 && head)
+	{
+		node->prev = head;
+		node->next = head;
+		head->prev = node;
+		head->next = node;
+		stack->head = node;
+	}
+	else
+		ft_int_dlst_add_front(&stack->head, node);
+}
+
+NODE	*ft_pop(STACK *stack)
 {
 	NODE	*output;
 
@@ -49,21 +81,4 @@ NODE	*ft_pop(t_stack *stack)
 	output->next = NULL;
 	output->prev = NULL;
 	return (output);
-}
-
-void	ft_push(t_stack *stack, NODE *node)
-{
-	t_int_dlist	*head;
-
-	head = stack->head;
-	if (stack->n++ == 1 && head)
-	{
-		node->prev = head;
-		node->next = head;
-		head->prev = node;
-		head->next = node;
-		stack->head = node;
-	}
-	else
-		ft_int_dlst_add_front(&stack->head, node);
 }

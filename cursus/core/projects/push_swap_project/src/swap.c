@@ -6,39 +6,47 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 19:57:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/22 20:55:46 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/30 13:57:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static void	ft_swap(STACK *stack)
+static int	ft_swap(STACK *stack, int *callables, int pos, int restore)
 {
 	NODE	*head;
 	NODE	*next;
 	int		tmp;
 
+	*callables &= ~(0b1 << pos);
 	if (stack->n < 2)
-		return ;
+		return (0);;
 	head = stack->head;
 	next = head->next;
 	tmp = head->content;
 	head->content = next->content;
 	next->content = tmp;
+	*callables |= restore;
+	return (1);
 }
 
-void	ft_sa(VARS *vars)
+char	*ft_sa(VARS *vars)
 {
-	ft_swap(vars->a);
+	if (ft_swap(vars->a, &vars->callables, 0, 0b1011100))
+		return ("sa");
+	return (NULL);
 }
 
-void	ft_sb(VARS *vars)
+char	*ft_sb(VARS *vars)
 {
-	ft_swap(vars->b);
+	if (ft_swap(vars->b, &vars->callables, 1, 0b10101100))
+		return ("sb");
+	return (NULL);
 }
 
-void	ft_ss(VARS *vars)
+char	*ft_ss(VARS *vars)
 {
 	ft_sa(vars);
 	ft_sb(vars);
+	return ("ss");
 }
