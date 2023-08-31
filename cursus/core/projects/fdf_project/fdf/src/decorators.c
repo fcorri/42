@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:55:31 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/04 18:27:34 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 19:37:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_init_color(char *input)
 	comma += 3;
 	color = 0;
 	digit = *comma++;
-	while (digit)
+	while (ft_isdigit(digit))
 	{
 		if (ft_isdigit(digit))
 			color = (color << 4) + (digit - '0');
