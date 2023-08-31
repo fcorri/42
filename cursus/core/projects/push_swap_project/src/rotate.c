@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/30 13:59:10 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 14:06:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,29 @@ static int	ft_rotate(STACK *stack, int *callables, int pos, int restore)
 	return (1);
 }
 
-char	*ft_ra(VARS *vars)
+int	ft_ra(VARS *vars)
 {
 	if (ft_rotate(vars->a, &vars->callables, 6, 0b1101))
-		return ("ra");
-	return (NULL);
+	{
+		ft_push(vars->output, ft_int_dlst_new(4));
+		return (1);
+	}
+	return (0);
 }
 
-char	*ft_rb(VARS *vars)
+int	ft_rb(VARS *vars)
 {
 	if (ft_rotate(vars->b, &vars->callables, 7, 0b1110))
-		return ("rb");
-	return (NULL);
+	{
+		ft_push(vars->output, ft_int_dlst_new(5));
+		return (1);
+	}
+	return (0);
 }
 
-char	*ft_rr(VARS *vars)
+int	ft_rr(VARS *vars)
 {
-	if (ft_ra(vars) && ft_rb(vars))
-		return ("rr");
-	// potrebbe essere stata fatta solo una delle due
-	return (NULL);
+	ft_ra(vars);
+	ft_rb(vars);
+	return (1);
 }

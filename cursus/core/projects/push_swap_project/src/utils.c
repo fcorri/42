@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:38:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/30 00:41:03 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 14:09:28 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	ft_free_and_return(t_vars *vars, int output)
 		ft_free_stack(stack);
 	free(stack);
 	stack = vars->b;
+	if (stack)
+		ft_free_stack(stack);
+	free(stack);
+	stack = vars->output;
 	if (stack)
 		ft_free_stack(stack);
 	free(stack);

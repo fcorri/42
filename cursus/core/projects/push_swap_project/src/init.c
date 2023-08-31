@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/30 13:13:47 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 14:22:58 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,40 @@ static void	ft_init_ops(VARS *vars)
 	vars->ops[7] = ft_rrb;
 }
 
+static void	ft_init_inv(VARS *vars)
+{
+	vars->inv[0] = ft_sa;
+	vars->inv[1] = ft_sb;
+	vars->inv[2] = ft_pb;
+	vars->inv[3] = ft_pa;
+	vars->inv[4] = ft_rra;
+	vars->inv[5] = ft_rrb;
+	vars->inv[6] = ft_ra;
+	vars->inv[7] = ft_rb;
+}
+
+static void	ft_init_names(VARS *vars)
+{
+	vars->names[0] = "sa";
+	vars->names[1] = "sb";
+	vars->names[2] = "pa";
+	vars->names[3] = "pb";
+	vars->names[4] = "ra";
+	vars->names[5] = "rb";
+	vars->names[6] = "rra";
+	vars->names[7] = "rrb";
+}
+
 void	ft_init(int argc, char **argv, t_vars *vars)
 {
 	char	*param;
 	STACK	*a;
-	STACK	*b;
 
 	vars->a = ft_new_stack();
 	a = vars->a;
 	vars->b = ft_new_stack();
-	b = vars->b;
-	if (!a || !b)
+	vars->output = ft_new_stack();
+	if (!a || !vars->b || !vars->output)
 		ft_free_and_return(vars, 1);
 	while (--argc)
 	{
@@ -83,4 +106,6 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 		ft_push(a, ft_atoi_decorator(vars, a, param));
 	}
 	ft_init_ops(vars);
+	ft_init_inv(vars);
+	ft_init_names(vars);
 }

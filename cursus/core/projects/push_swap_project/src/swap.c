@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 19:57:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/30 13:57:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 14:06:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_swap(STACK *stack, int *callables, int pos, int restore)
 
 	*callables &= ~(0b1 << pos);
 	if (stack->n < 2)
-		return (0);;
+		return (0);
 	head = stack->head;
 	next = head->next;
 	tmp = head->content;
@@ -30,23 +30,29 @@ static int	ft_swap(STACK *stack, int *callables, int pos, int restore)
 	return (1);
 }
 
-char	*ft_sa(VARS *vars)
+int	ft_sa(VARS *vars)
 {
 	if (ft_swap(vars->a, &vars->callables, 0, 0b1011100))
-		return ("sa");
-	return (NULL);
+	{
+		ft_push(vars->output, ft_int_dlst_new(1));
+		return (1);
+	}
+	return (0);
 }
 
-char	*ft_sb(VARS *vars)
+int	ft_sb(VARS *vars)
 {
 	if (ft_swap(vars->b, &vars->callables, 1, 0b10101100))
-		return ("sb");
-	return (NULL);
+	{
+		ft_push(vars->output, ft_int_dlst_new(2));
+		return (1);
+	}
+	return (0);
 }
 
-char	*ft_ss(VARS *vars)
+int	ft_ss(VARS *vars)
 {
 	ft_sa(vars);
 	ft_sb(vars);
-	return ("ss");
+	return (1);
 }

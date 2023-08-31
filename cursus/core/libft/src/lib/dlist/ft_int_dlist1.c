@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:33:38 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/22 20:38:06 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 14:36:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	ft_int_dlst_add_back(t_int_dlist **lst, t_int_dlist *new)
 		while (node->next)
 			node = node->next;
 		node->next = new;
+		new->prev = node;
 	}
-	new->prev = node;
 }
 
 void	ft_int_dlst_add_front(t_int_dlist **lst, t_int_dlist *new)

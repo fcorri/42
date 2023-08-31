@@ -6,19 +6,19 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/30 13:42:51 by fcorri           ###   ########.fr        #
+#    Updated: 2023/08/31 13:50:07 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/push_swap
 
-MIN				=	0
-MAX				=	20
-MANY			=	10
-ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
-ARGS			=	4 11 7 6 17 13 18 9 19 12
+#MIN				=	0
+#MAX				=	20
+#MANY			=	10
+#ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
+#ARGS			=	4 11 7 6 17 13 18 9 19 12
 #ARGS			=	6 5 12 10 9 1 17
-ARGS			=	1 3 2
+ARGS			=	3 2 1
 
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
