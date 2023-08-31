@@ -6,12 +6,12 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 18:07:57 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/28 01:25:50 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 18:43:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_P_H
+# define GET_NEXT_LINE_P_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
