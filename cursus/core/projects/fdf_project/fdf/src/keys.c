@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 17:13:21 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/03 13:59:44 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 16:49:29 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,10 @@ int	ft_key_down(int keycode, t_vars *vars)
 	else
 		return (ft_key_down_continue(keycode, vars));
 	return (ft_render(vars));
+}
+
+int	ft_close_window(t_vars *vars)
+{
+	mlx_loop_end(vars->mlx->this);
+	return (1);
 }

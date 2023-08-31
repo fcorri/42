@@ -6,13 +6,11 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:47:40 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/19 16:47:09 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/08/31 16:49:14 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_p.h"
-
-// manca la chiusura con click sulla croce
 
 int	main(int argc, char **argv)
 {
@@ -26,6 +24,7 @@ int	main(int argc, char **argv)
 	if (!ft_init_fdf(&vars, argv[1]))
 		return (ft_free_and_return(&vars, 1));
 	mlx_hook(vars.mlx->win, 2, 1L << 0, ft_key_down, &vars);
+	mlx_hook(vars.mlx->win, 17, 1L << 17, ft_close_window, &vars);
 	vars.camera->ft_view(&vars);
 	ft_render(&vars);
 	mlx_loop(vars.mlx->this);
