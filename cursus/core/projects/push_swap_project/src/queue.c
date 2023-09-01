@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:17:53 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 17:47:33 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 18:27:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,56 +27,56 @@ QUEUE	*ft_new_queue(void)
 
 void	ft_enqueue(QUEUE *queue, NODE *node)
 {
-	int	n;
-
-	n = ++queue->n;
-	if (n == 0)
+	if (queue->n++ == 0)
 	{
 		queue->head = node;
 		queue->tail = node;
 	}
 	else
-		ft_int_dlst_add_back(&stack->tail, node);
+		ft_int_dlst_add_back(&queue->tail, node);
 }
 
 NODE	*ft_dequeue(QUEUE *queue)
 {
-	int		n;
 	NODE	*node;
 	NODE	*head;
 
-	n = --queue->n;
-	if (n == 0)
+	if (queue->n == 0)
 		return (NULL);
-	head = queue->head
+	head = queue->head;
 	node = head;
-	if (n == 1)
+	if (queue->n-- == 1)
 	{
 		queue->head = NULL;
 		queue->tail = NULL;
-		return (node);
 	}
-	node->prev->next = node->next;
-	node->next->prev = node->prev;	
-	node->next = NULL;
-	node->prev = NULL;
+	else
+	{
+		queue->head = node->next;
+		node->next->prev = NULL;
+	}
 	return (node);
 }
 
 void	ft_remove(QUEUE *queue)
 {
-	int		n;
-	NODE	*head;
-
-	n = --stack->n;
-	head = queue->head;
-	if (n == 0)
-		return ;
-	else if (n == 1)
+	NODE	*prev;
+	NODE	*next;
+	
+	if (queue->n == 1)
 	{
-		queue->head = NULL;
+		ft_int_dlst_del_one(&queue->head);
 		queue->tail = NULL;
-		ft_
-		return ;
+	}
+	else if (queue->n-- > 1)
+	{
+		prev = queue->tail->prev;
+		next = queue->tail->next;
+		if (prev)
+			prev->next = next;
+		if (next)
+			next->prev = prev;
+		ft_int_dlst_del_one(&queue->tail);
+		queue->tail = prev;
 	}
 }

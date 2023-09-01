@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:24:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/30 13:43:50 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 19:34:21 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int main(int argc, char **argv)
 {
 	t_vars	vars;
-	char	input[3];
+	char	input[4] = "";
 	int		count = 0;
 
 	if (argc == 1)
@@ -31,29 +31,32 @@ int main(int argc, char **argv)
 		getchar();
 		count++;
 		if (!strcmp(input, "ra"))
-			ft_ra(&vars);
+			ft_ra(&vars, 0);
 		else if (!strcmp(input, "rb"))
-			ft_rb(&vars);
+			ft_rb(&vars, 0);
 		else if (!strcmp(input, "rr"))
-			ft_rr(&vars);
+			ft_rr(&vars, 0);
 		else if (!strcmp(input, "sa"))
-			ft_sa(&vars);
+			ft_sa(&vars, 0);
 		else if (!strcmp(input, "sb"))
-			ft_sb(&vars);
+			ft_sb(&vars, 0);
 		else if (!strcmp(input, "ss"))
-			ft_ss(&vars);
+			ft_ss(&vars, 0);
 		else if (!strcmp(input, "pa"))
-			ft_pa(&vars);
+			ft_pa(&vars, 0);
 		else if (!strcmp(input, "pb"))
-			ft_pb(&vars);
+			ft_pb(&vars, 0);
 		else if (!strcmp(input, "rra"))
-			ft_rra(&vars);
+			ft_rra(&vars, 0);
 		else if (!strcmp(input, "rrb"))
-			ft_rrb(&vars);
+			ft_rrb(&vars, 0);
 		else if (!strcmp(input, "rrr"))
-			ft_rrr(&vars);
+			ft_rrr(&vars, 0);
 		else
+		{
 			ft_printf("INSERISCI UN'OPERAZIONE VALIDA! NON PERDERE TEMPO\n");
+			count--;
+		}
 		ft_print(&vars);
 	}
 	ft_printf("Hai eseguito %d operazioni\n", count);

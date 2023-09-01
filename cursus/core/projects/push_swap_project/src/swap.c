@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 19:57:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:06:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 17:45:33 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,35 @@ static int	ft_swap(STACK *stack, int *callables, int pos, int restore)
 	return (1);
 }
 
-int	ft_sa(VARS *vars)
+int	ft_sa(VARS *vars, int inv)
 {
-	if (ft_swap(vars->a, &vars->callables, 0, 0b1011100))
-	{
-		ft_push(vars->output, ft_int_dlst_new(1));
-		return (1);
-	}
-	return (0);
+	int output;
+
+	output = ft_swap(vars->a, &vars->callables, 0, 0b1011100);
+	if (inv)
+		ft_remove(vars->output);
+	else if (output)
+		ft_enqueue(vars->output, ft_int_dlst_new(0));
+	return (inv || output);
 }
 
-int	ft_sb(VARS *vars)
+int	ft_sb(VARS *vars, int inv)
 {
-	if (ft_swap(vars->b, &vars->callables, 1, 0b10101100))
-	{
-		ft_push(vars->output, ft_int_dlst_new(2));
-		return (1);
-	}
-	return (0);
+	int output;
+
+	output = ft_swap(vars->b, &vars->callables, 1, 0b10101100);
+	if (inv)
+		ft_remove(vars->output);
+	else if (output)
+		ft_enqueue(vars->output, ft_int_dlst_new(1));
+	return (inv || output);
 }
 
-int	ft_ss(VARS *vars)
+int	ft_ss(VARS *vars, int inv)
 {
-	ft_sa(vars);
-	ft_sb(vars);
-	return (1);
+	int output;
+
+	output = ft_sa(vars, inv);
+	output = output || ft_sb(vars, inv);
+	return (inv || output);
 }

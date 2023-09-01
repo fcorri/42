@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:24:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:13:38 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 18:22:06 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 #include <stdio.h>
 #include <string.h>
 
-
-
 int main(int argc, char **argv)
 {
 	t_vars	vars;
-	int		n;
 
 	if (argc == 1)
 		ft_exit();
@@ -27,9 +24,7 @@ int main(int argc, char **argv)
 	if (!ft_is_ordered(vars.a))
 	{
 		ft_order(&vars, 0);
-		n = vars.output->n;
-		while (n--)
-			ft_printf("%d\n", ft_pop(vars.output)->content);
+		ft_print_queue(&vars);
 	}
 	return (ft_free_and_return(&vars, 0));
 }

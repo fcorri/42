@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:22:58 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 16:29:55 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 	vars->a = ft_new_stack();
 	a = vars->a;
 	vars->b = ft_new_stack();
-	vars->output = ft_new_stack();
+	vars->output = ft_new_queue();
 	if (!a || !vars->b || !vars->output)
 		ft_free_and_return(vars, 1);
 	while (--argc)

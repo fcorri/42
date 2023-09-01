@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/31 13:50:07 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/01 19:45:51 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME			=	$(BUILD_DIR)/push_swap
 #ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
 #ARGS			=	4 11 7 6 17 13 18 9 19 12
 #ARGS			=	6 5 12 10 9 1 17
-ARGS			=	3 2 1
+ARGS			=	1 3 2
 
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -38,6 +38,7 @@ SRCS			=	$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/utils.c \
 					$(SRCS_DIR)/stack.c \
+					$(SRCS_DIR)/queue.c \
 					$(SRCS_DIR)/order.c \
 					$(SRCS_DIR)/swap.c \
 					$(SRCS_DIR)/push.c \
@@ -49,6 +50,7 @@ CHECK_SRCS		=	$(SRCS_DIR)/check.c \
 					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/utils.c \
 					$(SRCS_DIR)/stack.c \
+					$(SRCS_DIR)/queue.c \
 					$(SRCS_DIR)/order.c \
 					$(SRCS_DIR)/swap.c \
 					$(SRCS_DIR)/push.c \

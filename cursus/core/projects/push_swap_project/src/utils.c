@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:38:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:09:28 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 16:32:37 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@ static void	ft_free_stack(STACK *stack)
 	}
 }
 
+static void	ft_free_queue(QUEUE *queue)
+{
+	NODE	*head;
+	NODE	*tmp;
+	int		n;
+
+	head = queue->head;
+	n = queue->n;
+	while (n--)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+}
+
 void	ft_exit(void)
 {
 	write(2, "Error\n", 6);
@@ -37,6 +53,7 @@ void	ft_exit(void)
 int	ft_free_and_return(t_vars *vars, int output)
 {
 	STACK	*stack;
+	QUEUE	*queue;
 
 	stack = vars->a;
 	if (stack)
@@ -46,10 +63,10 @@ int	ft_free_and_return(t_vars *vars, int output)
 	if (stack)
 		ft_free_stack(stack);
 	free(stack);
-	stack = vars->output;
-	if (stack)
-		ft_free_stack(stack);
-	free(stack);
+	queue = vars->output;
+	if (queue)
+		ft_free_queue(queue);
+	free(queue);
 	if (output)
 		ft_exit();
 	return (output);

@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:33:38 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:36:09 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 17:13:33 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_int_dlst_add_back(t_int_dlist **lst, t_int_dlist *new)
 		node->next = new;
 		new->prev = node;
 	}
+	*lst = new;
 }
 
 void	ft_int_dlst_add_front(t_int_dlist **lst, t_int_dlist *new)

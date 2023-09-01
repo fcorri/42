@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:48:55 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 17:31:34 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct vars
 	STACK	*b;
 	QUEUE	*output;
 	int		callables;
-	int		(*ops[8])(struct vars *vars);
-	int		(*inv[8])(struct vars *vars);
+	int		(*ops[8])(struct vars *vars, int inv);
+	int		(*inv[8])(struct vars *vars, int inv);
 	char	*names[8];
 }	t_vars;
 
@@ -63,19 +63,20 @@ void	ft_enqueue(QUEUE *queue, NODE *node);
 NODE	*ft_dequeue(QUEUE *queue);
 void	ft_remove(QUEUE *queue);
 
-int	ft_sa(VARS *vars);
-int	ft_sb(VARS *vars);
-int	ft_pa(VARS *vars);
-int	ft_pb(VARS *vars);
-int	ft_ra(VARS *vars);
-int	ft_rb(VARS *vars);
-int	ft_rra(VARS *vars);
-int	ft_rrb(VARS *vars);
+int	ft_sa(VARS *vars, int inv);
+int	ft_sb(VARS *vars, int inv);
+int	ft_pa(VARS *vars, int inv);
+int	ft_pb(VARS *vars, int inv);
+int	ft_ra(VARS *vars, int inv);
+int	ft_rb(VARS *vars, int inv);
+int	ft_rra(VARS *vars, int inv);
+int	ft_rrb(VARS *vars, int inv);
 
-int	ft_ss(VARS *vars);
-int	ft_rr(VARS *vars);
-int	ft_rrr(VARS *vars);
+int	ft_ss(VARS *vars, int inv);
+int	ft_rr(VARS *vars, int inv);
+int	ft_rrr(VARS *vars, int inv);
 
 void	ft_print(VARS *vars);
+void	ft_print_queue(VARS *vars);
 
 #endif

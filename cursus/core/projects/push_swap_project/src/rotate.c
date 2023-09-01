@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 14:06:57 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/01 17:32:48 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,35 @@ static int	ft_rotate(STACK *stack, int *callables, int pos, int restore)
 	return (1);
 }
 
-int	ft_ra(VARS *vars)
+int	ft_ra(VARS *vars, int inv)
 {
-	if (ft_rotate(vars->a, &vars->callables, 6, 0b1101))
-	{
-		ft_push(vars->output, ft_int_dlst_new(4));
-		return (1);
-	}
-	return (0);
+	int output;
+
+	output = ft_rotate(vars->a, &vars->callables, 6, 0b1101);
+	if (inv)
+		ft_remove(vars->output);
+	else if (output)
+		ft_enqueue(vars->output, ft_int_dlst_new(4));
+	return (inv || output);
 }
 
-int	ft_rb(VARS *vars)
+int	ft_rb(VARS *vars, int inv)
 {
-	if (ft_rotate(vars->b, &vars->callables, 7, 0b1110))
-	{
-		ft_push(vars->output, ft_int_dlst_new(5));
-		return (1);
-	}
-	return (0);
+	int output;
+
+	output = ft_rotate(vars->b, &vars->callables, 7, 0b1110);
+	if (inv)
+		ft_remove(vars->output);
+	else if (output)
+		ft_enqueue(vars->output, ft_int_dlst_new(5));
+	return (inv || output);
 }
 
-int	ft_rr(VARS *vars)
+int	ft_rr(VARS *vars, int inv)
 {
-	ft_ra(vars);
-	ft_rb(vars);
-	return (1);
+	int output;
+
+	output = ft_ra(vars, inv);
+	output = output ||ft_rb(vars, inv);
+	return (inv || output);
 }
