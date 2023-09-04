@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:44 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/20 19:37:32 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/04 13:19:00 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_atoi(const char *nptr)
 		else
 			output = temp;
 		nptr++;
-	}	
+	}
 	output *= sign;
 	return (output);
 }

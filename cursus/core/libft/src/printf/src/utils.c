@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:36:25 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/31 18:41:45 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/04 13:20:53 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_atoi_decorator(char **p_input, size_t index)
 	return (output);
 }
 
-int	ft_digits(BIG_TYPE num, int base)
+int	ft_digits(long num, int base)
 {
 	int	output;
 
