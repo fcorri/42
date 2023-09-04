@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:32 by fcorri            #+#    #+#             */
-/*   Updated: 2023/03/22 19:54:31 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/04 13:19:17 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_default_template_print(void)
 }
 
 void	ft_new_default_printer(char *sub, size_t sub_len)
-{	
+{
 	g_printer->as_base.ft_print = ft_default_template_print;
 	g_printer->as_default_printer.ft_init_string_len
 		= ft_default_init_string_len;
