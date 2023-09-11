@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:24:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/01 19:34:21 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 13:55:32 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,27 @@ int main(int argc, char **argv)
 		getchar();
 		count++;
 		if (!strcmp(input, "ra"))
-			ft_ra(&vars, 0);
+			ft_ra(&vars);
 		else if (!strcmp(input, "rb"))
-			ft_rb(&vars, 0);
+			ft_rb(&vars);
 		else if (!strcmp(input, "rr"))
-			ft_rr(&vars, 0);
+			ft_rr(&vars);
 		else if (!strcmp(input, "sa"))
-			ft_sa(&vars, 0);
+			ft_sa(&vars);
 		else if (!strcmp(input, "sb"))
-			ft_sb(&vars, 0);
+			ft_sb(&vars);
 		else if (!strcmp(input, "ss"))
-			ft_ss(&vars, 0);
+			ft_ss(&vars);
 		else if (!strcmp(input, "pa"))
-			ft_pa(&vars, 0);
+			ft_pa(&vars);
 		else if (!strcmp(input, "pb"))
-			ft_pb(&vars, 0);
+			ft_pb(&vars);
 		else if (!strcmp(input, "rra"))
-			ft_rra(&vars, 0);
+			ft_rra(&vars);
 		else if (!strcmp(input, "rrb"))
-			ft_rrb(&vars, 0);
+			ft_rrb(&vars);
 		else if (!strcmp(input, "rrr"))
-			ft_rrr(&vars, 0);
+			ft_rrr(&vars);
 		else
 		{
 			ft_printf("INSERISCI UN'OPERAZIONE VALIDA! NON PERDERE TEMPO\n");

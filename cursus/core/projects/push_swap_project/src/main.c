@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:24:13 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/04 18:15:03 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 14:41:40 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int main(int argc, char **argv)
 	if (argc == 1)
 		ft_exit();
 	ft_init(argc, argv, &vars);
-	ft_order(&vars, 0, 1);
+	if (!ft_is_ordered(vars.a))
+		ft_order(&vars);
 	ft_print_queue(&vars);
 	return (ft_free_and_return(&vars, 0));
 }

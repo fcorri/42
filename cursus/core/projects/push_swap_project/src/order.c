@@ -6,75 +6,59 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/04 19:26:24 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 14:42:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
+#include <stdio.h>
+#include <string.h>
 
-#define LIMIT	2
-#define	FACT_4	24
+#ifndef CHECK
+	#define CHECK 0
+#endif
 
-/*
-
-per ogni chiamata di funzione ricorsiva, salvati callables, prova a eseguire in ordine le operazioni permesse e se si ha successo, richiama la funzione ricorsiva, altrimenti prova un'altra configurazione di callables.
-
-le mosse DEVONO essere eseguite solo in alcuni casi, tipo:
-	- se si hanno due elementi in ordine si puo' eseguire 2ra
-
-*/
-
-static void	ft_init_vars(int arr[4][4])
+static void	ft_check(VARS *vars, int doit)
 {
-	int	iter;
-	int	index;
+	char	input[4] = "";
 
-	iter = -1;
-	while (iter++ < 2)
+	if (!doit)
+		return ;
+	ft_printf("\n\nDIGITA UNA DELLE SEGUENTI OPERAZIONI PER MODIFICARE LO STACK:\nsa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr\n\nDOVRESTI SAPERE COME SI COMPORTANO! LA PILA E' LA SEGUENTE\n");
+	ft_print(vars);
+	while (!ft_is_ordered(vars->a) || !ft_is_empty(vars->b))
 	{
-		index = -1;
-		while (index++ < 3)
-		{
-			arr[iter << 1][index] = index;
-			arr[(iter << 1) + 1][index] = 0;
-		}
+		scanf("%[^\n]", input);
+		getchar();
+		if (!strcmp(input, "ra"))
+			ft_ra(vars);
+		else if (!strcmp(input, "rb"))
+			ft_rb(vars);
+		else if (!strcmp(input, "rr"))
+			ft_rr(vars);
+		else if (!strcmp(input, "sa"))
+			ft_sa(vars);
+		else if (!strcmp(input, "sb"))
+			ft_sb(vars);
+		else if (!strcmp(input, "ss"))
+			ft_ss(vars);
+		else if (!strcmp(input, "pa"))
+			ft_pa(vars);
+		else if (!strcmp(input, "pb"))
+			ft_pb(vars);
+		else if (!strcmp(input, "rra"))
+			ft_rra(vars);
+		else if (!strcmp(input, "rrb"))
+			ft_rrb(vars);
+		else if (!strcmp(input, "rrr"))
+			ft_rrr(vars);
+		else
+			ft_printf("INSERISCI UN'OPERAZIONE VALIDA! NON PERDERE TEMPO\n");
+		ft_print(vars);
 	}
 }
 
-static void	ft_perm(int arr[4][4])
+void	ft_order(VARS *vars)
 {
-	int	largest;
-
-	largest = ft_get_largest(arr);
-	(void) arr;
-}
-
-int	ft_order(VARS *vars, int prev_index, int call)
-{
-	int			perm;
-	int			index;
-	int			arr[4][4];
-	static int	(**ops)(t_vars *vars, int inv);
-
-	if (ft_is_ordered(vars->a) && ft_is_empty(vars->b))
-		return (1);
-	if (call == LIMIT)
-	{
-		vars->callables &= ~(0b1 << prev_index);
-		vars->inv[prev_index](vars, 1);
-		return (0);
-	}
-	perm = FACT_4;
-	if (!ops)
-		ops = vars->ops;
-	ft_init_vars(arr);
-	while (perm--)
-	{
-		index = -1;
-		while (index++ < 4)
-			if (((vars->callables >> index) & 0b1) && ops[index](vars, 0) && ft_order(vars, index, call + 1))
-				return (1);
-		ft_perm(arr);
-	}
-	return (0);
+	ft_check(vars, CHECK);
 }
