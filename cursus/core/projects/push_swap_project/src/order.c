@@ -6,42 +6,59 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/01 19:46:29 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 14:22:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
+#include <stdio.h>
+#include <string.h>
 
-#define LIMIT	2
+#ifndef CHECK
+	#define CHECK 0
+#endif
 
-int	ft_order(VARS *vars, int prev_index)
+static void	ft_check(VARS *vars, int doit)
 {
-	static int	calls = 0;
-	int			start;
-	int			index;
-	int			callables;
-	static int	(**ops)(VARS *vars, int inv);
+	char	input[4] = "";
 
-	if (ft_is_ordered(vars->a) && ft_is_empty(vars->b))
-		return (1);
-	if (calls++ == LIMIT)
+	if (!doit)
+		return ;
+	ft_printf("\n\nDIGITA UNA DELLE SEGUENTI OPERAZIONI PER MODIFICARE LO STACK:\nsa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr\n\nDOVRESTI SAPERE COME SI COMPORTANO! LA PILA E' LA SEGUENTE\n");
+	ft_print(vars);
+	while (!ft_is_ordered(vars->a) || !ft_is_empty(vars->b))
 	{
-		calls--;
-		vars->callables &= ~(0b1 << prev_index);
-		vars->inv[prev_index](vars, 1);
-		return (0);
+		scanf("%[^\n]", input);
+		getchar();
+		if (!strcmp(input, "ra"))
+			ft_ra(vars);
+		else if (!strcmp(input, "rb"))
+			ft_rb(vars);
+		else if (!strcmp(input, "rr"))
+			ft_rr(vars);
+		else if (!strcmp(input, "sa"))
+			ft_sa(vars);
+		else if (!strcmp(input, "sb"))
+			ft_sb(vars);
+		else if (!strcmp(input, "ss"))
+			ft_ss(vars);
+		else if (!strcmp(input, "pa"))
+			ft_pa(vars);
+		else if (!strcmp(input, "pb"))
+			ft_pb(vars);
+		else if (!strcmp(input, "rra"))
+			ft_rra(vars);
+		else if (!strcmp(input, "rrb"))
+			ft_rrb(vars);
+		else if (!strcmp(input, "rrr"))
+			ft_rrr(vars);
+		else
+			ft_printf("INSERISCI UN'OPERAZIONE VALIDA! NON PERDERE TEMPO\n");
+		ft_print(vars);
 	}
-	start = -1;
-	callables = vars->callables;
-	if (!ops)
-		ops = vars->ops;
-	while (1)
-	{
-		index = start;
-		while (++index < 8)
-			if (((callables >> index) & 0b1) && ops[index](vars, 0) && ft_order(vars, index))
-				return (1);
-		start++;
-		start %= 7;
-	}
+}
+
+void	ft_order(VARS *vars)
+{
+	ft_check(vars, CHECK);
 }
