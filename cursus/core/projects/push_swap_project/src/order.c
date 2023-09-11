@@ -6,59 +6,74 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 14:42:26 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 18:02:25 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
-#include <stdio.h>
-#include <string.h>
 
 #ifndef CHECK
-	#define CHECK 0
+# define CHECK 0
 #endif
 
-static void	ft_check(VARS *vars, int doit)
+static void	ft_order_three(NODE *head, VARS *vars)
 {
-	char	input[4] = "";
+	int	first;
+	int	second;
+	int	third;
+	int	tmp;
 
-	if (!doit)
-		return ;
-	ft_printf("\n\nDIGITA UNA DELLE SEGUENTI OPERAZIONI PER MODIFICARE LO STACK:\nsa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr\n\nDOVRESTI SAPERE COME SI COMPORTANO! LA PILA E' LA SEGUENTE\n");
-	ft_print(vars);
-	while (!ft_is_ordered(vars->a) || !ft_is_empty(vars->b))
+	first = head->content;
+	second = head->next->content;
+	third = head->prev->content;
+	tmp = first;
+	if (first > second && first > third)
 	{
-		scanf("%[^\n]", input);
-		getchar();
-		if (!strcmp(input, "ra"))
-			ft_ra(vars);
-		else if (!strcmp(input, "rb"))
-			ft_rb(vars);
-		else if (!strcmp(input, "rr"))
-			ft_rr(vars);
-		else if (!strcmp(input, "sa"))
-			ft_sa(vars);
-		else if (!strcmp(input, "sb"))
-			ft_sb(vars);
-		else if (!strcmp(input, "ss"))
-			ft_ss(vars);
-		else if (!strcmp(input, "pa"))
-			ft_pa(vars);
-		else if (!strcmp(input, "pb"))
-			ft_pb(vars);
-		else if (!strcmp(input, "rra"))
-			ft_rra(vars);
-		else if (!strcmp(input, "rrb"))
-			ft_rrb(vars);
-		else if (!strcmp(input, "rrr"))
-			ft_rrr(vars);
-		else
-			ft_printf("INSERISCI UN'OPERAZIONE VALIDA! NON PERDERE TEMPO\n");
-		ft_print(vars);
+		ft_ra(vars);
+		first = second;
+		second = third;
+		third = tmp;
 	}
+	else if (first < second && second > third)
+	{
+		ft_rra(vars);
+		first = third;
+		third = second;
+		second = tmp;
+	}
+	if (first > second)
+		ft_sa(vars);
 }
 
-void	ft_order(VARS *vars)
+static void	ft_order_to_five(NODE *head, VARS *vars, int n)
 {
-	ft_check(vars, CHECK);
+	ft_pb(vars);
+	if (n == 5)
+		ft_pb(vars);
+	ft_order_three(head, vars);
+	while (vars->b->n)
+		ft_push_min_ops(vars);
+}
+
+static void	ft_quicksort(VARS *vars, int n)
+{
+	(void) vars;
+	(void) n;
+}
+
+void	ft_order(VARS *vars, int n)
+{
+	NODE	*head;
+
+	head = vars->a->head;
+	if (CHECK)
+		ft_check(vars);
+	else if (n == 2)
+		ft_sa(vars);
+	else if (n == 3)
+		ft_order_three(head, vars);
+	else if (n <= 5)
+		ft_order_to_five(head, vars, n);
+	else
+		ft_quicksort(vars, n);
 }

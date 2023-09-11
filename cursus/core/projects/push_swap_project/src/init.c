@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 13:50:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 16:25:48 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static NODE	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
 	static int	args = 0;
 
 	output = ft_atoi(input);
-	if (*input == '-' && !output)
+	if (*input == '-' && output > 0)
 		ft_free_and_return(vars, 1);
-	else if (output == -1)
+	else if (output < 0)
 		ft_free_and_return(vars, 1);
 	head = a->head;
 	arg = 0;
@@ -48,18 +48,6 @@ static NODE	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
 	}
 	args++;
 	return (ft_int_dlst_new(output));
-}
-
-static void	ft_init_ops(VARS *vars)
-{
-	vars->ops[0] = ft_sa;
-	vars->ops[1] = ft_sb;
-	vars->ops[2] = ft_pa;
-	vars->ops[3] = ft_pb;
-	vars->ops[4] = ft_ra;
-	vars->ops[5] = ft_rb;
-	vars->ops[6] = ft_rra;
-	vars->ops[7] = ft_rrb;
 }
 
 static void	ft_init_names(VARS *vars)
@@ -92,6 +80,5 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 			ft_free_and_return(vars, 1);
 		ft_push(a, ft_atoi_decorator(vars, a, param));
 	}
-	ft_init_ops(vars);
 	ft_init_names(vars);
 }

@@ -8,5 +8,5 @@ define ps
 call ft_print(vars)
 end
 
-b ft_pa
+b ft_push_min_ops
 r

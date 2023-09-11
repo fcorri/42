@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 13:51:56 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 18:02:12 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct vars
 	STACK	*a;
 	STACK	*b;
 	QUEUE	*output;
-	void	(*ops[8])(struct vars *vars);
 	char	*names[8];
 }	t_vars;
 
@@ -48,7 +47,7 @@ void	ft_exit(void);
 int		ft_free_and_return(VARS *vars, int output);
 
 void	ft_init(int argc, char **argv, VARS *vars);
-void	ft_order(VARS *vars);
+void	ft_order(VARS *vars, int n);
 
 STACK	*ft_new_stack(void);
 int		ft_is_empty(STACK *stack);
@@ -74,7 +73,10 @@ void	ft_ss(VARS *vars);
 void	ft_rr(VARS *vars);
 void	ft_rrr(VARS *vars);
 
+void	ft_push_min_ops(VARS *vars);
+
 void	ft_print(VARS *vars);
 void	ft_print_queue(VARS *vars);
+void	ft_check(VARS *vars);
 
 #endif

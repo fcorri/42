@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/11 14:33:39 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/11 18:47:05 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ NAME			=	$(BUILD_DIR)/push_swap
 #ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
 #ARGS			=	4 11 7 6 17 13 18 9 19 12
 #ARGS			=	6 5 12 10 9 1 17
-ARGS			=	5 2 7 1 6 3 9 4 8
+INT_MIN			=	-2147483648
+INT_MAX			=	2147483647
+ARGS			=	3 1 5 2 4
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -35,12 +37,14 @@ P_HEADER		=	$(SRCS_DIR)/push_swap_p.h
 
 SRCS			=	$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/init.c \
+					$(SRCS_DIR)/check.c \
 					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/utils.c \
 					$(SRCS_DIR)/stack.c \
 					$(SRCS_DIR)/queue.c \
 					$(SRCS_DIR)/order.c \
 					$(SRCS_DIR)/swap.c \
+					$(SRCS_DIR)/min_ops.c \
 					$(SRCS_DIR)/push.c \
 					$(SRCS_DIR)/rotate.c \
 					$(SRCS_DIR)/reverse.c \
@@ -73,6 +77,7 @@ clear:
 	clear
 
 run: clear all
+	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=0 -o $(OBJS_DIR)/order.o
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	$(NAME) $(ARGS)
 

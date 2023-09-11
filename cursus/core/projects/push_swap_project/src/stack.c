@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 19:50:53 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 14:35:06 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/11 17:52:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	ft_push(STACK *stack, NODE *node)
 {
 	NODE	*head;
 
+	if (!node)
+		return ;
 	head = stack->head;
 	if (stack->n++ == 1 && head)
 	{
@@ -71,6 +73,8 @@ NODE	*ft_pop(STACK *stack)
 {
 	NODE	*output;
 
+	if (!stack->n)
+		return (NULL);
 	stack->n--;
 	output = stack->head;
 	if (output->next)
