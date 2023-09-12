@@ -6,26 +6,33 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 18:02:12 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/12 20:07:59 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_P_H
 # define PUSH_SWAP_P_H
 
-# include <unistd.h>
-# include <stdlib.h>
 # include "libft/libft.h"
 
-# define NODE	t_int_dlist	
+# define NODE	t_int_dlist
+# define VECTOR	t_bvector
 # define STACK	t_stack
 # define QUEUE	t_queue
 # define VARS	t_vars
+
+typedef struct bvector
+{
+	int	x;
+	int	y;
+}	t_bvector;
 
 typedef struct stack
 {
 	NODE	*head;
 	int		n;
+	VECTOR	min_max;
+	int		i_min;
 }	t_stack;
 
 typedef struct queue

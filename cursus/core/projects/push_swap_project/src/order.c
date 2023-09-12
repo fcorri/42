@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 18:02:25 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/12 20:11:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,49 +16,67 @@
 # define CHECK 0
 #endif
 
-static void	ft_order_three(NODE *head, VARS *vars)
+struct s_vars
 {
 	int	first;
 	int	second;
 	int	third;
 	int	tmp;
+};
 
-	first = head->content;
-	second = head->next->content;
-	third = head->prev->content;
-	tmp = first;
-	if (first > second && first > third)
+static void	ft_order_three(NODE *head, VARS *vars)
+{
+	struct s_vars	triple;
+
+	triple.first = head->content;
+	triple.second = head->next->content;
+	triple.third = head->prev->content;
+	triple.tmp = triple.first;
+	if (triple.first > triple.second && triple.first > triple.third)
 	{
 		ft_ra(vars);
-		first = second;
-		second = third;
-		third = tmp;
+		triple.first = triple.second;
+		triple.second = triple.third;
+		triple.third = triple.tmp;
 	}
-	else if (first < second && second > third)
+	else if (triple.first < triple.second && triple.second > triple.third)
 	{
 		ft_rra(vars);
-		first = third;
-		third = second;
-		second = tmp;
+		triple.first = triple.third;
+		triple.third = triple.second;
+		triple.second = triple.tmp;
 	}
-	if (first > second)
+	if (triple.first > triple.second)
+	{
 		ft_sa(vars);
+		triple.tmp = triple.first;
+		triple.first = triple.second;
+		triple.second = triple.tmp;
+	}
+	vars->a->min_max = (VECTOR){triple.first, triple.third};
+	vars->a->i_min = 0;
 }
 
-static void	ft_order_to_five(NODE *head, VARS *vars, int n)
+static void	ft_order_more(VARS *vars, int size)
 {
-	ft_pb(vars);
-	if (n == 5)
+	int	n;
+
+	n = size;
+	while (n-- > 3)
 		ft_pb(vars);
-	ft_order_three(head, vars);
-	while (vars->b->n)
+	ft_order_three(vars->a->head, vars);
+	n = size - 3;
+	while (n--)
 		ft_push_min_ops(vars);
-}
-
-static void	ft_quicksort(VARS *vars, int n)
-{
-	(void) vars;
-	(void) n;
+	n = vars->a->i_min;
+	if (ft_abs(n) > size + n)
+		n = size + n;
+	if (n > 0)
+		while (n--)
+			ft_ra(vars);
+	else
+		while (n++)
+			ft_rra(vars);
 }
 
 void	ft_order(VARS *vars, int n)
@@ -72,8 +90,6 @@ void	ft_order(VARS *vars, int n)
 		ft_sa(vars);
 	else if (n == 3)
 		ft_order_three(head, vars);
-	else if (n <= 5)
-		ft_order_to_five(head, vars, n);
 	else
-		ft_quicksort(vars, n);
+		ft_order_more(vars, n);
 }
