@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/31 13:59:21 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/12 19:31:20 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ UTILS_DIR		=	$(LIB_DIR)/utils
 GNL_DIR			=	$(SRCS_DIR)/gnl
 
 SRCS			=	$(LIB_DIR)/ft_atoi.c \
+					$(LIB_DIR)/ft_abs.c \
 					$(LIB_DIR)/ft_bzero.c \
 					$(LIB_DIR)/ft_calloc.c \
 					$(LIB_DIR)/ft_error.c \
