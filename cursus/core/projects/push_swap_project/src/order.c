@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 01:41:30 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 10:32:20 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ static void	ft_order_three(VARS *vars, NODE *head)
 	if (first > second)
 	{
 		ft_sa(vars);
-		tmp = first;
 		first = second;
-		second = tmp;
 	}
 	vars->a->min = first;
 	vars->a->max = third;

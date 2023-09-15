@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:00:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 01:45:46 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 15:51:15 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, VARS *vars, int r_b, VECTOR
 	size = a->n;
 	if (r_a > size - r_a)
 		r_a = r_a - size;
-	if (ft_abs(r_a) + r_b < ft_abs(r_a_b_best.x))
+	if (ft_abs(r_a) + ft_abs(r_b) < ft_abs(r_a_b_best.x) + ft_abs(r_a_b_best.y))
 	{
 		r_a_b_best = (VECTOR){r_a, r_b};
 		if (input < a->min)
@@ -79,19 +79,22 @@ static VECTOR	ft_calc_min_ops(VARS *vars, NODE *start, VECTOR r_a_b, VECTOR inde
 	NODE	*next;
 	NODE	*prev;
 	NODE	*node;
+	int		r_b;
 
 	next = start->next;
 	prev = start->prev;
 	while (index_stop.x++ < index_stop.y)
 	{
-		count_tmp.x = 2;	
+		count_tmp.x = 2;
 		node = next;
+		r_b = index_stop.x;
 		while (count_tmp.x--)
 		{
-			r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, vars, index_stop.x, r_a_b);
+			r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, vars, r_b, r_a_b);
 			if (r_a_b.x < index_stop.y)
 				index_stop.y = r_a_b.x;
 			node = prev;
+			r_b = index_stop.x - 2;
 		}
 		next = next->next;
 		prev = prev->prev;
@@ -108,7 +111,7 @@ void	ft_push_min_ops(VARS *vars)
 	r_a_b = (VECTOR){INT_MAX, 0};
 	r_a_b = ft_calc_r_a_b_ops_to_insert(b->head->content, vars, 0, r_a_b);
 	if (b->n > 1)
-		r_a_b = ft_calc_min_ops(vars, b->head, r_a_b, (VECTOR){ft_min(ft_abs(r_a_b.x), b->n / 2), 0});
+		r_a_b = ft_calc_min_ops(vars, b->head, r_a_b, (VECTOR){0, ft_min(ft_abs(r_a_b.x), b->n / 2)});
 	if (r_a_b.x < 0)
 		while (r_a_b.x++)
 			ft_rra(vars);

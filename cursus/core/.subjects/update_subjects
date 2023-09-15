@@ -16,16 +16,16 @@ projects=(
 )
 
 urls=(
-"https://cdn.intra.42.fr/pdf/pdf/70131/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/81792/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/81372/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/81774/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/56849/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/66249/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/83099/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/70122/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/65475/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/70135/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/98026/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101896/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101895/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101894/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101902/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101901/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101907/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101908/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101909/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101897/en.subject.pdf"
 )
 
 for i in $(seq 0 $n)

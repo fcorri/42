@@ -2,10 +2,8 @@ import random
 import sys
 
 args = sys.argv
-numbers = list(range(int(args[1]), int(args[2])))
-random.shuffle(numbers)
-random_list = numbers[:int(args[3])]
-output = str(random_list)[1:-1].replace(',', '')
+n = int(args[1])
+numbers = [random.randint(-2147483648, 2147483647) for i in range(n)]
+output = str(numbers)[1:-1].replace(',', '')
 
 print(output)
-

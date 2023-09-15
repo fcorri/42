@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/15 02:02:23 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/15 14:32:42 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,9 @@ CHECK			=	$(BUILD_DIR)/check
 CHECKER			=	$(BUILD_DIR)/checker_linux
 PERM			=	$(BUILD_DIR)/perm
 
-MIN				=	-21474
-MAX				=	214748
-MANY			=	5
-ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
+MANY			=	7
+ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MANY))
+ARGS			=	1 3 5 2 4 6 7
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -74,7 +73,7 @@ re: fclean all
 clear:
 	clear
 
-run: clear all
+run: clear re
 	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=0 -o $(OBJS_DIR)/order.o
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	$(NAME) $(ARGS)
@@ -111,24 +110,71 @@ debugcf: clear re
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(CHECK)
 	vi .gdbinit && gdb --args $(CHECK) $(ARGS)
 
-checker: clear re
-	$(NAME) $(ARGS) | $(CHECKER) $(ARGS)
+checker: clear all 
+	@echo $(ARGS)
+	@$(NAME) $(ARGS) > commands ; cat commands | $(CHECKER) $(ARGS)
+	@wc -l commands
+	@rm commands
 
 perms: clear re
 	@$(CC) $(SRCS_DIR)/perm.c -o $(PERM) ; $(PERM) $(MANY) > perms
 
-define my_important_task =
-	echo "" > results
+define perm =
+	if [ -e "results" ]; then rm results; fi
+	touch results
+	if [ -e "commands" ]; then rm commands; fi
 	while read line
 	do
-		echo $line >> results
-		echo $(./build/push_swap $line | ./build/checker_linux $line) >> results
+		./build/push_swap $line > commands ; cat commands | ./build/checker_linux $line | if grep KO ; then echo $line ; break ; fi
+		#wc -l commands | awk -v max=12 '{ if ($1 > max) print "ERROR" }'
 	done < perms
 	grep -B1 KO results
 endef
 
+define tests =
+	if [ -e "input" ]; then rm input; fi
+	if [ -e "output" ]; then rm output; fi
+	touch input output
+	n=10
+	for i in $(seq 1 $n)
+	do
+		echo $(python3 utils/generate_random_numbers.py $i) >> input
+	done
+	while read line
+	do
+		echo $line >> output
+		echo $(./build/push_swap $line | ./build/checker_linux $line) >> output
+	done < input
+	if grep -B1 KO output ; then
+		echo "\e[31mKO in at least one text.. :(\e[0m"
+	else
+		echo "\e[32mOK!\e[0m"
+	fi
+	rm input
+	rm commands
+endef
+
+tests: clear re
+	@$(value tests)
+
+define test =
+	if [ -e "input" ]; then rm input; fi
+	if [ -e "commands" ]; then rm commands; fi
+	touch input
+	n=5
+	echo $(python3 utils/generate_random_numbers.py $n) >> input
+	while read line
+	do
+		echo $(./build/push_swap $line >> commands ; cat commands | ./build/checker_linux $line)
+	done < input
+	wc -l commands
+endef
+
+test: clear re
+	@$(value test)
+
 perm: perms
-	@$(value my_important_task)
+	@$(value perm)
 	@rm perms
 
 .ONESHELL:

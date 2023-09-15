@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 16:25:48 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 10:39:47 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ static NODE	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
 	static int	args = 0;
 
 	output = ft_atoi(input);
-	if (*input == '-' && output > 0)
-		ft_free_and_return(vars, 1);
-	else if (output < 0)
+	if ((*input == '-' && output > 0) || (ft_isdigit(*input) && output < 0))
 		ft_free_and_return(vars, 1);
 	head = a->head;
 	arg = 0;
