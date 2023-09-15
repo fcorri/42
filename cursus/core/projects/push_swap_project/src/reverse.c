@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:54:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 01:41:13 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 18:29:22 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,23 @@ static int	ft_reverse(t_stack *stack)
 void	ft_rra(t_vars *vars)
 {
 	if (ft_reverse(vars->a))
-		ft_enqueue(vars->output, ft_int_dlst_new(6));
+		ft_enqueue(vars->output, ft_int_dlst_new(7));
 }
 
 void	ft_rrb(t_vars *vars)
 {
 	if (ft_reverse(vars->b))
-		ft_enqueue(vars->output, ft_int_dlst_new(7));
+		ft_enqueue(vars->output, ft_int_dlst_new(8));
 }
 
 void	ft_rrr(t_vars *vars)
 {
+	QUEUE	*output;
+
+	output = vars->output;
 	ft_rra(vars);
 	ft_rrb(vars);
+	ft_remove(output);
+	ft_remove(output);
+	ft_enqueue(output, ft_int_dlst_new(9));
 }

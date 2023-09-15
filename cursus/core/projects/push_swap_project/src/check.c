@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 15:35:41 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 16:15:24 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 17:22:26 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_check(VARS *vars)
 
 	ft_printf("\n\nDIGITA UNA DELLE SEGUENTI OPERAZIONI PER MODIFICARE LO STACK:\nsa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr\n\nDOVRESTI SAPERE COME SI COMPORTANO! LA PILA E' LA SEGUENTE\n");
 	ft_print(vars);
-	while (!ft_is_ordered(vars->a) || !ft_is_empty(vars->b))
+	while (!ft_is_ordered(vars->a) || vars->b->n)
 	{
 		scanf("%[^\n]", input);
 		getchar();

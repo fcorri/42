@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 01:41:05 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 18:29:16 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	ft_rb(VARS *vars)
 
 void	ft_rr(VARS *vars)
 {
+	QUEUE	*output;
+
+	output = vars->output;
 	ft_ra(vars);
 	ft_rb(vars);
+	ft_remove(output);
+	ft_remove(output);
+	ft_enqueue(output, ft_int_dlst_new(6));
 }

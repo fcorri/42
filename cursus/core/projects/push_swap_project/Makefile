@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/15 14:32:42 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/15 18:33:31 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,8 @@ CHECK			=	$(BUILD_DIR)/check
 CHECKER			=	$(BUILD_DIR)/checker_linux
 PERM			=	$(BUILD_DIR)/perm
 
-MANY			=	7
+MANY			=	20
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MANY))
-ARGS			=	1 3 5 2 4 6 7
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -110,71 +109,36 @@ debugcf: clear re
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(CHECK)
 	vi .gdbinit && gdb --args $(CHECK) $(ARGS)
 
-checker: clear all 
-	@echo $(ARGS)
-	@$(NAME) $(ARGS) > commands ; cat commands | $(CHECKER) $(ARGS)
-	@wc -l commands
-	@rm commands
+checker: clear re 
+	$(NAME) $(ARGS) | $(CHECKER) $(ARGS)
 
-perms: clear re
-	@$(CC) $(SRCS_DIR)/perm.c -o $(PERM) ; $(PERM) $(MANY) > perms
-
+# testa tutte le permutazioni di lunghezza $(MANY) e si dovrebbe fermare quando checker restituisce KO, stampando il test fallito. Togliendo il commento si possono contare le operazioni e capire se viene sforato il massimo consentito, impostato su max
 define perm =
-	if [ -e "results" ]; then rm results; fi
-	touch results
 	if [ -e "commands" ]; then rm commands; fi
+	touch commands
 	while read line
 	do
-		./build/push_swap $line > commands ; cat commands | ./build/checker_linux $line | if grep KO ; then echo $line ; break ; fi
+		./build/push_swap $line > commands ; cat commands | ./build/checker_linux $line | if grep KO ; then break ; echo $line ; fi
 		#wc -l commands | awk -v max=12 '{ if ($1 > max) print "ERROR" }'
 	done < perms
-	grep -B1 KO results
+	rm perms
 endef
 
-define tests =
-	if [ -e "input" ]; then rm input; fi
-	if [ -e "output" ]; then rm output; fi
-	touch input output
-	n=10
-	for i in $(seq 1 $n)
-	do
-		echo $(python3 utils/generate_random_numbers.py $i) >> input
-	done
-	while read line
-	do
-		echo $line >> output
-		echo $(./build/push_swap $line | ./build/checker_linux $line) >> output
-	done < input
-	if grep -B1 KO output ; then
-		echo "\e[31mKO in at least one text.. :(\e[0m"
-	else
-		echo "\e[32mOK!\e[0m"
-	fi
-	rm input
-	rm commands
-endef
+perms: clear re
+	$(CC) $(SRCS_DIR)/perm.c -o $(PERM) ; $(PERM) $(MANY) > perms
+	$(value perm)
 
-tests: clear re
-	@$(value tests)
-
+# testa un input con n numeri casuali
 define test =
-	if [ -e "input" ]; then rm input; fi
-	if [ -e "commands" ]; then rm commands; fi
-	touch input
-	n=5
-	echo $(python3 utils/generate_random_numbers.py $n) >> input
-	while read line
-	do
-		echo $(./build/push_swap $line >> commands ; cat commands | ./build/checker_linux $line)
-	done < input
+	n=500
+	echo $(python3 utils/generate_random_numbers.py $n) > input
+	./build/push_swap $(cat input) > commands ; cat commands | ./build/checker_linux $(cat input)
 	wc -l commands
+	rm commands
+	rm input
 endef
 
 test: clear re
-	@$(value test)
-
-perm: perms
-	@$(value perm)
-	@rm perms
+	$(value test)
 
 .ONESHELL:

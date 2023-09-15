@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 10:39:47 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 18:19:41 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ static void	ft_init_names(VARS *vars)
 	vars->names[3] = "pb";
 	vars->names[4] = "ra";
 	vars->names[5] = "rb";
-	vars->names[6] = "rra";
-	vars->names[7] = "rrb";
+	vars->names[6] = "rr";
+	vars->names[7] = "rra";
+	vars->names[8] = "rrb";
+	vars->names[9] = "rrr";
 }
 
 void	ft_init(int argc, char **argv, t_vars *vars)

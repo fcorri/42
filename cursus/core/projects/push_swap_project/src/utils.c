@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:38:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/01 16:32:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 16:54:38 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,11 @@ int	ft_free_and_return(t_vars *vars, int output)
 	if (output)
 		ft_exit();
 	return (output);
+}
+
+int	ft_min(int first, int second)
+{
+	if (first < second)
+		return (first);
+	return (second);
 }
