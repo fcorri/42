@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/12 20:07:59 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 01:41:43 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct stack
 {
 	NODE	*head;
 	int		n;
-	VECTOR	min_max;
-	int		i_min;
+	int		min;
+	int		max;
 }	t_stack;
 
 typedef struct queue

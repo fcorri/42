@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/12 20:09:26 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/15 01:41:05 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_ra(VARS *vars)
 {
 	if (ft_rotate(vars->a))
 		ft_enqueue(vars->output, ft_int_dlst_new(4));
-	vars->a->i_min--;
 }
 
 void	ft_rb(VARS *vars)

@@ -6,19 +6,19 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/12 20:12:58 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/15 02:02:23 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/push_swap
+CHECK			=	$(BUILD_DIR)/check
+CHECKER			=	$(BUILD_DIR)/checker_linux
+PERM			=	$(BUILD_DIR)/perm
 
-MIN				=	0
-MAX				=	20
-MANY			=	4
+MIN				=	-21474
+MAX				=	214748
+MANY			=	5
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MIN) $(MAX) $(MANY))
-INT_MIN			=	-2147483648
-INT_MAX			=	2147483647
-ARGS			=	13 5 19 8
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -79,34 +79,56 @@ run: clear all
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	$(NAME) $(ARGS)
 
-check: clear all
+check: clear re
 	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=1 -o $(OBJS_DIR)/order.o
-	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
-	$(NAME) $(ARGS)
+	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(CHECK)
+	$(CHECK) $(ARGS)
 
-mem: clear all
+mem: clear re
 	valgrind --track-origins=yes --leak-check=full $(NAME) $(ARGS)
 
-vgdb: clear all
+vgdb: clear re
 	valgrind --track-origins=yes --vgdb-error=0 $(NAME) $(ARGS)
 
-gdb: clear all
+gdb: clear re
 	echo "target remote | vgdb" > .gdbinit
 	echo "c" >> .gdbinit
 	gdb $(NAME)
 
-debugf: clear all
-	vi .gdbinit && gdb --args $(NAME) $(ARGS)
-
-debug: clear all
+debug: clear re
 	gdb --args $(NAME) $(ARGS)
 
-debugc: clear all
-	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=1 -o $(OBJS_DIR)/order.o
-	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
-	gdb --args $(NAME) $(ARGS)
-
-debugcf: clear all
-	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=1 -o $(OBJS_DIR)/order.o
-	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+debugf: clear re
 	vi .gdbinit && gdb --args $(NAME) $(ARGS)
+
+debugc: clear re
+	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=1 -o $(OBJS_DIR)/order.o
+	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(CHECK)
+	gdb --args $(CHECK) $(ARGS)
+
+debugcf: clear re
+	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=1 -o $(OBJS_DIR)/order.o
+	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(CHECK)
+	vi .gdbinit && gdb --args $(CHECK) $(ARGS)
+
+checker: clear re
+	$(NAME) $(ARGS) | $(CHECKER) $(ARGS)
+
+perms: clear re
+	@$(CC) $(SRCS_DIR)/perm.c -o $(PERM) ; $(PERM) $(MANY) > perms
+
+define my_important_task =
+	echo "" > results
+	while read line
+	do
+		echo $line >> results
+		echo $(./build/push_swap $line | ./build/checker_linux $line) >> results
+	done < perms
+	grep -B1 KO results
+endef
+
+perm: perms
+	@$(value my_important_task)
+	@rm perms
+
+.ONESHELL:

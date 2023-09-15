@@ -8,5 +8,7 @@ define ps
 call ft_print(vars)
 end
 
-b ft_order_more
+b min_ops.c:42
+#b ft_calc_r_a_b_ops_to_insert
+#b ft_push_min_ops
 r
