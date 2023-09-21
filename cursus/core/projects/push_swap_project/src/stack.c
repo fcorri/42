@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 19:50:53 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/11 17:52:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/21 14:36:37 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ STACK	*ft_new_stack(void)
 	output->head = NULL;
 	output->n = 0;
 	return (output);
-}
-
-int	ft_is_empty(STACK *stack)
-{
-	return (stack->n == 0);
 }
 
 int	ft_is_ordered(STACK *stack)
@@ -84,5 +79,32 @@ NODE	*ft_pop(STACK *stack)
 	stack->head = output->next;
 	output->next = NULL;
 	output->prev = NULL;
+	return (output);
+}
+
+int	ft_find_index_min(STACK *stack)
+{
+	int		min;
+	int		output;
+	VECTOR	n_i;
+	NODE	*node;
+	int		content;
+
+	min = INT_MAX;
+	output = 0;
+	n_i = (VECTOR){stack->n, 0};
+	node = stack->head;
+	while (n_i.y++ < n_i.x)
+	{
+		content = node->content;
+		if (content < min)
+		{
+			min = content;
+			output = n_i.y - 1;
+		}
+		node = node->next;
+	}
+	if (output > n_i.x - output)
+		output = output - n_i.x;
 	return (output);
 }

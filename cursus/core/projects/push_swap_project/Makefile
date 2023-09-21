@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/15 18:33:31 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/21 15:27:10 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ PERM			=	$(BUILD_DIR)/perm
 
 MANY			=	20
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MANY))
+ARGS			=	$(shell cat input)
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -37,6 +38,7 @@ SRCS			=	$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/utils.c \
 					$(SRCS_DIR)/stack.c \
+					$(SRCS_DIR)/free.c \
 					$(SRCS_DIR)/queue.c \
 					$(SRCS_DIR)/order.c \
 					$(SRCS_DIR)/swap.c \
@@ -125,6 +127,7 @@ define perm =
 endef
 
 perms: clear re
+	cat input
 	$(CC) $(SRCS_DIR)/perm.c -o $(PERM) ; $(PERM) $(MANY) > perms
 	$(value perm)
 
@@ -134,8 +137,6 @@ define test =
 	echo $(python3 utils/generate_random_numbers.py $n) > input
 	./build/push_swap $(cat input) > commands ; cat commands | ./build/checker_linux $(cat input)
 	wc -l commands
-	rm commands
-	rm input
 endef
 
 test: clear re

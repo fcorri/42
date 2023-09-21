@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 10:32:20 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:49:37 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,16 @@ static void	ft_order_three(VARS *vars, NODE *head)
 	vars->a->max = third;
 }
 
-static void	ft_rot_min(VARS *vars, int size)
+static void	ft_rot_min(VARS *vars)
 {
-	NODE	*head;
-	int		n;
+	int	n;
 
-	head = vars->a->head;
-	n = 0;
-	while (head->content > head->prev->content)
-	{
-		head = head->next;
-		n++;
-	}
-	if (n > size - n)
-	{
-		n = size - n;
-		while (n--)
+	n = ft_find_index_min(vars->a);
+	if (!n)
+		return ;
+	if (n < 0)
+		while (n++)
 			ft_rra(vars);
-	}
 	else
 		while (n--)
 			ft_ra(vars);
@@ -75,7 +67,7 @@ static void	ft_rot_min(VARS *vars, int size)
 
 static void	ft_order_more(VARS *vars, int size)
 {
-	int		n;
+	int	n;
 
 	n = size;
 	while (n-- > 3)
@@ -84,7 +76,7 @@ static void	ft_order_more(VARS *vars, int size)
 	n = size - 3;
 	while (n--)
 		ft_push_min_ops(vars);
-	ft_rot_min(vars, size);
+	ft_rot_min(vars);
 }
 
 void	ft_order(VARS *vars, int size)

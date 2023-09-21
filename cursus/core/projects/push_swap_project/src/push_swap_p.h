@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 18:44:14 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/21 14:29:19 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_P_H
 
 # include "libft/libft.h"
+# include <limits.h>
 
 # define NODE	t_int_dlist
 # define VECTOR	t_bvector
@@ -53,6 +54,7 @@ typedef struct vars
 void	ft_exit(void);
 int		ft_free_and_return(VARS *vars, int output);
 int		ft_min(int first, int second);
+int		ft_max(int first, int second);
 
 void	ft_init(int argc, char **argv, VARS *vars);
 void	ft_order(VARS *vars, int n);
@@ -61,7 +63,7 @@ STACK	*ft_new_stack(void);
 int		ft_is_ordered(STACK *stack);
 void	ft_push(STACK *stack, NODE *node);
 NODE	*ft_pop(STACK *stack);
-int		ft_i_min(STACK *stack, int size);
+int		ft_find_index_min(STACK *stack);
 
 QUEUE	*ft_new_queue(void);
 void	ft_enqueue(QUEUE *queue, NODE *node);
