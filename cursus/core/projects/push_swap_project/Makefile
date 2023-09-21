@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/21 15:27:10 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/21 19:29:20 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ CHECK			=	$(BUILD_DIR)/check
 CHECKER			=	$(BUILD_DIR)/checker_linux
 PERM			=	$(BUILD_DIR)/perm
 
-MANY			=	20
+MANY			=	500
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MANY))
-ARGS			=	$(shell cat input)
+#ARGS			=	$(shell cat input)
 
 CFLAGS			=	-g3
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror
@@ -79,6 +79,11 @@ run: clear re
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	$(NAME) $(ARGS)
 
+arg: clear re
+	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=0 -o $(OBJS_DIR)/order.o
+	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+	ARGS="$(ARGS)" ; $(NAME) $$ARGS | $(CHECKER) $$ARGS
+	
 check: clear re
 	$(CC) -c $(SRCS_DIR)/order.c $(REQUIRED_CFLAGS) $(CPPFLAGS) -DCHECK=1 -o $(OBJS_DIR)/order.o
 	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(CHECK)
@@ -112,22 +117,19 @@ debugcf: clear re
 	vi .gdbinit && gdb --args $(CHECK) $(ARGS)
 
 checker: clear re 
-	$(NAME) $(ARGS) | $(CHECKER) $(ARGS)
+	$(NAME) $(ARGS) > commands ; cat commands | $(CHECKER) $(ARGS)
+	wc -l commands
 
 # testa tutte le permutazioni di lunghezza $(MANY) e si dovrebbe fermare quando checker restituisce KO, stampando il test fallito. Togliendo il commento si possono contare le operazioni e capire se viene sforato il massimo consentito, impostato su max
 define perm =
-	if [ -e "commands" ]; then rm commands; fi
-	touch commands
 	while read line
 	do
-		./build/push_swap $line > commands ; cat commands | ./build/checker_linux $line | if grep KO ; then break ; echo $line ; fi
-		#wc -l commands | awk -v max=12 '{ if ($1 > max) print "ERROR" }'
+		./build/push_swap $line > commands ; cat commands | ./build/checker_linux $line
+		wc -l commands
 	done < perms
-	rm perms
 endef
 
 perms: clear re
-	cat input
 	$(CC) $(SRCS_DIR)/perm.c -o $(PERM) ; $(PERM) $(MANY) > perms
 	$(value perm)
 
@@ -142,4 +144,4 @@ endef
 test: clear re
 	$(value test)
 
-.ONESHELL:
+.ONESHELL:kk
