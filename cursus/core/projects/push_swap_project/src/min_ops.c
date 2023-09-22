@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:00:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/21 16:47:31 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/22 17:52:05 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,36 @@ static VECTOR	ft_calc_op(int r_a, int r_b, VECTOR best)
 	return (output);
 }
 
-static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, VARS *vars, int r_b, VECTOR r_a_b_best)
+static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, VARS *vars, VECTOR r_a_b,
+	VECTOR r_a_b_best)
 {
 	STACK	*a;
-	int		index;
-	int 	size;
+	int		size;
 	NODE	*node;
-	// posso scriverlo insieme a r_b
-	int		r_a;
 	VECTOR	op_this_best;
 
 	a = vars->a;
 	size = a->n;
-	r_a = ft_find_index_min(a);
+	r_a_b.x = ft_find_index_min(a);
 	if (a->min < input && input < a->max)
 	{
-		index = 0;
 		node = a->head;
-		while (index++ < size)
+		while (size--)
 		{
 			if (node->content < input)
-				r_a++;
+				r_a_b.x++;
 			node = node->next;
 		}
-		if (r_a > size - r_a)
-			r_a = r_a - size;
+		size = a->n;
+		if (r_a_b.x > size - r_a_b.x)
+			r_a_b.x = r_a_b.x - size;
 	}
-	op_this_best = ft_calc_op(r_a, r_b, r_a_b_best);
-	if (op_this_best.x < op_this_best.y || (op_this_best.x == op_this_best.y && ft_abs(r_b) > ft_abs(r_a_b_best.y)))
+	op_this_best = ft_calc_op(r_a_b.x, r_a_b.y, r_a_b_best);
+	if (op_this_best.x < op_this_best.y
+		|| (op_this_best.x == op_this_best.y
+			&& ft_abs(r_a_b.y) > ft_abs(r_a_b_best.y)))
 	{
-		r_a_b_best = (VECTOR){r_a, r_b};
+		r_a_b_best = (VECTOR){r_a_b.x, r_a_b.y};
 		if (input < a->min)
 			a->min = input;
 		else if (a->max < input)
@@ -77,53 +77,59 @@ static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, VARS *vars, int r_b, VECTOR
 
 static VECTOR	ft_calc_min_ops(VARS *vars, NODE *start, VECTOR r_a_b, int stop)
 {
-	int		count;
 	NODE	*node;
 	int		index;
 
-	count = 2;
 	node = start->next;
-	while (count--)
+	index = 0;
+	while (index++ < stop)
 	{
-		index = 0;
-		while (index++ < stop)
-		{
-			if (count)
-			{
-				r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, vars, index, r_a_b);
-				node = node->next;
-			}
-			else
-			{
-				r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, vars, -index, r_a_b);
-				node = node->prev;
-			}
-			if (ft_abs(r_a_b.x) + ft_abs(r_a_b.y) < stop)
-				stop = ft_abs(r_a_b.x) + ft_abs(r_a_b.y);
-		}
-		node = start->prev;
+		r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, vars, (VECTOR){0, index}, r_a_b);
+		node = node->next;
+		if (ft_abs(r_a_b.x) + ft_abs(r_a_b.y) < stop)
+			stop = ft_abs(r_a_b.x) + ft_abs(r_a_b.y);
+	}
+	node = start->prev;
+	index = 0;
+	while (index++ < stop)
+	{
+		r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, vars, (VECTOR){0, -index}, r_a_b);
+		node = node->prev;
+		if (ft_abs(r_a_b.x) + ft_abs(r_a_b.y) < stop)
+			stop = ft_abs(r_a_b.x) + ft_abs(r_a_b.y);
 	}
 	return (r_a_b);
 }
 
-static void	ft_rot_a_b(VECTOR r_a_b, VARS *vars)
+static VECTOR	ft_rrot_a_b(VECTOR r_a_b, VARS *vars)
 {
 	int	same;
 
+	if (r_a_b.x < 0)
+		same = ft_max(r_a_b.x, r_a_b.y);
+	else
+		same = ft_min(r_a_b.x, r_a_b.y);
+	r_a_b = (VECTOR){r_a_b.x - same, r_a_b.y - same};
+	if (same <= 0)
+		while (same++)
+			ft_rrr(vars);
+	else
+		while (same--)
+			ft_rr(vars);
+	return (r_a_b);
+}
+
+void	ft_push_min_ops(VARS *vars)
+{
+	STACK	*b;
+	VECTOR	r_a_b;
+
+	b = vars->b;
+	r_a_b = ft_calc_r_a_b_ops_to_insert(b->head->content, vars, (VECTOR){0, 0}, (VECTOR){INT_MAX, 0});
+	if (r_a_b.x && b->n > 1)
+		r_a_b = ft_calc_min_ops(vars, b->head, r_a_b, b->n / 2);
 	if ((r_a_b.x ^ r_a_b.y) >= 0)
-	{
-		if (r_a_b.x < 0)
-			same = ft_max(r_a_b.x, r_a_b.y);
-		else
-			same = ft_min(r_a_b.x, r_a_b.y);
-		r_a_b = (VECTOR){r_a_b.x - same, r_a_b.y - same};
-		if (same <= 0)
-			while (same++)
-				ft_rrr(vars);
-		else
-			while (same--)
-				ft_rr(vars);
-	}
+		r_a_b = ft_rrot_a_b(r_a_b, vars);
 	if (r_a_b.x <= 0)
 		while (r_a_b.x++)
 			ft_rra(vars);
@@ -136,17 +142,5 @@ static void	ft_rot_a_b(VECTOR r_a_b, VARS *vars)
 	else
 		while (r_a_b.y--)
 			ft_rb(vars);
-}
-
-void	ft_push_min_ops(VARS *vars)
-{
-	STACK	*b;
-	VECTOR	r_a_b;
-
-	b = vars->b;
-	r_a_b = ft_calc_r_a_b_ops_to_insert(b->head->content, vars, 0, (VECTOR){INT_MAX, 0});
-	if (r_a_b.x && b->n > 1)
-		r_a_b = ft_calc_min_ops(vars, b->head, r_a_b, b->n / 2);
-	ft_rot_a_b(r_a_b, vars);
 	ft_pa(vars);
 }

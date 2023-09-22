@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/21 19:29:20 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/22 17:29:57 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,20 +32,19 @@ LIBFT_DIR		=	../../libft
 SRCS_DIR		=	src
 P_HEADER		=	$(SRCS_DIR)/push_swap_p.h
 
-SRCS			=	$(SRCS_DIR)/main.c \
+SRCS			=	$(SRCS_DIR)/free.c \
 					$(SRCS_DIR)/init.c \
-					$(SRCS_DIR)/check.c \
-					$(SRCS_DIR)/print.c \
-					$(SRCS_DIR)/utils.c \
-					$(SRCS_DIR)/stack.c \
-					$(SRCS_DIR)/free.c \
-					$(SRCS_DIR)/queue.c \
-					$(SRCS_DIR)/order.c \
-					$(SRCS_DIR)/swap.c \
+					$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/min_ops.c \
+					$(SRCS_DIR)/order.c \
+					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/push.c \
-					$(SRCS_DIR)/rotate.c \
+					$(SRCS_DIR)/queue.c \
 					$(SRCS_DIR)/reverse.c \
+					$(SRCS_DIR)/rotate.c \
+					$(SRCS_DIR)/stack.c \
+					$(SRCS_DIR)/swap.c \
+					$(SRCS_DIR)/utils.c \
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 

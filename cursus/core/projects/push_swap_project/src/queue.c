@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 14:17:53 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/01 18:27:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/22 17:34:06 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_remove(QUEUE *queue)
 {
 	NODE	*prev;
 	NODE	*next;
-	
+
 	if (queue->n == 1)
 	{
 		ft_int_dlst_del_one(&queue->head);
