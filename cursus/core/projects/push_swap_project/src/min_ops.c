@@ -6,25 +6,25 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:00:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/22 17:52:05 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/24 18:45:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static VECTOR	ft_calc_op(int r_a, int r_b, VECTOR best)
+static VECTOR	ft_calc_op(VECTOR r_a_b, VECTOR best)
 {
 	VECTOR	output;
 
-	if ((r_a ^ r_b) >= 0)
+	if ((r_a_b.x ^ r_a_b.y) >= 0)
 	{
-		if (r_a > 0)
-			output.x = ft_max(r_a, r_b);
+		if (r_a_b.x > 0)
+			output.x = ft_max(r_a_b.x, r_a_b.y);
 		else
-			output.x = -ft_min(r_a, r_b);
+			output.x = -ft_min(r_a_b.x, r_a_b.y);
 	}
 	else
-		output.x = ft_abs(r_a) + ft_abs(r_b);
+		output.x = ft_abs(r_a_b.x) + ft_abs(r_a_b.y);
 	if ((best.x ^ best.y) >= 0)
 	{
 		if (best.x > 0)
@@ -48,7 +48,7 @@ static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, VARS *vars, VECTOR r_a_b,
 	a = vars->a;
 	size = a->n;
 	r_a_b.x = ft_find_index_min(a);
-	if (a->min < input && input < a->max)
+	if (a->min_max.x < input && input < a->min_max.y)
 	{
 		node = a->head;
 		while (size--)
@@ -61,16 +61,15 @@ static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, VARS *vars, VECTOR r_a_b,
 		if (r_a_b.x > size - r_a_b.x)
 			r_a_b.x = r_a_b.x - size;
 	}
-	op_this_best = ft_calc_op(r_a_b.x, r_a_b.y, r_a_b_best);
-	if (op_this_best.x < op_this_best.y
-		|| (op_this_best.x == op_this_best.y
+	op_this_best = ft_calc_op(r_a_b, r_a_b_best);
+	if (op_this_best.x < op_this_best.y	|| (op_this_best.x == op_this_best.y
 			&& ft_abs(r_a_b.y) > ft_abs(r_a_b_best.y)))
 	{
 		r_a_b_best = (VECTOR){r_a_b.x, r_a_b.y};
-		if (input < a->min)
-			a->min = input;
-		else if (a->max < input)
-			a->max = input;
+		if (input < a->min_max.x)
+			a->min_max.x = input;
+		else if (a->min_max.y < input)
+			a->min_max.y = input;
 	}
 	return (r_a_b_best);
 }

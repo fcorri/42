@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/21 18:49:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/24 18:33:19 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,31 @@
 
 static void	ft_order_three(VARS *vars, NODE *head)
 {
-	int	first;
-	int	second;
-	int	third;
-	int	tmp;
+	VECTOR	first_second;
+	VECTOR	third_tmp;
 
-	first = head->content;
-	second = head->next->content;
-	third = head->prev->content;
-	tmp = first;
-	if (first > second && first > third)
+	first_second = (VECTOR){head->content, head->next->content};
+	third_tmp = (VECTOR){head->prev->content, first_second.x};
+	if (first_second.x > first_second.y && first_second.x > third_tmp.x)
 	{
 		ft_ra(vars);
-		first = second;
-		second = third;
-		third = tmp;
+		first_second.x = first_second.y;
+		first_second.y = third_tmp.x;
+		third_tmp.x = third_tmp.y;
 	}
-	else if (first < second && second > third)
+	else if (first_second.x < first_second.y && first_second.y > third_tmp.x)
 	{
 		ft_rra(vars);
-		first = third;
-		third = second;
-		second = tmp;
+		first_second.x = third_tmp.x;
+		third_tmp.x = first_second.y;
+		first_second.y = third_tmp.y;
 	}
-	if (first > second)
+	if (first_second.x > first_second.y)
 	{
 		ft_sa(vars);
-		first = second;
+		first_second.x = first_second.y;
 	}
-	vars->a->min = first;
-	vars->a->max = third;
+	vars->a->min_max = (VECTOR){first_second.x, third_tmp.x};
 }
 
 static void	ft_rot_min(VARS *vars)
