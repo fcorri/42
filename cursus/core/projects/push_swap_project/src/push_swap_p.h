@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/24 18:32:48 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/25 18:32:15 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ft_rrr(VARS *vars);
 void	ft_ss(VARS *vars);
 
 void	ft_push_min_ops(VARS *vars);
+VECTOR	ft_update_r_a_b_best_min_max(STACK *a, int input,
+			VECTOR r_a_b, VECTOR r_a_b_best);
 
 void	ft_print(VARS *vars);
 void	ft_print_queue(VARS *vars);
