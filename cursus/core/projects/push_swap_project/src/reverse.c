@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:54:43 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 18:29:22 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/27 17:33:17 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,21 @@ static int	ft_reverse(t_stack *stack)
 	return (1);
 }
 
-void	ft_rra(t_vars *vars)
+void	ft_rra(t_vars *vars, int print)
 {
-	if (ft_reverse(vars->a))
-		ft_enqueue(vars->output, ft_int_dlst_new(7));
+	if (ft_reverse(vars->a) && print)
+		ft_printf("rra\n");
 }
 
-void	ft_rrb(t_vars *vars)
+void	ft_rrb(t_vars *vars, int print)
 {
-	if (ft_reverse(vars->b))
-		ft_enqueue(vars->output, ft_int_dlst_new(8));
+	if (ft_reverse(vars->b) && print)
+		ft_printf("rrb\n");
 }
 
 void	ft_rrr(t_vars *vars)
 {
-	QUEUE	*output;
-
-	output = vars->output;
-	ft_rra(vars);
-	ft_rrb(vars);
-	ft_remove(output);
-	ft_remove(output);
-	ft_enqueue(output, ft_int_dlst_new(9));
+	ft_rra(vars, 0);
+	ft_rrb(vars, 0);
+	ft_printf("rrr\n");
 }

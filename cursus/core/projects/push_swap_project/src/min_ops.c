@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:00:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/25 18:32:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/27 17:33:37 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,15 +129,15 @@ void	ft_push_min_ops(VARS *vars)
 		r_a_b = ft_rrot_a_b(r_a_b, vars);
 	if (r_a_b.x <= 0)
 		while (r_a_b.x++)
-			ft_rra(vars);
+			ft_rra(vars, 1);
 	else
 		while (r_a_b.x--)
-			ft_ra(vars);
+			ft_ra(vars, 1);
 	if (r_a_b.y <= 0)
 		while (r_a_b.y++)
-			ft_rrb(vars);
+			ft_rrb(vars, 1);
 	else
 		while (r_a_b.y--)
-			ft_rb(vars);
+			ft_rb(vars, 1);
 	ft_pa(vars);
 }

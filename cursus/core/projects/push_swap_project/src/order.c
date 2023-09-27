@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/24 18:33:19 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/27 17:31:09 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ static void	ft_order_three(VARS *vars, NODE *head)
 	third_tmp = (VECTOR){head->prev->content, first_second.x};
 	if (first_second.x > first_second.y && first_second.x > third_tmp.x)
 	{
-		ft_ra(vars);
+		ft_ra(vars, 1);
 		first_second.x = first_second.y;
 		first_second.y = third_tmp.x;
 		third_tmp.x = third_tmp.y;
 	}
 	else if (first_second.x < first_second.y && first_second.y > third_tmp.x)
 	{
-		ft_rra(vars);
+		ft_rra(vars, 1);
 		first_second.x = third_tmp.x;
 		third_tmp.x = first_second.y;
 		first_second.y = third_tmp.y;
 	}
 	if (first_second.x > first_second.y)
 	{
-		ft_sa(vars);
+		ft_sa(vars, 1);
 		first_second.x = first_second.y;
 	}
 	vars->a->min_max = (VECTOR){first_second.x, third_tmp.x};
@@ -54,10 +54,10 @@ static void	ft_rot_min(VARS *vars)
 		return ;
 	if (n < 0)
 		while (n++)
-			ft_rra(vars);
+			ft_rra(vars, 1);
 	else
 		while (n--)
-			ft_ra(vars);
+			ft_ra(vars, 1);
 }
 
 static void	ft_order_more(VARS *vars, int size)
@@ -79,7 +79,7 @@ void	ft_order(VARS *vars, int size)
 	if (CHECK)
 		ft_check(vars);
 	else if (size == 2)
-		ft_sa(vars);
+		ft_sa(vars, 1);
 	else if (size == 3)
 		ft_order_three(vars, vars->a->head);
 	else

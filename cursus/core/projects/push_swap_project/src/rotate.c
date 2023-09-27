@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 18:30:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 18:29:16 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/27 17:34:57 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,21 @@ static int	ft_rotate(STACK *stack)
 	return (1);
 }
 
-void	ft_ra(VARS *vars)
+void	ft_ra(VARS *vars, int print)
 {
-	if (ft_rotate(vars->a))
-		ft_enqueue(vars->output, ft_int_dlst_new(4));
+	if (ft_rotate(vars->a) && print)
+		ft_printf("ra\n");
 }
 
-void	ft_rb(VARS *vars)
+void	ft_rb(VARS *vars, int print)
 {
-	if (ft_rotate(vars->b))
-		ft_enqueue(vars->output, ft_int_dlst_new(5));
+	if (ft_rotate(vars->b) && print)
+		ft_printf("rb\n");
 }
 
 void	ft_rr(VARS *vars)
 {
-	QUEUE	*output;
-
-	output = vars->output;
-	ft_ra(vars);
-	ft_rb(vars);
-	ft_remove(output);
-	ft_remove(output);
-	ft_enqueue(output, ft_int_dlst_new(6));
+	ft_ra(vars, 0);
+	ft_rb(vars, 0);
+	ft_printf("rr\n");
 }

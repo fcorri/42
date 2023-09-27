@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/22 17:29:57 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/27 17:31:25 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,7 @@ SRCS			=	$(SRCS_DIR)/free.c \
 					$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/min_ops.c \
 					$(SRCS_DIR)/order.c \
-					$(SRCS_DIR)/print.c \
 					$(SRCS_DIR)/push.c \
-					$(SRCS_DIR)/queue.c \
 					$(SRCS_DIR)/reverse.c \
 					$(SRCS_DIR)/rotate.c \
 					$(SRCS_DIR)/stack.c \

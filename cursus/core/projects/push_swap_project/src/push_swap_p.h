@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/25 18:32:15 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/27 17:33:24 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define NODE	t_int_dlist
 # define VECTOR	t_bvector
 # define STACK	t_stack
-# define QUEUE	t_queue
 # define VARS	t_vars
 
 typedef struct bvector
@@ -35,19 +34,10 @@ typedef struct stack
 	VECTOR	min_max;
 }	t_stack;
 
-typedef struct queue
-{
-	NODE	*head;
-	NODE	*tail;
-	int		n;
-}	t_queue;
-
 typedef struct vars
 {
 	STACK	*a;
 	STACK	*b;
-	QUEUE	*output;
-	char	*names[10];
 }	t_vars;
 
 void	ft_exit(void);
@@ -64,20 +54,15 @@ void	ft_push(STACK *stack, NODE *node);
 NODE	*ft_pop(STACK *stack);
 int		ft_find_index_min(STACK *stack);
 
-QUEUE	*ft_new_queue(void);
-void	ft_enqueue(QUEUE *queue, NODE *node);
-NODE	*ft_dequeue(QUEUE *queue);
-void	ft_remove(QUEUE *queue);
-
-void	ft_sa(VARS *vars);
-void	ft_sb(VARS *vars);
+void	ft_sa(VARS *vars, int print);
+void	ft_sb(VARS *vars, int print);
 void	ft_pa(VARS *vars);
 void	ft_pb(VARS *vars);
-void	ft_ra(VARS *vars);
-void	ft_rb(VARS *vars);
+void	ft_ra(VARS *vars, int print);
+void	ft_rb(VARS *vars, int print);
 void	ft_rr(VARS *vars);
-void	ft_rra(VARS *vars);
-void	ft_rrb(VARS *vars);
+void	ft_rra(VARS *vars, int print);
+void	ft_rrb(VARS *vars, int print);
 void	ft_rrr(VARS *vars);
 
 void	ft_ss(VARS *vars);

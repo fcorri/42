@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/15 18:19:41 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/27 17:30:03 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,6 @@ static NODE	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
 	return (ft_int_dlst_new(output));
 }
 
-static void	ft_init_names(VARS *vars)
-{
-	vars->names[0] = "sa";
-	vars->names[1] = "sb";
-	vars->names[2] = "pa";
-	vars->names[3] = "pb";
-	vars->names[4] = "ra";
-	vars->names[5] = "rb";
-	vars->names[6] = "rr";
-	vars->names[7] = "rra";
-	vars->names[8] = "rrb";
-	vars->names[9] = "rrr";
-}
-
 void	ft_init(int argc, char **argv, t_vars *vars)
 {
 	char	*param;
@@ -70,8 +56,7 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 	vars->a = ft_new_stack();
 	a = vars->a;
 	vars->b = ft_new_stack();
-	vars->output = ft_new_queue();
-	if (!a || !vars->b || !vars->output)
+	if (!a || !vars->b)
 		ft_free_and_return(vars, 1);
 	while (--argc)
 	{
@@ -80,5 +65,4 @@ void	ft_init(int argc, char **argv, t_vars *vars)
 			ft_free_and_return(vars, 1);
 		ft_push(a, ft_atoi_decorator(vars, a, param));
 	}
-	ft_init_names(vars);
 }
