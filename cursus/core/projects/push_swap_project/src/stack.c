@@ -6,17 +6,17 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 19:50:53 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/21 14:36:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/28 19:00:32 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-STACK	*ft_new_stack(void)
+t_stack	*ft_new_stack(void)
 {
-	STACK	*output;
+	t_stack	*output;
 
-	output = malloc(sizeof(STACK));
+	output = malloc(sizeof(t_stack));
 	if (!output)
 		return (NULL);
 	output->head = NULL;
@@ -24,11 +24,11 @@ STACK	*ft_new_stack(void)
 	return (output);
 }
 
-int	ft_is_ordered(STACK *stack)
+int	ft_is_ordered(t_stack *stack)
 {
-	NODE	*node;
-	NODE	*next;
-	int		n;
+	t_int_dlist	*node;
+	t_int_dlist	*next;
+	int			n;
 
 	n = stack->n;
 	if (n == 1)
@@ -45,9 +45,9 @@ int	ft_is_ordered(STACK *stack)
 	return (1);
 }
 
-void	ft_push(STACK *stack, NODE *node)
+void	ft_push(t_stack *stack, t_int_dlist *node)
 {
-	NODE	*head;
+	t_int_dlist	*head;
 
 	if (!node)
 		return ;
@@ -64,9 +64,9 @@ void	ft_push(STACK *stack, NODE *node)
 		ft_int_dlst_add_front(&stack->head, node);
 }
 
-NODE	*ft_pop(STACK *stack)
+t_int_dlist	*ft_pop(t_stack *stack)
 {
-	NODE	*output;
+	t_int_dlist	*output;
 
 	if (!stack->n)
 		return (NULL);
@@ -82,17 +82,17 @@ NODE	*ft_pop(STACK *stack)
 	return (output);
 }
 
-int	ft_find_index_min(STACK *stack)
+int	ft_find_index_min(t_stack *stack)
 {
-	int		min;
-	int		output;
-	VECTOR	n_i;
-	NODE	*node;
-	int		content;
+	int			min;
+	int			output;
+	t_bvector	n_i;
+	t_int_dlist	*node;
+	int			content;
 
 	min = INT_MAX;
 	output = 0;
-	n_i = (VECTOR){stack->n, 0};
+	n_i = (t_bvector){stack->n, 0};
 	node = stack->head;
 	while (n_i.y++ < n_i.x)
 	{

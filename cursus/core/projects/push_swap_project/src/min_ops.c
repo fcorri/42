@@ -6,15 +6,15 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:00:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/27 17:33:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/28 18:59:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static VECTOR	ft_calc_total_ops(VECTOR r_a_b, VECTOR best)
+static t_bvector	ft_calc_total_ops(t_bvector r_a_b, t_bvector best)
 {
-	VECTOR	output;
+	t_bvector	output;
 
 	if ((r_a_b.x ^ r_a_b.y) >= 0)
 	{
@@ -37,13 +37,13 @@ static VECTOR	ft_calc_total_ops(VECTOR r_a_b, VECTOR best)
 	return (output);
 }
 
-static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, STACK *a, VECTOR r_a_b,
-	VECTOR r_a_b_best)
+static t_bvector	ft_calc_r_a_b_ops_to_insert(int input, t_stack *a,
+	t_bvector r_a_b, t_bvector r_a_b_best)
 {
-	int		size;
-	NODE	*node;
-	VECTOR	min_max;
-	VECTOR	tmp;
+	int			size;
+	t_int_dlist	*node;
+	t_bvector	min_max;
+	t_bvector	tmp;
 
 	size = a->n;
 	min_max = a->min_max;
@@ -67,17 +67,18 @@ static VECTOR	ft_calc_r_a_b_ops_to_insert(int input, STACK *a, VECTOR r_a_b,
 	return (r_a_b_best);
 }
 
-static VECTOR	ft_calc_min_ops(STACK *a, NODE *start, VECTOR r_a_b, int stop)
+static t_bvector	ft_calc_min_ops(t_stack *a, t_int_dlist *start,
+	t_bvector r_a_b, int stop)
 {
-	NODE	*node;
-	int		index;
+	t_int_dlist	*node;
+	int			index;
 
 	node = start->next;
 	index = 0;
 	while (index++ < stop)
 	{
 		r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, a,
-				(VECTOR){ft_find_index_min(a), index}, r_a_b);
+				(t_bvector){ft_find_index_min(a), index}, r_a_b);
 		node = node->next;
 		if (ft_abs(r_a_b.x) + ft_abs(r_a_b.y) < stop)
 			stop = ft_abs(r_a_b.x) + ft_abs(r_a_b.y);
@@ -87,7 +88,7 @@ static VECTOR	ft_calc_min_ops(STACK *a, NODE *start, VECTOR r_a_b, int stop)
 	while (index++ < stop)
 	{
 		r_a_b = ft_calc_r_a_b_ops_to_insert(node->content, a,
-				(VECTOR){ft_find_index_min(a), -index}, r_a_b);
+				(t_bvector){ft_find_index_min(a), -index}, r_a_b);
 		node = node->prev;
 		if (ft_abs(r_a_b.x) + ft_abs(r_a_b.y) < stop)
 			stop = ft_abs(r_a_b.x) + ft_abs(r_a_b.y);
@@ -95,7 +96,7 @@ static VECTOR	ft_calc_min_ops(STACK *a, NODE *start, VECTOR r_a_b, int stop)
 	return (r_a_b);
 }
 
-static VECTOR	ft_rrot_a_b(VECTOR r_a_b, VARS *vars)
+static t_bvector	ft_rrot_a_b(t_bvector r_a_b, t_vars *vars)
 {
 	int	same;
 
@@ -103,7 +104,7 @@ static VECTOR	ft_rrot_a_b(VECTOR r_a_b, VARS *vars)
 		same = ft_max(r_a_b.x, r_a_b.y);
 	else
 		same = ft_min(r_a_b.x, r_a_b.y);
-	r_a_b = (VECTOR){r_a_b.x - same, r_a_b.y - same};
+	r_a_b = (t_bvector){r_a_b.x - same, r_a_b.y - same};
 	if (same <= 0)
 		while (same++)
 			ft_rrr(vars);
@@ -113,16 +114,16 @@ static VECTOR	ft_rrot_a_b(VECTOR r_a_b, VARS *vars)
 	return (r_a_b);
 }
 
-void	ft_push_min_ops(VARS *vars)
+void	ft_push_min_ops(t_vars *vars)
 {
-	STACK	*a;
-	STACK	*b;
-	VECTOR	r_a_b;
+	t_stack		*a;
+	t_stack		*b;
+	t_bvector	r_a_b;
 
 	a = vars->a;
 	b = vars->b;
 	r_a_b = ft_calc_r_a_b_ops_to_insert(b->head->content, a,
-			(VECTOR){ft_find_index_min(a), 0}, (VECTOR){INT_MAX, 0});
+			(t_bvector){ft_find_index_min(a), 0}, (t_bvector){INT_MAX, 0});
 	if (r_a_b.x && b->n > 1)
 		r_a_b = ft_calc_min_ops(a, b->head, r_a_b, b->n / 2);
 	if ((r_a_b.x ^ r_a_b.y) >= 0)

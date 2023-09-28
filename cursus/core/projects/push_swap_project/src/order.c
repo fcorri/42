@@ -16,13 +16,13 @@
 # define CHECK 0
 #endif
 
-static void	ft_order_three(VARS *vars, NODE *head)
+static void	ft_order_three(t_vars *vars, t_int_dlist *head)
 {
-	VECTOR	first_second;
-	VECTOR	third_tmp;
+	t_bvector	first_second;
+	t_bvector	third_tmp;
 
-	first_second = (VECTOR){head->content, head->next->content};
-	third_tmp = (VECTOR){head->prev->content, first_second.x};
+	first_second = (t_bvector){head->content, head->next->content};
+	third_tmp = (t_bvector){head->prev->content, first_second.x};
 	if (first_second.x > first_second.y && first_second.x > third_tmp.x)
 	{
 		ft_ra(vars, 1);
@@ -42,10 +42,10 @@ static void	ft_order_three(VARS *vars, NODE *head)
 		ft_sa(vars, 1);
 		first_second.x = first_second.y;
 	}
-	vars->a->min_max = (VECTOR){first_second.x, third_tmp.x};
+	vars->a->min_max = (t_bvector){first_second.x, third_tmp.x};
 }
 
-static void	ft_rot_min(VARS *vars)
+static void	ft_rot_min(t_vars *vars)
 {
 	int	n;
 
@@ -60,7 +60,7 @@ static void	ft_rot_min(VARS *vars)
 			ft_ra(vars, 1);
 }
 
-static void	ft_order_more(VARS *vars, int size)
+static void	ft_order_more(t_vars *vars, int size)
 {
 	int	n;
 
@@ -74,7 +74,7 @@ static void	ft_order_more(VARS *vars, int size)
 	ft_rot_min(vars);
 }
 
-void	ft_order(VARS *vars, int size)
+void	ft_order(t_vars *vars, int size)
 {
 	if (CHECK)
 		ft_check(vars);

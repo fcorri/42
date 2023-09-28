@@ -12,18 +12,18 @@
 
 #include "push_swap_p.h"
 
-static void	ft_push_op(STACK *src, STACK *dest)
+static void	ft_push_op(t_stack *src, t_stack *dest)
 {
 	ft_push(dest, ft_pop(src));
 }
 
-void	ft_pa(VARS *vars)
+void	ft_pa(t_vars *vars)
 {
 	ft_push_op(vars->b, vars->a);
 	ft_printf("pa\n");
 }
 
-void	ft_pb(VARS *vars)
+void	ft_pb(t_vars *vars)
 {
 	ft_push_op(vars->a, vars->b);
 	ft_printf("pb\n");

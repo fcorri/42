@@ -32,10 +32,10 @@ int	ft_max(int first, int second)
 	return (first);
 }
 
-VECTOR	ft_update_r_a_b_best_min_max(STACK *a, int input, VECTOR r_a_b,
-	VECTOR r_a_b_best)
+t_bvector	ft_update_r_a_b_best_min_max(t_stack *a, int input, t_bvector r_a_b,
+	t_bvector r_a_b_best)
 {
-	VECTOR	min_max;
+	t_bvector	min_max;
 
 	min_max = a->min_max;
 	r_a_b_best = r_a_b;

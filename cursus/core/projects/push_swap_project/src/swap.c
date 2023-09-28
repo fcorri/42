@@ -6,17 +6,17 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 19:57:09 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/27 17:35:35 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/28 19:00:13 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_p.h"
 
-static int	ft_swap(STACK *stack)
+static int	ft_swap(t_stack *stack)
 {
-	NODE	*head;
-	NODE	*next;
-	int		tmp;
+	t_int_dlist	*head;
+	t_int_dlist	*next;
+	int			tmp;
 
 	if (stack->n < 2)
 		return (0);
@@ -28,19 +28,19 @@ static int	ft_swap(STACK *stack)
 	return (1);
 }
 
-void	ft_sa(VARS *vars, int print)
+void	ft_sa(t_vars *vars, int print)
 {
 	if (ft_swap(vars->a) && print)
 		ft_printf("sa\n");
 }
 
-void	ft_sb(VARS *vars, int print)
+void	ft_sb(t_vars *vars, int print)
 {
 	if (ft_swap(vars->b) && print)
 		ft_printf("sb\n");
 }
 
-void	ft_ss(VARS *vars)
+void	ft_ss(t_vars *vars)
 {
 	ft_sa(vars, 0);
 	ft_sb(vars, 0);

@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/27 17:30:03 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/28 19:00:04 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static int	ft_check_for_non_digits(char *param)
 	return (0);
 }
 
-static NODE	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
+static t_int_dlist	*ft_atoi_decorator(t_vars *vars, t_stack *a, char *input)
 {
-	int			output;
-	NODE		*head;
-	int			arg;
-	static int	args = 0;
+	int				output;
+	t_int_dlist		*head;
+	int				arg;
+	static int		args = 0;
 
 	output = ft_atoi(input);
 	if ((*input == '-' && output > 0) || (ft_isdigit(*input) && output < 0))
@@ -51,7 +51,7 @@ static NODE	*ft_atoi_decorator(VARS *vars, STACK *a, char *input)
 void	ft_init(int argc, char **argv, t_vars *vars)
 {
 	char	*param;
-	STACK	*a;
+	t_stack	*a;
 
 	vars->a = ft_new_stack();
 	a = vars->a;
