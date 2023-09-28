@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 09:17:48 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/14 14:02:39 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/28 18:38:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,34 +76,47 @@ static int	ft_free_and_return(int output)
 {
 	free(g_printer);
 	free(g_specification);
+	va_end(g_ap);
 	return (output);
+}
+
+static int	ft_count_args(const char *format)
+{
+	int	args;
+
+	args = 0;
+	format = ft_strchr(format, '%');
+	while (format++)
+	{
+		args++;
+		format = ft_strchr(++format, '%');
+	}
+	return (args);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	char	*subformat;
-	char	read;
 	int		output;
+	int		args;
 
-	g_printer = ft_malloc_soul(sizeof(*g_printer));
-	g_specification = ft_malloc_soul(sizeof(*g_specification));
 	va_start(g_ap, format);
-	subformat = (char *) format;
-	read = *subformat++;
-	output = 0;
-	while (read)
+	args = ft_count_args(format);
+	if (args)
 	{
-		if (read == '%')
-		{
-			if (subformat != format + 1)
-				output += write(1, format, subformat - format - 1);
-			ft_init_printing_specification_with(&subformat);
-			output += g_printer->as_base.ft_print();
-			format = subformat;
-		}
-		read = *subformat++;
+		g_printer = ft_malloc_soul(sizeof(*g_printer));
+		g_specification = ft_malloc_soul(sizeof(*g_specification));
 	}
-	if (subformat != format + 1)
+	output = 0;
+	subformat = (char *) format;
+	while (args--)
+	{
+		subformat = ft_strchr(subformat, '%') + 1;
 		output += write(1, format, subformat - format - 1);
+		ft_init_printing_specification_with(&subformat);
+		output += g_printer->as_base.ft_print();
+		format = subformat;
+	}
+	output += write(1, subformat, ft_strlen(subformat));
 	return (ft_free_and_return(output));
 }
