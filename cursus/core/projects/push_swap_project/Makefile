@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/28 16:43:53 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/28 19:02:09 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,8 @@ define test =
 	echo $(python3 utils/generate_random_numbers.py $n) > input
 	./build/push_swap $(cat input) > commands ; cat commands | ./build/checker_linux $(cat input)
 	wc -l commands
+	rm commands
+	rm input
 endef
 
 test: clear all
