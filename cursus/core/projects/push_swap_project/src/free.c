@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:26:08 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/28 18:59:02 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/09/29 14:23:27 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_free_stack(t_stack *stack)
 	}
 }
 
-int	ft_free_and_return(t_vars *vars, int output)
+int	ft_free_and_exit(t_vars *vars, int output)
 {
 	t_stack	*stack;
 
@@ -41,6 +41,6 @@ int	ft_free_and_return(t_vars *vars, int output)
 		ft_free_stack(stack);
 	free(stack);
 	if (output)
-		ft_exit();
+		ft_exit(1);
 	return (output);
 }
