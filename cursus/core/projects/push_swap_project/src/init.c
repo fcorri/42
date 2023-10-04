@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/29 15:54:00 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/04 16:48:04 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_int_dlist	*ft_atoi_decorator(t_vars *vars, t_stack *a, char *input)
 	static int		args = 0;
 
 	output = ft_atoi(input);
-	if ((*input == '-' && output == 0) || (ft_isdigit(*input) && output < 0))
+	if ((*input == '-' && output >= 0) || (ft_isdigit(*input) && output < 0))
 		ft_free_and_exit(vars, 1);
 	head = a->head;
 	arg = 0;

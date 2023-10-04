@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/29 13:48:58 by fcorri           ###   ########.fr        #
+#    Updated: 2023/10/04 17:01:18 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ debugf: clear all
 checker: clear all
 	$(NAME) $(ARGS) > commands ; cat commands | $(CHECKER) $(ARGS)
 	wc -l commands
+	rm commands
 
 # testa un input con n numeri casuali
 define test =
