@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/10/04 16:48:04 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/04 20:36:37 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,44 @@ static t_stack	*ft_init_stacks(t_vars *vars)
 	return (a);
 }
 
-int	ft_init(int argc, char **argv, t_vars *vars)
+static int	ft_free_argv(char **argv, t_bvector argc, int ret, t_vars *vars)
 {
-	char	*param;
-	int		old_argc;
-	int		incr;
-	t_stack	*a;
+	int	index;
+
+	if (argc.x != argc.y)
+	{
+		index = 0;
+		while (argv[index])
+			free(argv[index++]);
+		free(argv);
+	}
+	if (ret)
+		ft_free_and_exit(vars, 1);
+	return (argc.y);
+}
+
+int	ft_init(t_bvector argc, char **argv, t_vars *vars)
+{
+	char		*param;
+	t_bvector	index_incr;
+	t_stack		*a;
 
 	a = ft_init_stacks(vars);
-	incr = 0;
-	if (argc == 2)
+	index_incr = (t_bvector){0, 0};
+	if (argc.x == 2)
 	{
 		argv = ft_split(argv[1], ' ');
-		argc = 1;
-		while (argv[argc - 1])
-			argc++;
-		incr = -1;
+		argc.y = 1;
+		while (argv[argc.y - 1])
+			argc.y++;
+		index_incr.y = -1;
 	}
-	old_argc = argc;
-	while (--argc)
+	while (index_incr.x++ != argc.y)
 	{
-		param = argv[argc + incr];
+		param = argv[argc.y + index_incr.y];
 		if (ft_check_for_non_digits(param))
-			ft_free_and_exit(vars, 1);
+			ft_free_argv(argv, argc, 1, vars);
 		ft_push(a, ft_atoi_decorator(vars, a, param));
 	}
-	return (old_argc);
+	return (ft_free_argv(argv, argc, 0, vars));
 }

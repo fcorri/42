@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/29 14:53:59 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/04 20:32:23 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			ft_free_and_exit(t_vars *vars, int output);
 int			ft_min(int first, int second);
 int			ft_max(int first, int second);
 
-int			ft_init(int argc, char **argv, t_vars *vars);
+int			ft_init(t_bvector argc, char **argv, t_vars *vars);
 void		ft_order(t_vars *vars, int n);
 
 t_stack		*ft_new_stack(void);
