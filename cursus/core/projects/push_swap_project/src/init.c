@@ -64,7 +64,7 @@ static int	ft_free_argv(char **argv, t_bvector argc, int ret, t_vars *vars)
 {
 	int	index;
 
-	if (argc.x != argc.y)
+	if (argc.x == 2)
 	{
 		index = 0;
 		while (argv[index])
