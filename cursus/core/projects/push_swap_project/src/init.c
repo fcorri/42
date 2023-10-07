@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:41:59 by fcorri            #+#    #+#             */
-/*   Updated: 2023/10/07 11:34:09 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/07 17:26:49 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_init(int argc, char **argv, t_vars *vars)
 			param = argv[argc];
 			if (ft_isdigit_decorator_ps(param))
 				ft_free_and_exit(vars, 1);
-			ft_push(a, ft_atoi_decorator_ps(vars, a, param));
+			ft_push(a, ft_atol_decorator_ps(vars, a, param));
 		}
 	}
 	return (a->n);
