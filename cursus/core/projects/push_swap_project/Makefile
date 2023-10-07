@@ -6,14 +6,14 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 18:12:28 by fcorri            #+#    #+#              #
-#    Updated: 2023/10/04 17:01:18 by fcorri           ###   ########.fr        #
+#    Updated: 2023/10/07 12:00:48 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	$(BUILD_DIR)/push_swap
 CHECKER			=	$(BUILD_DIR)/checker_linux
 
-MANY			=	500
+MANY			=	100
 ARGS			:=	$(shell python3 utils/generate_random_numbers.py $(MANY))
 
 CFLAGS			=	-g3
@@ -29,7 +29,8 @@ LIBFT_DIR		=	../../libft
 SRCS_DIR		=	src
 P_HEADER		=	$(SRCS_DIR)/push_swap_p.h
 
-SRCS			=	$(SRCS_DIR)/free.c \
+SRCS			=	$(SRCS_DIR)/decorators.c \
+					$(SRCS_DIR)/free.c \
 					$(SRCS_DIR)/init.c \
 					$(SRCS_DIR)/main.c \
 					$(SRCS_DIR)/min_ops.c \

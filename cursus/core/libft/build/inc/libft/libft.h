@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:05:46 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/12 19:16:17 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/07 12:02:00 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,12 @@ typedef struct s_int_dlist
 }						t_int_dlist;
 
 t_int_dlist				*ft_int_dlst_new(int content);
-void					ft_int_dlst_add_front(t_int_dlist **lst, t_int_dlist *new);
+void					ft_int_dlst_add_front(t_int_dlist **lst,
+							t_int_dlist *new);
 size_t					ft_int_dlst_size(t_int_dlist *lst);
 t_int_dlist				*ft_int_dlst_last(t_int_dlist *lst);
-void					ft_int_dlst_add_back(t_int_dlist **lst, t_int_dlist *new);
+void					ft_int_dlst_add_back(t_int_dlist **lst,
+							t_int_dlist *new);
 void					ft_int_dlst_del_one(t_int_dlist **lst);
 void					ft_int_dlst_clear(t_int_dlist **lst);
 void					ft_int_dlst_iter(t_int_dlist *lst, void (*f)(int *));

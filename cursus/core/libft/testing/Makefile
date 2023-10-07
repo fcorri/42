@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/21 19:02:33 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/21 19:09:05 by fcorri           ###   ########.fr        #
+#    Updated: 2023/09/28 18:21:32 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,17 +28,16 @@ SRCS_DIR		=	src
 P_HEADER		=	$(SRCS_DIR)/
 
 SRCS			=	$(SRCS_DIR)/main.c \
-#					$(SRCS_DIR)/ \
-#					$(SRCS_DIR)/
+					$(LIBFT_DIR)/src/printf/src/ft_printf.c
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
 RM				=	rm -fr
 
-all: $(NAME) #private_headers
+all: $(NAME)
 
 $(NAME): $(LIBFT_DIR)/$(BUILD_DIR)/libft.a $(OBJS)
-	$(CC) $(OBJS) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+	$(CC) $(OBJS) $(TEST) $(REQUIRED_CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 
 $(LIBFT_DIR)/$(BUILD_DIR)/libft.a:
 	make -C $(LIBFT_DIR)
@@ -61,6 +60,11 @@ run: all
 mem: all
 	clear ; valgrind --track-origins=yes $(NAME) $(ARGS)
 
-debug: all
-	clear ; vi .gdbinit && gdb --args $(NAME) $(ARGS)
+vgdb: all
+	valgrind --track-origins=yes --vgdb-error=0 $(NAME) $(ARGS)
 
+debug: all
+	clear ; gdb --args $(NAME) $(ARGS)
+
+debugf: all
+	clear ; vi .gdbinit && gdb --args $(NAME) $(ARGS)

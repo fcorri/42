@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:44 by fcorri            #+#    #+#             */
-/*   Updated: 2022/10/20 19:37:32 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/07 11:18:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,31 @@ static int	ft_is_sign(const char **ptr)
 	return (1);
 }
 
+static int	ft_overflow(int sign)
+{
+	if (sign > 0)
+		return (-1);
+	return (0);
+}
+
 int	ft_atoi(const char *nptr)
 {
 	long	output;
 	long	temp;
 	int		sign;
+	char	digit;
 
 	output = 0;
 	ft_remove_initial_spaces(&nptr);
 	sign = ft_is_sign(&nptr);
-	while (ft_isdigit(*nptr))
+	digit = *nptr;
+	while (ft_isdigit(digit))
 	{
-		temp = output * 10 + (*nptr - '0');
+		temp = output * 10 + (digit - '0');
 		if (temp < output)
-		{
-			if (sign > 0)
-				return (-1);
-			else
-				return (0);
-		}
-		else
-			output = temp;
-		nptr++;
+			return (ft_overflow(sign));
+		output = temp;
+		digit = *++nptr;
 	}	
 	output *= sign;
 	return (output);

@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 18:25:12 by fcorri            #+#    #+#             */
-/*   Updated: 2023/10/04 20:32:23 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/06 19:20:21 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ typedef struct vars
 }	t_vars;
 
 void		ft_exit(int error);
-int			ft_free_and_exit(t_vars *vars, int output);
+int			ft_free_and_exit(t_vars *vars, int exit);
 int			ft_min(int first, int second);
 int			ft_max(int first, int second);
 
-int			ft_init(t_bvector argc, char **argv, t_vars *vars);
+int			ft_init(int argc, char **argv, t_vars *vars);
 void		ft_order(t_vars *vars, int n);
+
+int			ft_isdigit_decorator_ps(char *param);
+t_int_dlist	*ft_atoi_decorator_ps(t_vars *vars, t_stack *a, char *input);
+void		ft_split_decorator_ps(char **argv, t_vars *vars, t_stack *a);
 
 t_stack		*ft_new_stack(void);
 int			ft_is_ordered(t_stack *stack);

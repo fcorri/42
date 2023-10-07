@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/21 12:07:47 by fcorri            #+#    #+#              #
-#    Updated: 2023/09/21 14:16:59 by fcorri           ###   ########.fr        #
+#    Updated: 2023/10/07 11:52:08 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,3 @@ define pr
 p r_a_b
 end
 
-#b ft_push_min_ops
-#r
-#c 13
-b ft_order_more
-r
-ps

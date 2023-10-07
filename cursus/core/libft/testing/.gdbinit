@@ -1,2 +1,2 @@
-b main
+b ft_atoi
 r

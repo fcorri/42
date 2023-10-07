@@ -6,7 +6,7 @@
 /*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:55:36 by fcorri            #+#    #+#             */
-/*   Updated: 2023/09/27 17:31:09 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/06 19:06:10 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ static void	ft_order_more(t_vars *vars, int size)
 
 void	ft_order(t_vars *vars, int size)
 {
-	if (CHECK)
-		ft_check(vars);
-	else if (size == 2)
+	if (size == 2)
 		ft_sa(vars, 1);
 	else if (size == 3)
 		ft_order_three(vars, vars->a->head);
