@@ -1,6 +1,6 @@
 #!/bin/bash
 
-n=9
+n=11
 
 projects=(
 "libft"
@@ -13,19 +13,23 @@ projects=(
 "fdf"
 "fract-ol"
 "push_swap"
+"philosophers"
+"minishell"
 )
 
 urls=(
-"https://cdn.intra.42.fr/pdf/pdf/98026/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101896/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101895/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101894/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101902/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101901/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101907/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101908/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101909/en.subject.pdf"
-"https://cdn.intra.42.fr/pdf/pdf/101897/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/105850/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106613/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106616/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106623/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106602/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106597/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106591/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106618/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106524/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106594/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/101910/en.subject.pdf"
+"https://cdn.intra.42.fr/pdf/pdf/106609/en.subject.pdf"
 )
 
 for i in $(seq 0 $n)
