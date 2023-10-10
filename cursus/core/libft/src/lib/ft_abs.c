@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsafe_listsadd_back.c                          :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 09:43:24 by fcorri            #+#    #+#             */
-/*   Updated: 2023/06/06 09:56:10 by fcorri           ###   ########.fr       */
+/*   Created: 2023/09/12 19:16:38 by fcorri            #+#    #+#             */
+/*   Updated: 2023/09/12 19:17:25 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_unsafe_lstadd_back(t_list *node, t_list *next)
+int	ft_abs(int nbr)
 {
-	node->next = next;
-	return (node->next);
+	if (nbr >= 0)
+		return (nbr);
+	return (-nbr);
 }

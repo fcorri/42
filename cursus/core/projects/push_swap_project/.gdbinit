@@ -1,14 +1,25 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    .gitignore                                         :+:      :+:    :+:    #
+#    .gdbinit                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+         #
+#    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/15 00:25:24 by fcorri            #+#    #+#              #
-#    Updated: 2023/08/18 16:25:35 by fcorri           ###   ########.fr        #
+#    Created: 2023/09/21 12:07:47 by fcorri            #+#    #+#              #
+#    Updated: 2023/10/07 11:52:08 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-minilibx-linux
-*.o
+define bin
+p /t $arg0
+end
+define pq
+call ft_print_queue(vars)
+end
+define ps
+call ft_print(vars)
+end
+define pr
+p r_a_b
+end
+

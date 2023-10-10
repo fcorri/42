@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 18:34:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/21 17:07:59 by fcorri           ###   ########.fr       */
+/*   Created: 2023/08/07 18:24:13 by fcorri            #+#    #+#             */
+/*   Updated: 2023/10/06 19:12:30 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap_p.h"
 
-size_t	ft_lstsize(t_list *lst)
+int	main(int argc, char **argv)
 {
-	size_t	size;
+	t_vars	vars;
 
-	size = 0;
-	while (lst != NULL)
-	{
-		size++;
-		lst = lst->next;
-	}
-	return (size);
+	if (argc == 1)
+		return (0);
+	argc = ft_init(argc, argv, &vars);
+	if (!ft_is_ordered(vars.a))
+		ft_order(&vars, argc);
+	return (ft_free_and_exit(&vars, 0));
 }

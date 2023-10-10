@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: fcorri <fcorri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 18:34:29 by fcorri            #+#    #+#             */
-/*   Updated: 2023/08/21 17:07:59 by fcorri           ###   ########.fr       */
+/*   Created: 2023/08/21 17:58:33 by fcorri            #+#    #+#             */
+/*   Updated: 2023/08/21 19:17:08 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_lstsize(t_list *lst)
+void	ft_error(char *caller, char *message)
 {
-	size_t	size;
-
-	size = 0;
-	while (lst != NULL)
-	{
-		size++;
-		lst = lst->next;
-	}
-	return (size);
+	ft_printf("ERROR on %s:\t%s\n", caller, message);
+	exit(1);
 }

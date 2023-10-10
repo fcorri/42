@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:44 by fcorri            #+#    #+#             */
-/*   Updated: 2023/10/10 16:18:08 by fcorri           ###   ########.fr       */
+/*   Updated: 2023/10/07 17:22:59 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ static int	ft_overflow(int sign)
 	return (0);
 }
 
-int	ft_atoi(const char *nptr)
+long	ft_atol(const char *nptr)
 {
-	long	output;
-	long	temp;
-	int		sign;
-	char	digit;
+	long long	output;
+	long long	temp;
+	int			sign;
+	char		digit;
 
 	output = 0;
 	ft_remove_initial_spaces(&nptr);
