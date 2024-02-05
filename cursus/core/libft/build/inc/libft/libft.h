@@ -6,7 +6,7 @@
 /*   By: fcorri <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:05:46 by fcorri            #+#    #+#             */
-/*   Updated: 2023/10/10 16:14:37 by fcorri           ###   ########.fr       */
+/*   Updated: 2024/02/05 11:11:05 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void					ft_putnbr_fd(int n, int fd);
 // NON MANDATORY
 
 char					*ft_strndup(const char *s, size_t n);
-void					ft_error(char *caller, char *message);
+void					ft_error_libft(char *caller, char *message);
 int						ft_abs(int nbr);
 
 // MEMORY UTILS

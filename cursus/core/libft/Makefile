@@ -6,7 +6,7 @@
 #    By: fcorri <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 15:29:43 by fcorri            #+#    #+#              #
-#    Updated: 2023/10/07 17:27:53 by fcorri           ###   ########.fr        #
+#    Updated: 2024/02/05 11:16:13 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,9 +68,6 @@ SRCS			=	$(LIB_DIR)/ft_atoi.c \
 					$(UTILS_DIR)/ft_memutils1.c \
 					$(UTILS_DIR)/ft_memutils2.c \
 					\
-					$(LIB_DIR)/dlist/ft_int_dlist1.c \
-					$(LIB_DIR)/dlist/ft_int_dlist2.c \
-					\
 					$(GNL_DIR)/get_next_line.c \
 					$(GNL_DIR)/get_next_line_utils.c
 
@@ -104,7 +101,7 @@ $(NAME): $(OBJS)
 	$(AR) $(NAME) $(OBJS) ./*.o
 	$(RM) ./*.o
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(INC_DIR)/libft/libft.h
 	@mkdir -p $(@D)
 	$(CC) -c $< $(REQUIRED_FLAGS) $(CPPFLAGS) -o $@
 
