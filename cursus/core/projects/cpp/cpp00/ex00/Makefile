@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/04 13:00:45 by fcorri            #+#    #+#              #
-#    Updated: 2024/03/04 16:56:36 by fcorri           ###   ########.fr        #
+#    Created: 2024/03/04 18:58:04 by fcorri            #+#    #+#              #
+#    Updated: 2024/03/04 18:59:50 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ VALGRIND-OPTIONS=
 CC				=	c++
 CFLAGS			=	-g
 REQUIRED_CFLAGS	=	$(CFLAGS) -Wall -Wextra -Werror -std=c++98
-CPPFLAGS		=	$(addprefix -I, )
+CPPFLAGS		=	$(addprefix -I, $(INC_DIR))
 LDFLAGS			=	$(addprefix -L, )
 LDLIBS			=	$(addprefix -l, )
 
@@ -29,9 +29,7 @@ OBJS_DIR		=	$(BUILD_DIR)/obj
 SRCS_DIR		=	src
 P_HEADER		=	
 
-SRCS			=	$(SRCS_DIR)/megaphone.cpp \
-#					$(SRCS_DIR)/ \
-#					$(SRCS_DIR)/
+SRCS			=	$(SRCS_DIR)/megaphone.cpp
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 
@@ -75,4 +73,7 @@ debug: clear all
 
 debugf: clear all
 	vi .gdbinit && gdb --args $(NAME) $(ARGS)
+
+PHONY:
+	all clean fclean re clear run mem vgdb gdb debug debugf
 
