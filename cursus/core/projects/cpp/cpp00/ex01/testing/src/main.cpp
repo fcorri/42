@@ -6,11 +6,11 @@
 /*   By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:09:59 by fcorri            #+#    #+#             */
-/*   Updated: 2024/03/04 20:10:58 by fcorri           ###   ########.fr       */
+/*   Updated: 2024/03/05 18:07:11 by fcorri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Contact.hpp"
+#include "copyOfContact.hpp"
 
 int main(void)
 {

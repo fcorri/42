@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/04 20:11:06 by fcorri            #+#    #+#              #
-#    Updated: 2024/03/04 20:12:09 by fcorri           ###   ########.fr        #
+#    Updated: 2024/03/05 18:14:59 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,16 @@ CPPFLAGS		=	$(addprefix -I, $(INC_DIR))
 LDFLAGS			=	$(addprefix -L, )
 LDLIBS			=	$(addprefix -l, )
 
+TEST			=	copyOfContact
+
 BUILD_DIR		=	build
 INC_DIR			=	../$(BUILD_DIR)/inc
 OBJS_DIR		=	$(BUILD_DIR)/obj
 SRCS_DIR		=	src
-P_HEADER		=	$(INC_DIR)/Contact.hpp
+P_HEADER		=	$(INC_DIR)/$(TEST).hpp
 
 SRCS			=	$(SRCS_DIR)/main.cpp \
-					../$(SRCS_DIR)/Contact.cpp
+					../$(SRCS_DIR)/$(TEST).cpp
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 
