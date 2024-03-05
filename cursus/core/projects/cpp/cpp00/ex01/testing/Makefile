@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/04 20:11:06 by fcorri            #+#    #+#              #
-#    Updated: 2024/03/05 18:14:59 by fcorri           ###   ########.fr        #
+#    Updated: 2024/03/06 00:43:42 by filippo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CPPFLAGS		=	$(addprefix -I, $(INC_DIR))
 LDFLAGS			=	$(addprefix -L, )
 LDLIBS			=	$(addprefix -l, )
 
-TEST			=	copyOfContact
+TEST			=	Contact
 
 BUILD_DIR		=	build
 INC_DIR			=	../$(BUILD_DIR)/inc
