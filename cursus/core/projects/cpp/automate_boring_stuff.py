@@ -59,40 +59,40 @@ def writeLastLines(output):
 def defineConstructor(output):
 	output.write("#include \"" + className + ".hpp\"\n\n")
 	output.write(className + "::" + className + "\n")
-	output.write("\t(\n")
+	output.write("(\n")
 	for attribute in privateAttributes[:-1]:
-		output.write("\t\t" + attribute[0])
+		output.write("\t" + attribute[0])
 		output.write("\t")
 		for i in range(len(attribute) - 2):
 			output.write("\t")
 		output.write(attribute[-1][1:] + ",\n")
 	attribute = privateAttributes[-1]
-	output.write("\t\t" + attribute[0] + "\t" + attribute[-1][1:] + "\n")
-	output.write("\t)\n")
-	output.write("\t:\n")
+	output.write("\t" + attribute[0] + "\t" + attribute[-1][1:] + "\n")
+	output.write(")\n")
+	output.write(":\n")
 	for attribute in privateAttributes[:-1]:
 		nameOfAttribute = attribute[-1]
-		output.write("\t" + nameOfAttribute + "(" + nameOfAttribute[1:] + "),\n")
+		output.write(nameOfAttribute + "(" + nameOfAttribute[1:] + "),\n")
 	nameOfAttribute = privateAttributes[-1][1]
-	output.write("\t" + nameOfAttribute + "(" + nameOfAttribute[1:] + ")\n")
-	output.write("\t{\n")
-	output.write("\t\t\n")
-	output.write("\t}\n")
+	output.write(nameOfAttribute + "(" + nameOfAttribute[1:] + ")\n")
+	output.write("{\n")
+	output.write("\t\n")
+	output.write("}\n")
 
 def defineGetters(output):
 	output.write("\n")
 	for attribute in privateAttributes:
 		nameOfAttribute = attribute[-1]
-		output.write("\t" + attribute[0] + "\t" + className + "::get" + nameOfAttribute[1].upper() + nameOfAttribute[2:] + "(void) const {\n")
-		output.write("\t\treturn " + nameOfAttribute + ";\n")
-		output.write("\t}\n\n")
+		output.write(attribute[0] + "\t" + className + "::get" + nameOfAttribute[1].upper() + nameOfAttribute[2:] + "(void) const {\n")
+		output.write("\treturn " + nameOfAttribute + ";\n")
+		output.write("}\n\n")
 
 def defineSetters(output):
 	for attribute in privateAttributes:
 		nameOfAttribute = attribute[-1]
-		output.write("\tvoid\t" + className + "::set" + nameOfAttribute[1].upper() + nameOfAttribute[2:] + "(" + attribute[0] + " " + nameOfAttribute[1:] + ") {\n");
-		output.write("\t\t" + nameOfAttribute + " = " + nameOfAttribute[1:] + ";\n")
-		output.write("\t}\n\n")
+		output.write("void\t" + className + "::set" + nameOfAttribute[1].upper() + nameOfAttribute[2:] + "(" + attribute[0] + " " + nameOfAttribute[1:] + ") {\n");
+		output.write("\t" + nameOfAttribute + " = " + nameOfAttribute[1:] + ";\n")
+		output.write("}\n\n")
 
 copy = sys.argv[1].replace(className, "copyOf" + className)
 output = open(copy, "w")
