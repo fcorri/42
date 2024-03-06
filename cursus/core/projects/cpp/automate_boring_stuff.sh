@@ -7,6 +7,8 @@ if [[ -z $1 ]]; then
 	exit 1
 fi
 
+rm $1build/inc/copy*
+
 for file in $1build/inc/*; do
 	python3 automate_boring_stuff.py $file
 	cat $file
