@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/04 19:01:05 by fcorri            #+#    #+#              #
-#    Updated: 2024/03/04 20:04:33 by fcorri           ###   ########.fr        #
+#    Updated: 2024/03/06 19:19:35 by filippo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ OBJS_DIR		=	$(BUILD_DIR)/obj
 SRCS_DIR		=	src
 P_HEADER		=	
 
-SRCS			=	$(SRCS_DIR)/Contact.cpp
+SRCS			=	$(SRCS_DIR)/main.cpp \
+					$(SRCS_DIR)/Contact.cpp
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 
