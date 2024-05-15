@@ -2,3 +2,4 @@
 *.a
 .gdbinit
 testing/
+build/
