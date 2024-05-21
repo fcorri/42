@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/04 19:01:05 by fcorri            #+#    #+#              #
-#    Updated: 2024/03/06 19:19:35 by filippo          ###   ########.fr        #
+#    Updated: 2024/05/21 19:38:09 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,12 @@ BUILD_DIR		=	build
 INC_DIR			=	$(BUILD_DIR)/inc
 OBJS_DIR		=	$(BUILD_DIR)/obj
 SRCS_DIR		=	src
-P_HEADER		=	
+P_HEADER		=	$(INC_DIR)/Contact.hpp \
+					$(INC_DIR)/PhoneBook.hpp
 
 SRCS			=	$(SRCS_DIR)/main.cpp \
-					$(SRCS_DIR)/Contact.cpp
+					$(SRCS_DIR)/Contact.cpp \
+					$(SRCS_DIR)/PhoneBook.cpp
 
 OBJS			=	$(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 
