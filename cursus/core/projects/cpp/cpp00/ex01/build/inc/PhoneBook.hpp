@@ -21,14 +21,8 @@ class PhoneBook
 		Contact	_contacts[8];
 
 	public:
-		PhoneBook
-		(
-			Contact	_contacts[8]
-		);
-
-		Contact	getContacts[8](void) const;
-
-		void	setContacts[8](Contact contacts[8]);
+		PhoneBook();
+		~PhoneBook();
 };
 
 #endif
