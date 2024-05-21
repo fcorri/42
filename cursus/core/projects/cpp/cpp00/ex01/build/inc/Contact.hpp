@@ -11,40 +11,34 @@
 /* ************************************************************************** */
 
 #ifndef CONTACT_HPP
-# define CONTACT_HPP
+#define CONTACT_HPP
 
 #include <string>
 
-class Contact
+const class Contact
 {
-	private:
-		std::string	_firstName;
-		std::string	_lastName;
-		std::string	_nickName;
-		std::string	_phoneNumber;
-		std::string	_darkestSecret;
+private:
+	const std::string _firstName;
+	const std::string _lastName;
+	const std::string _nickName;
+	const std::string _phoneNumber;
+	const std::string _darkestSecret;
 
-	public:
-		Contact
-		(
-			std::string	_firstName,
-			std::string	_lastName,
-			std::string	_nickName,
-			std::string	_phoneNumber,
-			std::string	_darkestSecret
-		);
+public:
+	Contact
+	(
+		std::string	_firstName,
+		std::string	_lastName,
+		std::string	_nickName,
+		std::string	_phoneNumber,
+		std::string	_darkestSecret
+	);
 
-		std::string	getFirstName(void) const;
-		std::string	getLastName(void) const;
-		std::string	getNickName(void) const;
-		std::string	getPhoneNumber(void) const;
-		std::string	getDarkestSecret(void) const;
-
-		void	setFirstName(std::string firstName);
-		void	setLastName(std::string lastName);
-		void	setNickName(std::string nickName);
-		void	setPhoneNumber(std::string phoneNumber);
-		void	setDarkestSecret(std::string darkestSecret);
+	std::string getFirstName() const;
+	std::string getLastName() const;
+	std::string getNickName() const;
+	std::string getPhoneNumber() const;
+	std::string getDarkestSecret() const;
 };
 
 #endif
