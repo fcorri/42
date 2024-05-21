@@ -24,6 +24,8 @@ class PhoneBook
 	public:
 		PhoneBook();
 		~PhoneBook();
+
+		void	addContact(Contact &contact);
 };
 
 #endif
