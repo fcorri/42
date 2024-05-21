@@ -15,7 +15,7 @@
 
 #include <string>
 
-const class Contact
+class Contact
 {
 private:
 	const std::string _firstName;
