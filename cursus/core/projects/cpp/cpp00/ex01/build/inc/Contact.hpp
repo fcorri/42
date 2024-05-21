@@ -25,6 +25,8 @@ private:
 	const std::string _darkestSecret;
 
 public:
+	Contact();
+	~Contact();
 	Contact
 	(
 		std::string	_firstName,
