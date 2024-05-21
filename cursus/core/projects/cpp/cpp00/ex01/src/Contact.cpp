@@ -7,14 +7,14 @@ Contact::Contact
 (
 	std::string	firstName,
 	std::string	lastName,
-	std::string	nickName,
+	std::string	nickname,
 	std::string	phoneNumber,
 	std::string	darkestSecret
 )
 :
 _firstName(firstName),
 _lastName(lastName),
-_nickName(nickName),
+_nickname(nickname),
 _phoneNumber(phoneNumber),
 _darkestSecret(darkestSecret)
 {
@@ -29,8 +29,8 @@ std::string	Contact::getLastName(void) const {
 	return _lastName;
 }
 
-std::string	Contact::getNickName(void) const {
-	return _nickName;
+std::string	Contact::getNickname(void) const {
+	return _nickname;
 }
 
 std::string	Contact::getPhoneNumber(void) const {
