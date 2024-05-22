@@ -10,10 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Contact.hpp"
+#include "PhoneBook.hpp"
+#include <iostream>
 
-int main(void)
+#define PROMPT "Please type one of the following options: ADD, SEARCH, EXIT: "
+
+int main()
 {
+	std::string cmd;
+
+	do
+	{
+		std::cout << PROMPT;
+		std::getline(std::cin, cmd);
+		if (cmd.compare("ADD"))
+		{
+			// create contact and add it to the phonebook, if input is valid
+		}
+		else if (cmd.compare("SEARCH"))
+		{
+			// search for a contact in the phonebook
+		}
+		else
+			std::cout << "ERROR: invalid option!";
+	} while (cmd.compare("EXIT"));
 	return (0);
 }
-
