@@ -21,6 +21,17 @@ _darkestSecret(darkestSecret)
 	
 }
 
+Contact* Contact::makeContact(
+		std::string firstName,
+		std::string lastName,
+		std::string nickname,
+		std::string phoneNumber,
+		std::string darkestSecret) {
+			if (firstName.empty() || lastName.empty() || nickname.empty() || phoneNumber.empty() || darkestSecret.empty())
+				return NULL;
+			return new Contact(firstName, lastName, nickname, phoneNumber, darkestSecret);
+		}
+
 std::string	Contact::getFirstName(void) const {
 	return _firstName;
 }

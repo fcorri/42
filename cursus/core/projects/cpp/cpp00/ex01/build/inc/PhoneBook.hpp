@@ -13,19 +13,22 @@
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
 
+# define LEN	8
+
 #include "Contact.hpp"
 
 class PhoneBook
 {
 	private:
 		int		_index;
-		Contact	_contacts[8];
+		Contact	*_contacts[LEN];
 
 	public:
 		PhoneBook();
 		~PhoneBook();
 
-		void	addContact(Contact &contact);
+		void	addContact(Contact *contact);
+		void	deleteContacts();
 };
 
 #endif

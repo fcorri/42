@@ -18,15 +18,11 @@
 class Contact
 {
 private:
-	std::string _firstName;
-	std::string _lastName;
-	std::string _nickname;
-	std::string _phoneNumber;
-	std::string _darkestSecret;
-
-public:
-	Contact();
-	~Contact();
+	const std::string _firstName;
+	const std::string _lastName;
+	const std::string _nickname;
+	const std::string _phoneNumber;
+	const std::string _darkestSecret;
 	Contact
 	(
 		std::string	_firstName,
@@ -34,6 +30,18 @@ public:
 		std::string	_nickname,
 		std::string	_phoneNumber,
 		std::string	_darkestSecret
+	);
+
+public:
+	Contact();
+	~Contact();
+
+	static Contact*	makeContact(
+		std::string firstName,
+		std::string lastName,
+		std::string nickname,
+		std::string phoneNumber,
+		std::string darkestSecret
 	);
 
 	std::string getFirstName() const;
