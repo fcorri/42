@@ -6,7 +6,7 @@
 #    By: fcorri <fcorri@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/04 19:01:05 by fcorri            #+#    #+#              #
-#    Updated: 2024/05/21 19:38:09 by fcorri           ###   ########.fr        #
+#    Updated: 2024/05/22 19:45:53 by fcorri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ vgdb: clear all
 	valgrind --tool=$(VALGRIND-TOOL) $(VALGRIND-OPTIONS) --vgdb-error=0 $(NAME) $(ARGS)
 
 gdb: clear all
-	echo "target remote | vgdb\nc" > .gdbinit
+	echo "target remote | vgdb\nb main\nc" > .gdbinit
 	gdb --args $(NAME) $(ARGS)
 
 debug: clear all
