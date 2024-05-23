@@ -20,13 +20,6 @@ int main()
 	PhoneBook	phoneBook;
 	std::string cmd;
 
-	for (int i = 0; i < 10; i++) {
-		Contact *newContact = Contact::makeContact("Random", "Contact", "random", "987654321", "random secret");
-		phoneBook.addContact(newContact);
-	}
-	phoneBook.deleteContacts();
-	return (0);
-
 	do
 	{
 		std::cout << PROMPT;
@@ -42,6 +35,6 @@ int main()
 		else
 			std::cout << "ERROR: invalid option!";
 	} while (cmd.compare("EXIT"));
-	
+
 	return (0);
 }
