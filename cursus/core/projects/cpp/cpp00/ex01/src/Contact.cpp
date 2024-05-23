@@ -1,4 +1,5 @@
 #include "Contact.hpp"
+#include <iostream>
 
 Contact::Contact() {}
 Contact::~Contact() {}
@@ -21,16 +22,35 @@ _darkestSecret(darkestSecret)
 	
 }
 
-Contact* Contact::makeContact(
-		std::string firstName,
-		std::string lastName,
-		std::string nickname,
-		std::string phoneNumber,
-		std::string darkestSecret) {
-			if (firstName.empty() || lastName.empty() || nickname.empty() || phoneNumber.empty() || darkestSecret.empty())
-				return NULL;
-			return new Contact(firstName, lastName, nickname, phoneNumber, darkestSecret);
-		}
+std::string	getInput(std::string field) {
+	std::string input = "";
+
+	while (input.empty()) {
+		std::cout << "Enter " << field << ": ";
+		std::getline(std::cin, input);
+		if (input.empty())
+			std::cout << "ERROR: " << field << " cannot be empty!\n";
+		else
+			break;
+	};
+
+	return input;
+}
+
+Contact* Contact::makeContact() {
+	std::string	firstName = "";
+	std::string	lastName = "";
+	std::string	nickname = "";
+	std::string	phoneNumber = "";
+	std::string	darkestSecret = "";
+
+	firstName = getInput("first name");
+	lastName = getInput("last name");
+	nickname = getInput("nickname");
+	phoneNumber = getInput("phone number");
+	darkestSecret = getInput("darkest secret");
+	return new Contact(firstName, lastName, nickname, phoneNumber, darkestSecret);
+}
 
 std::string	Contact::getFirstName(void) const {
 	return _firstName;

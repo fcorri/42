@@ -17,24 +17,29 @@
 
 int main()
 {
-	PhoneBook	phoneBook;
+	PhoneBook phoneBook;
 	std::string cmd;
 
-	do
+	while (true)
 	{
 		std::cout << PROMPT;
 		std::getline(std::cin, cmd);
-		if (cmd.compare("ADD"))
+		if (std::cin.eof())
 		{
-			// create contact and add it to the phonebook, if input is valid
+			std::cout << "\n";
+			break;
 		}
-		else if (cmd.compare("SEARCH"))
+		else if (!cmd.compare("ADD"))
+			phoneBook.addContact(Contact::makeContact());
+		else if (!cmd.compare("SEARCH"))
 		{
 			// search for a contact in the phonebook
 		}
+		else if (!cmd.compare("EXIT"))
+			break;
 		else
-			std::cout << "ERROR: invalid option!";
-	} while (cmd.compare("EXIT"));
-
+			std::cout << "ERROR: invalid option!\n";
+	}
+	std::cout << "Goodbye!" << std::endl;
 	return (0);
 }

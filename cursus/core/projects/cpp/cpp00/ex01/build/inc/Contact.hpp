@@ -36,13 +36,7 @@ public:
 	Contact();
 	~Contact();
 
-	static Contact*	makeContact(
-		std::string firstName,
-		std::string lastName,
-		std::string nickname,
-		std::string phoneNumber,
-		std::string darkestSecret
-	);
+	static Contact*	makeContact();
 
 	std::string getFirstName() const;
 	std::string getLastName() const;
